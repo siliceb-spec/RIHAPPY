@@ -729,27 +729,76 @@ body{font-family:'Nunito',sans-serif;background:#0D0828;
 
 <script>
 /* ══════════════════════════════════════════════════
-   SOLZINHO VOICE ENGINE
-   Simulates a cheerful young boy voice:
-   — pitch: 1.45  (high, child-like)
-   — rate:  0.78  (slow, cadenced, clear for 2-6yo)
-   — volume: 1
-   Every message is broken into short phrases
-   with natural pauses between them.
-   The Solzinho image animates while speaking.
+   SOLZINHO VOICE ENGINE v2
+   — Portuguese: male voice, slow, cadenced, boyish
+   — English:    male American voice, slow, clear
+   — Explicit voice selection: scans system voices
+     and picks male ones by name keyword matching.
+   — Falls back gracefully if no male voice found
+     by using high pitch to approximate boy voice.
 ══════════════════════════════════════════════════ */
 
-const SOL_VOICE_SETTINGS = {
-  lang:   'pt-BR',
-  pitch:  1.45,     // high child voice
-  rate:   0.78,     // slow and cadenced
+/* Resolved voice objects — filled after voices load */
+let PT_VOICE = null;
+let EN_VOICE = null;
+let voicesReady = false;
+
+/* Male voice keyword patterns to search for */
+const PT_MALE_KEYWORDS = [
+  'daniel','felipe','roberto','carlos','marco',
+  'male','masculino','homem','man','brasil',
+  'pt-br','português'
+];
+const EN_MALE_KEYWORDS = [
+  'daniel','aaron','fred','david','mark','tom',
+  'alex','george','james','evan','diego',
+  'male','man','guy','en-us','english united states'
+];
+
+function pickMaleVoice(voices, lang, keywords) {
+  /* 1st pass — exact lang + male keyword */
+  const langVoices = voices.filter(v =>
+    v.lang.toLowerCase().startsWith(lang.toLowerCase().slice(0,2))
+  );
+  for (const kw of keywords) {
+    const hit = langVoices.find(v => v.name.toLowerCase().includes(kw));
+    if (hit) return hit;
+  }
+  /* 2nd pass — any male keyword in all voices */
+  for (const kw of keywords) {
+    const hit = voices.find(v => v.name.toLowerCase().includes(kw));
+    if (hit) return hit;
+  }
+  /* 3rd pass — just pick the first voice for that lang */
+  if (langVoices.length) return langVoices[0];
+  /* Last resort — whatever is available */
+  return voices[0] || null;
+}
+
+function loadVoices() {
+  const voices = window.speechSynthesis.getVoices();
+  if (!voices.length) return;
+  PT_VOICE = pickMaleVoice(voices, 'pt', PT_MALE_KEYWORDS);
+  EN_VOICE = pickMaleVoice(voices, 'en', EN_MALE_KEYWORDS);
+  voicesReady = true;
+  console.log('PT voice:', PT_VOICE?.name);
+  console.log('EN voice:', EN_VOICE?.name);
+}
+
+/* Voices load asynchronously — listen for the event */
+window.speechSynthesis.onvoiceschanged = loadVoices;
+/* Also try immediately (some browsers have them sync) */
+loadVoices();
+
+/* ── Voice config ── */
+const PT_CFG = {
+  pitch:  1.52,   /* boyish high pitch for PT */
+  rate:   0.74,   /* slow, clear, cadenced */
   volume: 1.0,
 };
-
-const EN_VOICE_SETTINGS = {
-  lang:   'en-US',
-  pitch:  1.4,
-  rate:   0.58,
+const EN_CFG = {
+  pitch:  1.42,   /* American boy — high but natural */
+  rate:   0.56,   /* very slow for learning */
   volume: 1.0,
 };
 
@@ -804,6 +853,7 @@ function setBubble(screen, text) {
    CORE SPEAK FUNCTION
    Splits text on ' ... ' for natural pauses.
    Each segment is a separate utterance.
+   Explicitly assigns male voice object.
    Solzinho animates for each segment.
 ══════════════════════════════════════════ */
 function solSpeak(text, lang, onDone) {
@@ -812,6 +862,10 @@ function solSpeak(text, lang, onDone) {
     return;
   }
   window.speechSynthesis.cancel();
+
+  const isEN   = lang === 'en-US';
+  const cfg    = isEN ? EN_CFG : PT_CFG;
+  const voice  = isEN ? EN_VOICE : PT_VOICE;
 
   const segments = text.split(' ... ');
   let idx = 0;
@@ -827,21 +881,18 @@ function solSpeak(text, lang, onDone) {
     if(!seg) { idx++; speakNext(); return; }
 
     const u = new SpeechSynthesisUtterance(seg);
-    const isEN = lang === 'en-US';
-    u.lang   = lang   || SOL_VOICE_SETTINGS.lang;
-    u.pitch  = isEN   ? EN_VOICE_SETTINGS.pitch  : SOL_VOICE_SETTINGS.pitch;
-    u.rate   = isEN   ? EN_VOICE_SETTINGS.rate    : SOL_VOICE_SETTINGS.rate;
-    u.volume = SOL_VOICE_SETTINGS.volume;
+    u.lang   = lang || 'pt-BR';
+    u.pitch  = cfg.pitch;
+    u.rate   = cfg.rate;
+    u.volume = cfg.volume;
+    /* Assign explicit male voice if found */
+    if(voice) u.voice = voice;
 
     setTalking(currentScreen, true);
-    setBubble(currentScreen, seg.replace(/\.\.\./g,''));
+    setBubble(currentScreen, seg.replace(/\.\.\./g, ''));
 
-    u.onend = () => {
-      idx++;
-      // Natural pause between phrases (400ms)
-      setTimeout(speakNext, 420);
-    };
-    u.onerror = () => { idx++; speakNext(); };
+    u.onend  = () => { idx++; setTimeout(speakNext, 420); };
+    u.onerror= () => { idx++; speakNext(); };
 
     window.speechSynthesis.speak(u);
   }
@@ -1084,7 +1135,6 @@ function playWord(idx) {
   const data = WORDS[currentCat];
   const w = data.items[idx];
 
-  // Clear previous card state
   if(currentlyPlaying !== null) {
     const prev = document.getElementById('wc-'+currentlyPlaying);
     if(prev) prev.classList.remove('playing');
@@ -1093,57 +1143,62 @@ function playWord(idx) {
   const card = document.getElementById('wc-'+idx);
   if(card) card.classList.add('playing');
   setTalking('gallery', true);
-
   window.speechSynthesis.cancel();
 
-  // Step 1 — PT name (anchor)
-  const u1 = new SpeechSynthesisUtterance(w.pt);
-  u1.lang='pt-BR'; u1.pitch=1.45; u1.rate=0.80; u1.volume=1;
+  /* Helper: build utterance with explicit male voice */
+  function mkU(text, lang, pitch, rate) {
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang   = lang;
+    u.pitch  = pitch;
+    u.rate   = rate;
+    u.volume = 1.0;
+    const v  = lang === 'en-US' ? EN_VOICE : PT_VOICE;
+    if(v) u.voice = v;
+    return u;
+  }
 
-  // Step 2 — EN very slow, clear
-  const u2 = new SpeechSynthesisUtterance(w.en);
-  u2.lang='en-US'; u2.pitch=1.4; u2.rate=0.50; u2.volume=1;
+  /* Step 1 — PT anchor: slow, clear, male boyish */
+  const u1 = mkU(w.pt, 'pt-BR', 1.52, 0.76);
 
-  // Step 3 — EN slightly faster
-  const u3 = new SpeechSynthesisUtterance(w.en);
-  u3.lang='en-US'; u3.pitch=1.38; u3.rate=0.65; u3.volume=1;
+  /* Step 2 — EN very slow: child hears each phoneme */
+  const u2 = mkU(w.en, 'en-US', 1.44, 0.50);
 
-  // Step 4 — "PT ... EN" paired
-  const u4pt = new SpeechSynthesisUtterance(w.pt);
-  u4pt.lang='pt-BR'; u4pt.pitch=1.45; u4pt.rate=0.80; u4pt.volume=1;
-  const u4en = new SpeechSynthesisUtterance(w.en);
-  u4en.lang='en-US'; u4en.pitch=1.4; u4en.rate=0.62; u4en.volume=1;
+  /* Step 3 — EN natural pace: second exposure */
+  const u3 = mkU(w.en, 'en-US', 1.40, 0.66);
 
-  // Solzinho encourage after
-  const uEnc = new SpeechSynthesisUtterance('Agora fala você!');
-  uEnc.lang='pt-BR'; uEnc.pitch=1.45; uEnc.rate=0.82; uEnc.volume=1;
+  /* Step 4 — PT + EN paired: consolidation */
+  const u4pt = mkU(w.pt, 'pt-BR', 1.52, 0.78);
+  const u4en = mkU(w.en, 'en-US', 1.42, 0.62);
+
+  /* Step 5 — PT encouragement */
+  const uEnc = mkU('Agora fala você!', 'pt-BR', 1.55, 0.80);
 
   setBubble('gallery', w.pt);
   window.speechSynthesis.speak(u1);
 
   u1.onend = () => {
     setBubble('gallery', w.en);
-    setTimeout(()=>window.speechSynthesis.speak(u2), 350);
+    setTimeout(()=>window.speechSynthesis.speak(u2), 380);
   };
   u2.onend = () => {
-    setTimeout(()=>window.speechSynthesis.speak(u3), 500);
+    setTimeout(()=>window.speechSynthesis.speak(u3), 520);
   };
   u3.onend = () => {
     setBubble('gallery', w.pt + ' = ' + w.en);
     setTimeout(()=>{
       window.speechSynthesis.speak(u4pt);
-      u4pt.onend = ()=>setTimeout(()=>window.speechSynthesis.speak(u4en),300);
+      u4pt.onend = ()=>setTimeout(()=>window.speechSynthesis.speak(u4en), 320);
       u4en.onend = ()=>{
-        setBubble('gallery','Agora fala você! 🎤');
-        setTimeout(()=>window.speechSynthesis.speak(uEnc), 200);
+        setBubble('gallery', 'Agora fala você! 🎤');
+        setTimeout(()=>window.speechSynthesis.speak(uEnc), 220);
         uEnc.onend = ()=>{
-          setTalking('gallery',false);
+          setTalking('gallery', false);
           if(card) card.classList.remove('playing');
-          currentlyPlaying=null;
+          currentlyPlaying = null;
           setBubble('gallery','Toque em cada palavra para ouvir! Repita em voz alta! 🔊');
         };
       };
-    }, 450);
+    }, 480);
   };
 }
 
@@ -1157,14 +1212,24 @@ function pickAge(el, key) {
 }
 
 /* ══════════════════════════════════════════
-   BOOT — Solzinho greets on load
+   BOOT — wait for voices then greet
 ══════════════════════════════════════════ */
 window.addEventListener('load', ()=>{
   currentScreen = 'home';
-  // Small delay so browser allows speech
-  setTimeout(()=>{
-    solSpeak(HOME_MSGS.boot, 'pt-BR', null);
-  }, 1200);
+
+  /* Retry loading voices up to 10 times × 200ms */
+  let tries = 0;
+  function tryBoot() {
+    loadVoices();
+    if(voicesReady || tries++ > 10) {
+      setTimeout(()=>{
+        solSpeak(HOME_MSGS.boot, 'pt-BR', null);
+      }, 400);
+    } else {
+      setTimeout(tryBoot, 250);
+    }
+  }
+  setTimeout(tryBoot, 800);
 });
 </script>
 </body>
