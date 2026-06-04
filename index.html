@@ -491,6 +491,176 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);
 /* Mini-world category bg overrides */
 .world-mini .ctx-animals{background:radial-gradient(ellipse at 50% 0%,rgba(255,100,180,.15) 0%,transparent 58%),linear-gradient(180deg,#1A0010,#060012)!important;}
 .world-mini .ctx-colors{background:radial-gradient(ellipse at 50% 0%,rgba(255,150,200,.15) 0%,transparent 58%),linear-gradient(180deg,#150010,#060012)!important;}
+
+/* ═══ CHARACTER SYSTEM ═══════════════════════════════════════
+   Each character has its own color, aura, and bubble style.
+   The .char-active class is applied to the device to switch
+   which character is currently guiding the session.
+═══════════════════════════════════════════════════════════ */
+
+/* Character color tokens */
+:root {
+  --teddy-color: #8B4513;
+  --bunny-color: #FF69B4;
+  --robo-color:  #4169E1;
+  --dino-color:  #228B22;
+  --luna-color:  #9B59FF;
+}
+
+/* Character bubble styles */
+.char-bubble-teddy  { border-color: rgba(139,69,19,.5)!important; }
+.char-bubble-bunny  { border-color: rgba(255,105,180,.5)!important; }
+.char-bubble-robo   { border-color: rgba(65,105,225,.5)!important; }
+.char-bubble-dino   { border-color: rgba(34,139,34,.5)!important; }
+.char-bubble-luna   { border-color: rgba(155,89,255,.5)!important; }
+
+/* Character emoji SVG avatars — inline emoji approach */
+.char-avatar {
+  font-size: inherit;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,.4));
+  display: inline-block;
+  will-change: transform;
+}
+
+/* Character companion bar — appears below Solzinho on map */
+.char-bar {
+  display: flex;
+  gap: 8px;
+  padding: 8px 18px 4px;
+  position: relative;
+  z-index: 10;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.char-bar::-webkit-scrollbar { display: none; }
+
+.char-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  flex-shrink: 0;
+  will-change: transform;
+}
+.char-chip-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  border: 2.5px solid rgba(255,255,255,.15);
+  transition: border-color .2s, box-shadow .2s;
+  position: relative;
+  overflow: hidden;
+}
+.char-chip-icon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(255,255,255,.2) 0%, transparent 55%);
+  pointer-events: none;
+}
+.char-chip.active .char-chip-icon {
+  border-color: var(--sun);
+  box-shadow: 0 0 14px rgba(255,209,0,.6);
+}
+.char-chip-name {
+  font-family: var(--ff);
+  font-size: 10px;
+  color: rgba(255,255,255,.7);
+  letter-spacing: .3px;
+}
+.char-chip.active .char-chip-name { color: var(--sun); }
+
+/* Character unlock badge */
+.char-locked .char-chip-icon {
+  filter: grayscale(.8);
+  opacity: .5;
+}
+
+/* Companion speech panel — world-aware styling */
+.companion-panel {
+  margin: 0 16px 12px;
+  border-radius: 18px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  z-index: 10;
+  backdrop-filter: var(--blur);
+  border: 1.5px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.06);
+  min-height: 68px;
+  overflow: hidden;
+}
+.companion-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255,255,255,.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+.cp-emoji {
+  font-size: 42px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 3px 8px rgba(0,0,0,.4));
+  will-change: transform;
+  position: relative;
+  z-index: 2;
+}
+.cp-content { flex: 1; position: relative; z-index: 2; }
+.cp-name {
+  font-family: var(--ff);
+  font-size: 11px;
+  color: rgba(255,255,255,.6);
+  margin-bottom: 3px;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+.cp-text {
+  font-family: var(--ff);
+  font-size: 14px;
+  color: rgba(255,255,255,.92);
+  line-height: 1.45;
+}
+
+/* Module-to-character color mapping */
+.mb-w  { --char-accent: var(--fire); }
+.mb-s  { --char-accent: #CC44FF; }
+.mb-st { --char-accent: #00DD88; }
+.mb-g  { --char-accent: #FF2255; }
+
+/* Luna: dark mode special panel */
+.world-adventure .companion-panel.char-luna {
+  background: rgba(155,89,255,.08);
+  border-color: rgba(155,89,255,.3);
+}
+/* Teddy: warm panel */
+.companion-panel.char-teddy {
+  background: rgba(139,69,19,.08);
+  border-color: rgba(139,69,19,.3);
+}
+/* Bunny: pink panel */
+.companion-panel.char-bunny {
+  background: rgba(255,105,180,.08);
+  border-color: rgba(255,105,180,.3);
+}
+/* Robo: blue panel */
+.companion-panel.char-robo {
+  background: rgba(65,105,225,.08);
+  border-color: rgba(65,105,225,.3);
+}
+/* Dino: green panel */
+.companion-panel.char-dino {
+  background: rgba(34,139,34,.08);
+  border-color: rgba(34,139,34,.3);
+}
 </style>
 </head>
 <body>
@@ -634,6 +804,21 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);
         <div class="sol-bubble" id="bbl-map" style="left:90px;bottom:10px;"></div>
       </div>
       <div class="map-bbl"><p id="map-bbl-txt">Escolha um módulo para explorar! 🎯</p></div>
+    </div>
+
+
+    <!-- Character Companion Bar — per Toyland Universe Fase 3 -->
+    <div class="char-bar" id="char-bar">
+      <!-- Populated by JS based on world + module -->
+    </div>
+
+    <!-- Active Companion Panel — shows current character guiding -->
+    <div class="companion-panel" id="companion-panel">
+      <div class="cp-emoji" id="cp-emoji">☀️</div>
+      <div class="cp-content">
+        <div class="cp-name" id="cp-name">SOLZINHO</div>
+        <div class="cp-text" id="cp-text">Escolha um módulo para explorar! 🎯</div>
+      </div>
     </div>
 
     <!-- Module grid — populated by JS based on world -->
@@ -781,6 +966,410 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);
 </div><!-- /device -->
 
 <script>
+
+/* ═══════════════════════════════════════════════════════════════
+   FASE 3 — ELENCO COMPLETO DO TOYLAND UNIVERSE
+   6 personagens com personalidade, papel pedagógico, voz,
+   frases e dinâmicas por mundo — per Bíblia dos Personagens
+═══════════════════════════════════════════════════════════════ */
+const CHARACTERS = {
+
+  solzinho: {
+    id: 'solzinho',
+    name: 'Solzinho',
+    emoji: '☀️',
+    role: 'Guia · Protagonista',
+    module: 'all',          // appears in all modules
+    worlds: ['mini','kids','adventure'],
+    color: '#FF6B00',
+    panelClass: '',         // no special class, default orange
+    // Voice params per world (overrides WORLD_CONFIG when this char speaks)
+    voice: {
+      mini:      {ptPitch:1.58, ptRate:0.80, enPitch:1.46, enRate:0.50},
+      kids:      {ptPitch:1.52, ptRate:0.92, enPitch:1.42, enRate:0.60},
+      adventure: {ptPitch:1.48, ptRate:1.00, enPitch:1.38, enRate:0.72},
+    },
+    // Frases icônicas por situação
+    phrases: {
+      welcome:   ['Oi! Eu sou o Solzinho! ... Bem-vindo ao Toyland Universe!',
+                  'Que legal te ver aqui! ... Vamos começar a aventura?'],
+      correct:   ['Isso mesmo! ... Você acertou! ... Eu sabia que você conseguia!',
+                  'Que incrível! ... Você está mandando bem demais!'],
+      wrong:     ['Quase! ... Vamos tentar de novo? ... Eu acredito em você!',
+                  'Tudo bem errar! ... Até eu erro às vezes. ... Bora!'],
+      collect:   ['Figurinha coletada! ... Você está arrasando!',
+                  'Mais uma no álbum! ... Você é incrível!'],
+      encourage: ['Ei! Faz quanto tempo que você não aparece? ... Tô com saudade!',
+                  'Bora aprender mais! ... Cada palavra é uma nova aventura!'],
+      miniIdle:  ['Ei! Toque em mim!', 'Olá! Vamos brincar?', 'Que fofo que você chegou!'],
+      complete:  ['Você completou a categoria! ... Estou muito orgulhoso!',
+                  'Parabéns! ... Você é um campeão!'],
+    },
+    mini_role:   'Solzinho Baby — guia gentil, movimentos suaves, zero pressão',
+    kids_role:   'Solzinho — companheiro animado, streak, missões diárias',
+    adv_role:    'Solzinho Capitão — coach de inglês, batalhas, Cambridge',
+  },
+
+  teddy: {
+    id: 'teddy',
+    name: 'Teddy',
+    emoji: '🧸',
+    role: 'Mestre das Histórias',
+    module: 'stories',
+    worlds: ['mini','kids','adventure'],
+    color: '#8B4513',
+    panelClass: 'char-teddy',
+    voice: {
+      mini:      {ptPitch:1.35, ptRate:0.75, enPitch:1.28, enRate:0.48},
+      kids:      {ptPitch:1.38, ptRate:0.82, enPitch:1.30, enRate:0.56},
+      adventure: {ptPitch:1.35, ptRate:0.88, enPitch:1.28, enRate:0.65},
+    },
+    phrases: {
+      welcome:   ['Olá, pequeno explorador. ... Tenho uma história esperando por você.',
+                  'Bem-vindo de volta. ... Suas histórias continuam aqui.'],
+      correct:   ['Muito bem. ... Você lembrou da palavra certa na hora certa.',
+                  'Exatamente assim. ... As histórias ficam melhores quando você acerta.'],
+      wrong:     ['Tudo bem. ... As melhores histórias precisam de mais de uma tentativa.',
+                  'Quase. ... Olha de novo, devagar. ... Você consegue.'],
+      stories:   ['Era uma vez... ... Sabe o que isso significa em inglês? ... Once upon a time.',
+                  'Cada história tem palavras especiais. ... Vamos encontrá-las juntos?'],
+      night:     ['Hora de dormir, pequeno explorador. ... Mas amanhã tem mais aventura.',
+                  'Descansa. ... Sua memória vai guardar tudo que aprendeu hoje.'],
+      encourage: ['Sabia que cada palavra que você aprende fica guardada em mim para sempre?',
+                  'Você tem mais histórias dentro de você do que imagina.'],
+      complete:  ['Você completou essa história. ... Foi incrível te ver aprender.',
+                  'Muito bem. ... Essa história agora é sua também.'],
+    },
+    mini_role:   'Conta histórias curtas de 3 cenas com vocabulário A0',
+    kids_role:   'Histórias ramificadas de 6 cenas — criança escolhe o caminho',
+    adv_role:    'Novelas em inglês A2 — criança escreve parte da história',
+  },
+
+  bunny: {
+    id: 'bunny',
+    name: 'Bunny',
+    emoji: '🐰',
+    role: 'Cantora · Energia',
+    module: 'songs',
+    worlds: ['mini','kids','adventure'],
+    color: '#FF69B4',
+    panelClass: 'char-bunny',
+    voice: {
+      mini:      {ptPitch:1.65, ptRate:0.85, enPitch:1.58, enRate:0.52},
+      kids:      {ptPitch:1.62, ptRate:0.98, enPitch:1.55, enRate:0.65},
+      adventure: {ptPitch:1.58, ptRate:1.05, enPitch:1.50, enRate:0.76},
+    },
+    phrases: {
+      welcome:   ['OI OI OI! ... Bunny chegou! ... Tá pronto pra cantar?!',
+                  'Que saudade! ... Vem cantar comigo! ... Bora bora bora!'],
+      correct:   ['ISSO! ... Você cantou certo! ... Eu sabia! ... Né?! Né?!',
+                  'PERFEITO! ... Você tem ritmo! ... Melhor que eu às vezes!'],
+      wrong:     ['Opa! ... Quase! ... A letra é assim ó: canta de novo! ... Vai!',
+                  'Sabe o que acontece quando erra? ... A gente canta mais! ... Boa notícia né?!'],
+      songs:     ['Cantar em inglês é a melhor forma de aprender! ... Confia na Bunny!',
+                  'Sabe o que é incrível? ... Dog vira música e você nunca mais esquece!'],
+      karaoke:   ['Pronta! ... Três, dois, um... ... SING WITH ME!',
+                  'Aí! Deixa eu errar de propósito e você me corrige! ... Bora!'],
+      encourage: ['Ei! Faz tempo que não cantamos juntos! ... Tô com falta do seu ritmo!',
+                  'Sua voz tá esperando! ... Vem cantar!'],
+      complete:  ['YEEES! ... Você terminou! ... Essa música é sua agora! ... Para sempre!',
+                  'Arrasou! ... Agora você sabe cantar em inglês!'],
+    },
+    mini_role:   'Canções de ninar simples 65–70 BPM — exposição auditiva pura',
+    kids_role:   'Pop-reggaeton brasileiro em inglês — karaokê sincronizado PT+EN',
+    adv_role:    'Rap e hip-hop com vocabulário A2 — pontuação de ritmo e freestyle',
+  },
+
+  robo: {
+    id: 'robo',
+    name: 'Robo',
+    emoji: '🤖',
+    role: 'Analisador · Árbitro dos Jogos',
+    module: 'games',
+    worlds: ['kids','adventure'],
+    color: '#4169E1',
+    panelClass: 'char-robo',
+    voice: {
+      kids:      {ptPitch:1.42, ptRate:0.90, enPitch:1.38, enRate:0.62},
+      adventure: {ptPitch:1.38, ptRate:0.96, enPitch:1.35, enRate:0.72},
+    },
+    phrases: {
+      welcome:   ['Análise iniciada. ... Bem-vindo de volta. ... Dados carregados.',
+                  'Sistema ativo. ... Prontos para aprender? ... Calculando nível atual.'],
+      correct:   ['Acerto registrado. ... Análise: excelente. ... Processando... orgulho.',
+                  'Correto. ... Score aumentado. ... Você está melhorando a cada tentativa.'],
+      wrong:     ['Erro registrado. ... Dado importante: errar é aprender 40% mais rápido.',
+                  'Resposta incorreta. ... Recalculando. ... Tente novamente. ... Você consegue.'],
+      data:      ['Análise completa: você acertou 9 de 10. ... Processando... isso é excelente.',
+                  'Dado interessante: você aprende mais rápido quando está sorrindo. ... Então sorri!'],
+      emotions:  ['Descobri uma nova emoção: chama-se orgulho. ... Acho que estou sentindo agora.',
+                  'Emoção detectada: alegria. ... Tentando replicar. ... Assim?'],
+      battle:    ['Sistema de batalha ativado. ... Seu oponente não vai saber o que o acertou.',
+                  'PvP iniciado. ... Analisando pontos fracos do oponente. ... Vamos lá.'],
+      encourage: ['Dados mostram: você está melhorando 15% por sessão. ... Continue.',
+                  'Streak ativo. ... Cada dia conta. ... Os dados não mentem.'],
+      complete:  ['Missão completa. ... Análise final: desempenho excelente. ... Score máximo.',
+                  'Parabéns calculados e enviados. ... Muito bem. ... Rank subindo.'],
+    },
+    mini_role:   'Não aparece no Mundo Mini — introduzido no Kids',
+    kids_role:   'Monitora streak, XP e jogos — feedback objetivo com porcentagens',
+    adv_role:    'Coach Cambridge, árbitro PvP, gráficos de evolução pessoal',
+  },
+
+  dino: {
+    id: 'dino',
+    name: 'Dino',
+    emoji: '🦕',
+    role: 'Aventureiro · Mestre das Ações',
+    module: 'actions',
+    worlds: ['mini','kids','adventure'],
+    color: '#228B22',
+    panelClass: 'char-dino',
+    voice: {
+      mini:      {ptPitch:1.45, ptRate:0.82, enPitch:1.38, enRate:0.50},
+      kids:      {ptPitch:1.48, ptRate:0.95, enPitch:1.40, enRate:0.64},
+      adventure: {ptPitch:1.45, ptRate:1.02, enPitch:1.38, enRate:0.74},
+    },
+    phrases: {
+      welcome:   ['HEEY! ... Dino chegou! ... Pronto pra se mexer?!',
+                  'OI OI! ... Não consigo ficar parado! ... Vamos aprender ações hoje!'],
+      correct:   ['ISSOOO! ... Você acertou! ... JUMP JUMP JUMP de alegria!',
+                  'PERFEITO! ... Você aprendeu! ... Agora faz a ação! ... VAI!'],
+      wrong:     ['QUAAASE! ... Tenta de novo! ... RUN RUN RUN e volta com a resposta certa!',
+                  'Não foi dessa vez! ... Mas vai ser! ... VAMOS!'],
+      actions:   ['JUMP! ... Aprendeu? ... Então pula! ... Agora! ... Vai vai vai!',
+                  'Palavras de ação são para agir! ... RUN! ... DANCE! ... CLAP!'],
+      tpr:       ['Faz junto comigo! ... JUMP! ... um... dois... três... JUMP!',
+                  'Olha o que eu faço e faz igual! ... Que ação é essa em inglês?'],
+      encourage: ['Ei! Tô aqui esperando você pra correr! ... Saudade do seu JUMP!',
+                  'Quantos dias sem se mexer? ... O Dino não aguenta mais!'],
+      complete:  ['YUUUUH! ... Você completou! ... Dança de vitória comigo! ... DANCE DANCE DANCE!',
+                  'Você aprendeu todas as ações! ... Agora você pode fazer tudo em inglês!'],
+    },
+    mini_role:   'TPR puro — executa cada ação físicamente, criança imita',
+    kids_role:   'Sequências de ações + velocidade crescente + mímica inversa',
+    adv_role:    'Ações em contexto de missão narrativa em inglês completo',
+  },
+
+  luna: {
+    id: 'luna',
+    name: 'Luna',
+    emoji: '🌙',
+    role: 'Sábia · Guardiã do Vocabulário',
+    module: 'vocabulary',
+    worlds: ['kids','adventure'],
+    color: '#9B59FF',
+    panelClass: 'char-luna',
+    voice: {
+      kids:      {ptPitch:1.38, ptRate:0.78, enPitch:1.32, enRate:0.55},
+      adventure: {ptPitch:1.35, ptRate:0.84, enPitch:1.30, enRate:0.66},
+    },
+    phrases: {
+      welcome:   ['Bem-vindo. ... Tenho palavras esperando por você.',
+                  'Olá. ... Encontrei algo especial para te mostrar hoje.'],
+      correct:   ['Exato. ... Você entendeu. ... As palavras chegam quando estamos prontos.',
+                  'Muito bem. ... Essa palavra agora é sua.'],
+      wrong:     ['Não foi dessa vez. ... Olha de novo, com calma. ... A palavra está lá.',
+                  'Quase. ... Deixa a palavra entrar. ... Ela sabe o caminho.'],
+      vocab:     ['Serendipity. ... Repete. ... Não precisa entender ainda. ... Apenas sente.',
+                  'Existe uma palavra em inglês feita para você. ... Ainda não encontramos. ... Mas encontraremos.'],
+      night:     ['A noite é a melhor hora para as palavras difíceis. ... Silêncio.',
+                  'Enquanto você dorme, sua memória guarda as palavras. ... Boa noite.'],
+      deep:      ['Nota como essa frase muda quando troco uma palavra? ... Olha de novo.',
+                  'Algumas palavras não são aprendidas. ... São descobertas.'],
+      encourage: ['As palavras mais belas ainda estão por vir. ... Volta logo.',
+                  'Você tem uma palavra especial esperando. ... Só você pode encontrá-la.'],
+      complete:  ['Você encontrou todas as palavras. ... Elas vão ficar com você para sempre.',
+                  'Muito bem. ... O vocabulário cresce junto com você.'],
+    },
+    mini_role:   'Não aparece no Mundo Mini',
+    kids_role:   'Aparece raramente — sussurra dicas quando a criança trava em A1',
+    adv_role:    'Sessões dedicadas de vocabulário A2 e preparação Cambridge',
+  },
+};
+
+/* ══════════════════════════════════════════════
+   COMPANION SYSTEM
+   - Assigns character to each module/context
+   - Switches active companion when user taps a module
+   - Updates companion panel with char emoji + speech
+══════════════════════════════════════════════ */
+const MODULE_TO_CHAR = {
+  words:     'solzinho',
+  songs:     'bunny',
+  stories:   'teddy',
+  games:     'robo',
+  battles:   'robo',
+  cambridge: 'luna',
+  actions:   'dino',
+};
+
+// Context-to-char: what each screen's default companion is
+const SCREEN_TO_CHAR = {
+  home:      'solzinho',
+  worldsel:  'solzinho',
+  map:       'solzinho',
+  words:     'solzinho',
+  gallery:   'solzinho',   // overridden by category
+  reward:    'solzinho',
+  transition:'solzinho',
+};
+
+// Category-to-char in gallery
+const CAT_TO_CHAR = {
+  animals:   'dino',      // Dino loves animals — he IS one
+  colors:    'luna',      // Luna's aesthetic sense
+  actions:   'dino',      // TPR master
+  numbers:   'robo',      // Data-driven Robo
+};
+
+let activeChar = 'solzinho';
+
+// Get character config for current world
+function getChar(id){
+  return CHARACTERS[id] || CHARACTERS.solzinho;
+}
+
+// Get character voice params for current world
+function getCharVoice(charId){
+  const ch = getChar(charId);
+  const worldVoice = ch.voice?.[currentWorld];
+  if(worldVoice) return worldVoice;
+  // Fallback to world config
+  const cfg = WORLD_CONFIG[currentWorld];
+  return {ptPitch:cfg.ptPitch, ptRate:cfg.ptRate, enPitch:cfg.enPitch, enRate:cfg.enRate};
+}
+
+// Activate a companion — updates panel + speaks a phrase
+function activateChar(charId, phraseKey, cb){
+  activeChar = charId;
+  const ch = getChar(charId);
+  const phrases = ch.phrases?.[phraseKey] || ch.phrases?.welcome || ['Olá!'];
+  const phrase = phrases[Math.floor(Math.random()*phrases.length)];
+
+  // Update companion panel
+  const panel = document.getElementById('companion-panel');
+  const emoji  = document.getElementById('cp-emoji');
+  const name   = document.getElementById('cp-name');
+  const text   = document.getElementById('cp-text');
+
+  if(panel){
+    // Remove old char class
+    panel.className = 'companion-panel';
+    if(ch.panelClass) panel.classList.add(ch.panelClass);
+
+    // Animate emoji entrance
+    if(emoji){
+      gsap.fromTo(emoji,
+        {scale:0, rotation:-20},
+        {scale:1, rotation:0, duration:.35, ease:'popIn'}
+      );
+      emoji.textContent = ch.emoji;
+    }
+    if(name) name.textContent = ch.name.toUpperCase();
+    if(text) text.textContent = '';  // will be filled by speech
+  }
+
+  // Update char bar selection
+  document.querySelectorAll('.char-chip').forEach(c=>{
+    c.classList.toggle('active', c.dataset.char===charId);
+  });
+
+  // Speak with character's own voice
+  const v = getCharVoice(charId);
+  speakWithVoice(phrase, v, cb);
+}
+
+// Speak using specific voice params (character-aware)
+function speakWithVoice(text, voiceParams, cb){
+  if(!('speechSynthesis' in window)){if(cb)cb();return;}
+  window.speechSynthesis.cancel();
+  const chunks = chunkPT(text);
+  let i=0;
+  function nx(){
+    if(i>=chunks.length){
+      const sol=getSol(curScr);if(sol)solIdle(sol);
+      if(cb)cb(); return;
+    }
+    const seg=chunks[i].trim();if(!seg){i++;nx();return;}
+    const u=new SpeechSynthesisUtterance(seg);
+    const isEN = /^[A-Z][A-Z\s!?.']+$/.test(seg.trim()); // all caps = EN word
+    u.lang  = isEN ? 'en-US' : 'pt-BR';
+    u.pitch = isEN ? (voiceParams.enPitch||1.42) : (voiceParams.ptPitch||1.52);
+    u.rate  = isEN ? (voiceParams.enRate||0.60)  : (voiceParams.ptRate||0.92);
+    u.volume = 1.0;
+    if(isEN && EN_V) u.voice=EN_V;
+    else if(!isEN && PT_V) u.voice=PT_V;
+
+    const sol=getSol(curScr);if(sol)solTalkLoop(sol);
+    // Update companion text
+    const textEl=document.getElementById('cp-text');
+    if(textEl)textEl.textContent=seg;
+    u.onend=()=>{i++;setTimeout(nx,200);};
+    u.onerror=()=>{i++;nx();};
+    window.speechSynthesis.speak(u);
+  }
+  nx();
+}
+
+// Build character selection bar on map
+function buildCharBar(){
+  const bar = document.getElementById('char-bar');
+  if(!bar) return;
+  bar.innerHTML = '';
+
+  const world = currentWorld;
+  const availableChars = Object.values(CHARACTERS).filter(c=>
+    c.worlds.includes(world)
+  );
+
+  availableChars.forEach(ch=>{
+    const chip = document.createElement('div');
+    chip.className = 'char-chip' + (ch.id===activeChar?' active':'');
+    chip.dataset.char = ch.id;
+
+    // Color per character
+    const colors = {
+      solzinho:'linear-gradient(135deg,#FF6B00,#FFD100)',
+      teddy:   'linear-gradient(135deg,#8B4513,#CD853F)',
+      bunny:   'linear-gradient(135deg,#CC44AA,#FF69B4)',
+      robo:    'linear-gradient(135deg,#1A3A8F,#4169E1)',
+      dino:    'linear-gradient(135deg,#1A6B22,#3CB371)',
+      luna:    'linear-gradient(135deg,#5500AA,#9B59FF)',
+    };
+
+    chip.innerHTML=`
+      <div class="char-chip-icon" style="background:${colors[ch.id]||'rgba(255,255,255,.1)'}">
+        <span style="font-size:24px;">${ch.emoji}</span>
+      </div>
+      <div class="char-chip-name">${ch.name}</div>`;
+
+    chip.onclick = ()=>{
+      press(chip);
+      burst(getMid(), 350, 8);
+      activateChar(ch.id, 'welcome', null);
+      gsap.fromTo(chip, {scale:1},{scale:1.15,duration:.2,ease:'spring',yoyo:true,repeat:1});
+    };
+    bar.appendChild(chip);
+    gsap.from(chip,{opacity:0,y:12,scale:.8,duration:.3,ease:'spring',delay:availableChars.indexOf(ch)*.06});
+  });
+}
+
+// Category companion assignment — Dino for actions/animals, Robo for numbers, Luna for colors
+function assignCatCompanion(cat){
+  const charId = CAT_TO_CHAR[cat] || 'solzinho';
+  // Only assign if char is available in this world
+  const ch = getChar(charId);
+  const finalChar = ch.worlds.includes(currentWorld) ? charId : 'solzinho';
+  activateChar(finalChar, 'welcome', null);
+}
+
+/* Override solSay to use active character voice */
+function solSay(msg, cb){
+  const v = getCharVoice(activeChar);
+  speakWithVoice(msg, v, ()=>{if(cb)setTimeout(cb,220);});
+}
+
 /* ═══════════════════════════════════════════════════════════════
    GSAP SETUP
 ═══════════════════════════════════════════════════════════════ */
@@ -1093,6 +1682,10 @@ function buildModuleGrid(){
     el.parentElement.addEventListener('mouseleave',()=>
       gsap.to(el,{scale:1,rotation:0,duration:.3,ease:'bouncy'}));
   });
+  // Build character companion bar
+  setTimeout(buildCharBar, 100);
+  // Set active companion for map
+  setTimeout(()=>activateChar('solzinho','welcome',null), 300);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1532,13 +2125,10 @@ function openCat(cat){
   // Go to gallery (or refresh if already there)
   if(curScr!=='gallery')go('gallery');
   else{const sol=getSol('gallery');if(sol)solIdle(sol);}
-  // World-specific guide message
-  const msgs={
-    mini:'Toque em cada figurinha para ouvir! ... Que legal!',
-    kids:'Toque em cada palavra! ... Ouça e repita!',
-    adventure:'Toque na palavra! ... Ouça, repita e colecione!',
-  };
-  setTimeout(()=>speakPT(msgs[currentWorld]||d.msg,null),450);
+  // Assign category companion and speak intro
+  setTimeout(()=>{
+    assignCatCompanion(cat);
+  }, 500);
 }
 
 function updateColl(cat){
@@ -1638,6 +2228,11 @@ function collectWord(idx, w, card, bbl, sol, collKey, u_enc, cfg){
   }
   if(bbl)bbl.textContent='Muito bem! 🌟';
   setTimeout(()=>window.speechSynthesis.speak(u_enc),180);
+  // Character-specific encouragement after collection
+  const ch = getChar(activeChar);
+  const encPhrases = ch.phrases?.correct || ch.phrases?.collect || ['Muito bem!'];
+  const encMsg = encPhrases[Math.floor(Math.random()*encPhrases.length)];
+  u_enc = mkU(encMsg,'pt-BR',getCharVoice(activeChar).ptPitch||1.52,getCharVoice(activeChar).ptRate||0.92,PT_V);
   u_enc.onend=()=>{
     if(sol)solIdle(sol);
     if(card)card.classList.remove('playing');
