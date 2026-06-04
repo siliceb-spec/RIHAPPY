@@ -1273,6 +1273,157 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);
 .key-slot.unlocked .key-emoji { filter:none; }
 .key-emoji { font-size:18px; filter:grayscale(1) opacity(.3); transition:filter .4s; }
 
+
+/* ═══ RETENTION SYSTEM ══════════════════════════════════════ */
+
+/* Daily present box */
+.daily-gift {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%) scale(0);
+  z-index: 9997;
+  background: rgba(10,0,30,.97);
+  backdrop-filter: var(--blur);
+  border: 2px solid rgba(255,209,0,.5);
+  border-radius: 28px;
+  padding: 28px 26px 22px;
+  width: 300px;
+  text-align: center;
+  box-shadow: 0 0 60px rgba(255,209,0,.25), 0 20px 60px rgba(0,0,0,.8);
+}
+.dg-emoji { font-size: 56px; margin-bottom: 10px; display: block; }
+.dg-title {
+  font-family: var(--ff); font-size: 22px; color: var(--sun);
+  margin-bottom: 6px; text-shadow: var(--gw-sun);
+}
+.dg-text  { font-size: 14px; color: rgba(255,255,255,.8); font-weight: 700; margin-bottom: 18px; line-height: 1.5; }
+.dg-btn {
+  width: 100%; padding: 14px;
+  background: linear-gradient(135deg,var(--sun),var(--fire));
+  border: none; border-radius: 16px;
+  font-family: var(--ff); font-size: 18px; color: #fff;
+  box-shadow: 0 5px 0 #8B3800;
+  cursor: pointer; will-change: transform;
+}
+.dg-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.65);
+  z-index: 9996; display: none;
+}
+
+/* Streak flame widget — enhanced */
+.streak-flame-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+.streak-days-row {
+  display: flex;
+  gap: 4px;
+  margin-top: 4px;
+}
+.sday {
+  width: 18px; height: 18px;
+  border-radius: 5px;
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.15);
+  font-size: 10px;
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,.4);
+}
+.sday.done {
+  background: rgba(255,107,0,.3);
+  border-color: rgba(255,107,0,.6);
+  color: var(--fire);
+}
+.sday.today {
+  background: rgba(255,209,0,.2);
+  border-color: var(--sun);
+  color: var(--sun);
+  box-shadow: 0 0 8px rgba(255,209,0,.4);
+}
+
+/* Mission card on map */
+.daily-mission-card {
+  margin: 0 16px 10px;
+  border-radius: 18px;
+  padding: 12px 16px;
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+  cursor: pointer;
+  will-change: transform;
+  border: 1.5px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.06);
+  backdrop-filter: var(--blur);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.daily-mission-card::before {
+  content: '';
+  position: absolute; inset: 0; border-radius: inherit;
+  background: linear-gradient(135deg,rgba(255,255,255,.08) 0%,transparent 55%);
+  pointer-events: none;
+}
+.dmc-icon { font-size: 32px; flex-shrink: 0; filter: drop-shadow(0 2px 6px rgba(0,0,0,.4)); }
+.dmc-info { flex: 1; }
+.dmc-label { font-size: 10px; font-weight: 800; color: rgba(255,255,255,.55); letter-spacing: .8px; text-transform: uppercase; }
+.dmc-title { font-family: var(--ff); font-size: 14px; color: #fff; line-height: 1.4; }
+.dmc-xp {
+  font-family: var(--ff); font-size: 13px;
+  color: var(--sun); background: rgba(255,209,0,.12);
+  border: 1px solid rgba(255,209,0,.3);
+  border-radius: 10px; padding: 3px 8px; flex-shrink: 0;
+}
+
+/* Weekly progress strip */
+.week-strip {
+  display: flex;
+  gap: 5px;
+  padding: 6px 18px 0;
+  position: relative;
+  z-index: 10;
+}
+.wday {
+  flex: 1;
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(255,255,255,.1);
+  transition: background .4s, box-shadow .4s;
+}
+.wday.done {
+  background: linear-gradient(90deg,var(--sun),var(--fire));
+  box-shadow: 0 0 8px rgba(255,209,0,.5);
+}
+.wday.today {
+  background: rgba(255,209,0,.3);
+  border: 1px solid rgba(255,209,0,.5);
+  animation: today-pulse .8s ease-in-out infinite alternate;
+}
+@keyframes today-pulse {
+  0%{opacity:.6} 100%{opacity:1}
+}
+
+/* Flash event badge */
+.flash-badge {
+  position: fixed;
+  top: 58px; right: 12px;
+  z-index: 9993;
+  background: linear-gradient(135deg,#CC0000,#FF4400);
+  border-radius: 16px;
+  padding: 6px 12px;
+  font-family: var(--ff); font-size: 12px; color: #fff;
+  box-shadow: 0 0 20px rgba(255,68,0,.6);
+  animation: flash-pulse .4s ease-in-out infinite alternate;
+  cursor: pointer;
+  display: none;
+}
+@keyframes flash-pulse {
+  0%{transform:scale(1)} 100%{transform:scale(1.06)}
+}
+
 </style>
 </head>
 <body>
@@ -1413,6 +1564,12 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);
         </div>
       </div>
     </div>
+
+    <!-- Week progress strip -->
+    <div class="week-strip" id="week-strip"></div>
+
+    <!-- Daily mission card -->
+    <div class="daily-mission-card" id="daily-mission-card"></div>
 
     <!-- Chaves das 6 Personagens — narrativa das 10 temporadas -->
     <div class="keys-bar" id="keys-bar"></div>
@@ -2768,6 +2925,7 @@ function go(name){
     reward:cfg.rewardMsg,
   };
   if(em[name])setTimeout(()=>speakPT(em[name],null),520);
+  if(name==='home') setTimeout(tryShowDailyGift, 3000);
   if(name==='reward')animReward();
   if(name==='map'){updateHUD();buildModuleGrid();}
 }
@@ -4084,6 +4242,228 @@ function initNarrative(){
     if(playerXP >= 300) NARRATIVE.keysUnlocked = ['sol','move'];
     buildKeyBar();
   }, 800);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   RETENTION SYSTEM — Daily / Weekly / Monthly
+   Healthy engagement mechanics approved for children
+═══════════════════════════════════════════════════════════════ */
+
+// ── STATE ──
+const RETENTION = {
+  streakDays:    3,      // current streak (in production: persisted)
+  weekSessions:  [1,1,1,0,0,0,0], // Mon-Sun: 1=done, 0=not done
+  lastGiftDate:  null,
+  monthSessions: 12,
+  totalWords:    47,
+  dailyMissionDone: false,
+};
+
+// Day names for week strip
+const DAY_NAMES = ['S','T','Q','Q','S','S','D'];
+
+// ── DAILY GIFT SYSTEM ──
+const DAILY_GIFTS = [
+  {emoji:'🃏', title:'Figurinha do Dia!',    text:'Uma nova figurinha chegou no seu álbum!',     xp:10},
+  {emoji:'⭐', title:'XP Duplo!',            text:'Todas as palavras de hoje valem o dobro!',    xp:20},
+  {emoji:'🌙', title:'Dica Secreta da Luna', text:'"Serendipity — guarda essa palavra. É linda."',xp:5},
+  {emoji:'🦕', title:'Desafio do Dino!',     text:'Dino propõe: aprenda 3 ações hoje!',          xp:15},
+  {emoji:'🎵', title:'Música Bônus!',        text:'Bunny desbloqueou um karaokê especial!',      xp:12},
+  {emoji:'📖', title:'Capítulo Extra!',      text:'Teddy tem um conto surpresa para você!',      xp:8},
+  {emoji:'🔥', title:'Streak Protegido!',    text:'Seu Escudo de Streak foi renovado esta semana!', xp:0},
+];
+
+function getDailyGift(){
+  const dayOfWeek = new Date().getDay();
+  return DAILY_GIFTS[dayOfWeek % DAILY_GIFTS.length];
+}
+
+function showDailyGift(){
+  const gift = getDailyGift();
+
+  // Create overlay
+  let overlay = document.getElementById('dg-overlay');
+  if(!overlay){
+    overlay = document.createElement('div');
+    overlay.className = 'dg-overlay';
+    overlay.id = 'dg-overlay';
+    document.body.appendChild(overlay);
+  }
+  overlay.style.display = 'block';
+
+  // Create gift box
+  let box = document.getElementById('daily-gift-box');
+  if(!box){
+    box = document.createElement('div');
+    box.className = 'daily-gift';
+    box.id = 'daily-gift-box';
+    document.body.appendChild(box);
+  }
+  box.innerHTML = `
+    <span class="dg-emoji">${gift.emoji}</span>
+    <div class="dg-title">${gift.title}</div>
+    <div class="dg-text">${gift.text}${gift.xp>0?' +'+gift.xp+' XP':''}</div>
+    <button class="dg-btn" onclick="closeDailyGift()">Oba! Obrigado! ☀️</button>`;
+
+  gsap.to(box, {scale:1, duration:.5, ease:'popIn'});
+  gsap.fromTo(box, {y:30},{y:0,duration:.5,ease:'spring'});
+
+  // Burst particles
+  setTimeout(()=>burst(getMid(), window.innerHeight/2, 16), 300);
+  setTimeout(()=>speakPT(gift.title.replace('!','')+'! '+gift.text, null), 500);
+}
+
+function closeDailyGift(){
+  const box = document.getElementById('daily-gift-box');
+  const overlay = document.getElementById('dg-overlay');
+  gsap.to(box, {scale:0, duration:.25, ease:'power2.in'});
+  if(overlay) setTimeout(()=>overlay.style.display='none', 280);
+}
+
+// ── BUILD DAILY MISSION CARD ──
+const DAILY_MISSIONS = [
+  {icon:'🦕', char:'Dino',    title:'Dino perdeu 3 animais! Diga o nome deles em inglês para encontrá-los.', xp:'+30 XP', cat:'animals'},
+  {icon:'🤖', char:'Robo',    title:'Robo detectou palavras perdidas. Acerte 8 de 10 para recuperá-las!',  xp:'+25 XP', cat:'numbers'},
+  {icon:'🐰', char:'Bunny',   title:'Bunny vai cantar para o Rei Grammar — cante junto com ela!',          xp:'+20 XP', cat:'colors'},
+  {icon:'🧸', char:'Teddy',   title:'Teddy precisa de 5 palavras novas para escrever seu próximo capítulo.',xp:'+35 XP', cat:'actions'},
+  {icon:'🌙', char:'Luna',    title:'Luna encontrou uma palavra rarísima. Acerte 3 vezes seguidas!',       xp:'+40 XP', cat:'colors'},
+  {icon:'☀️', char:'Solzinho','title':'O Solzinho desafia você: complete uma categoria inteira hoje!',     xp:'+50 XP', cat:'animals'},
+];
+
+function buildDailyMission(){
+  const container = document.getElementById('daily-mission-card');
+  if(!container) return;
+
+  const dayIdx = new Date().getDay();
+  const mission = DAILY_MISSIONS[dayIdx % DAILY_MISSIONS.length];
+
+  container.innerHTML = `
+    <div class="dmc-icon">${mission.icon}</div>
+    <div class="dmc-info">
+      <div class="dmc-label">Missão do Dia — ${mission.char}</div>
+      <div class="dmc-title">${mission.title}</div>
+    </div>
+    <div class="dmc-xp">${mission.xp}</div>`;
+
+  container.onclick = ()=>{
+    press(container);
+    activateChar(mission.char.toLowerCase()==='solzinho'?'solzinho':
+      mission.char.toLowerCase(), 'welcome', null);
+    speakPT(mission.title, ()=>go('words'));
+  };
+
+  gsap.from(container,{x:-20,opacity:0,duration:.4,ease:'spring',delay:.2});
+}
+
+// ── WEEK STRIP ──
+function buildWeekStrip(){
+  const strip = document.getElementById('week-strip');
+  if(!strip) return;
+  const today = new Date().getDay(); // 0=Sun
+  // Remap to Mon=0
+  const todayIdx = today===0?6:today-1;
+  strip.innerHTML = '';
+  RETENTION.weekSessions.forEach((done,i)=>{
+    const d = document.createElement('div');
+    d.className = 'wday'+(done?' done':'')+(i===todayIdx?' today':'');
+    d.title = DAY_NAMES[i];
+    strip.appendChild(d);
+    if(done) gsap.from(d,{scaleX:0,duration:.3,ease:'power2.out',delay:i*.05});
+  });
+}
+
+// ── STREAK WEEK DOTS ──
+function buildStreakDots(){
+  const wrap = document.querySelector('.streak');
+  if(!wrap) return;
+  // Add day dots under streak number
+  let dotsRow = document.getElementById('streak-dots');
+  if(!dotsRow){
+    dotsRow = document.createElement('div');
+    dotsRow.id = 'streak-dots';
+    dotsRow.className = 'streak-days-row';
+    wrap.appendChild(dotsRow);
+  }
+  dotsRow.innerHTML = '';
+  const today = new Date().getDay()===0?6:new Date().getDay()-1;
+  RETENTION.weekSessions.forEach((done,i)=>{
+    const d = document.createElement('div');
+    d.className = 'sday'+(done?' done':'')+(i===today?' today':'');
+    d.textContent = DAY_NAMES[i];
+    dotsRow.appendChild(d);
+  });
+}
+
+// ── FLASH EVENT SYSTEM ──
+const FLASH_EVENTS = [
+  {emoji:'🃏', title:'CHUVA DE FIGURINHAS!', text:'Por 30 min: toda palavra = 2 figurinhas!', duration:1800},
+  {emoji:'🦕', title:'DINO FUGIU!',          text:'Dino está escondido numa categoria. Encontre-o!', duration:1800},
+  {emoji:'🤖', title:'ROBO CHALLENGE!',      text:'60 segundos, XP triplicado. Vai!', duration:1800},
+  {emoji:'⭐', title:'XP TRIPLO!',           text:'Todas as atividades agora valem 3x!', duration:1800},
+];
+let flashActive = false;
+
+function triggerFlashEvent(){
+  if(flashActive) return;
+  flashActive = true;
+  const ev = FLASH_EVENTS[Math.floor(Math.random()*FLASH_EVENTS.length)];
+  let badge = document.getElementById('flash-badge');
+  if(!badge){
+    badge = document.createElement('div');
+    badge.className = 'flash-badge';
+    badge.id = 'flash-badge';
+    document.body.appendChild(badge);
+  }
+  badge.innerHTML = `⚡ ${ev.emoji} ${ev.title}`;
+  badge.style.display = 'block';
+  badge.onclick = ()=>{
+    showNarrativeToast(ev.emoji, ev.title, ev.text, 5000);
+    burst(getMid(), 200, 15);
+  };
+  gsap.from(badge,{x:60,opacity:0,duration:.4,ease:'spring'});
+  setTimeout(()=>{
+    gsap.to(badge,{x:60,opacity:0,duration:.3,onComplete:()=>{
+      badge.style.display='none'; flashActive=false;
+    }});
+  }, ev.duration * 1000);
+  speakPT(ev.title+'! ... '+ev.text, null);
+  rainConfetti();
+}
+
+// ── MONTHLY MILESTONE CHECK ──
+function checkMonthlyMilestone(){
+  const s = RETENTION.monthSessions;
+  if(s >= 25){
+    setTimeout(()=>showNarrativeToast('🏆','Mês Lendário!',
+      playerName+' completou '+s+' sessões este mês! Você é uma lenda do Toyland! ✨', 6000), 1000);
+  } else if(s >= 20){
+    setTimeout(()=>showNarrativeToast('🥇','Herói do Mês!',
+      s+' sessões este mês! A Névoa recuou muito graças a você!', 5000), 1000);
+  } else if(s >= 10){
+    setTimeout(()=>showNarrativeToast('⭐','Aventureiro do Mês!',
+      'Você está no caminho certo! '+s+' sessões e contando!', 4000), 1000);
+  }
+}
+
+// ── INITIALIZE RETENTION ON MAP ──
+function initRetentionUI(){
+  buildDailyMission();
+  buildWeekStrip();
+  buildStreakDots();
+  checkMonthlyMilestone();
+  // Random flash event (demo: 20% chance on map open)
+  if(Math.random() < 0.20 && !flashActive){
+    setTimeout(triggerFlashEvent, 4000);
+  }
+}
+
+// Show daily gift when entering home for first time today
+let giftShownToday = false;
+function tryShowDailyGift(){
+  if(giftShownToday) return;
+  giftShownToday = true;
+  setTimeout(showDailyGift, 2200);
 }
 
 </script>
