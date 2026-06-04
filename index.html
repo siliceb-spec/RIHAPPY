@@ -1190,6 +1190,89 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);
   will-change: transform;
 }
 
+
+/* ═══ NARRATIVA — NÉVOA DO SILÊNCIO ══════════════════════ */
+
+/* Névoa overlay — aparece no mapa quando streak cai */
+.mist-overlay {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 16px;
+  background: radial-gradient(ellipse,
+    rgba(80,80,100,.55) 0%,
+    rgba(40,40,60,.35) 50%,
+    transparent 80%);
+  animation: mist-drift 4s ease-in-out infinite;
+  z-index: 5;
+  transition: opacity 1.5s ease;
+}
+@keyframes mist-drift {
+  0%,100%{ transform:translate(0,0) scale(1); opacity:.6; }
+  33%    { transform:translate(8px,-6px) scale(1.08); opacity:.85; }
+  66%    { transform:translate(-6px,8px) scale(.95); opacity:.7; }
+}
+/* Mist particles */
+.mist-particle {
+  position:absolute; border-radius:50%;
+  background:rgba(120,120,140,.3);
+  animation:mist-float linear infinite;
+  pointer-events:none;
+}
+@keyframes mist-float{
+  0%  { transform:translateY(0) translateX(0); opacity:0; }
+  20% { opacity:.6; }
+  80% { opacity:.4; }
+  100%{ transform:translateY(-40px) translateX(15px); opacity:0; }
+}
+
+/* Streak urgency indicator */
+.streak-danger {
+  border-color:rgba(100,100,120,.6)!important;
+  background:linear-gradient(135deg,rgba(80,80,100,.3),rgba(40,40,60,.2))!important;
+  animation:danger-pulse 1.5s ease-in-out infinite!important;
+}
+@keyframes danger-pulse{
+  0%,100%{box-shadow:0 0 10px rgba(100,100,150,.3)}
+  50%{box-shadow:0 0 24px rgba(100,100,150,.6)}
+}
+
+/* Narrative toast notification */
+.narrative-toast {
+  position:fixed; bottom:80px; left:50%; transform:translateX(-50%) translateY(80px);
+  z-index:9995; min-width:300px; max-width:360px;
+  background:rgba(10,0,30,.95); backdrop-filter:var(--blur);
+  border:1.5px solid rgba(155,89,255,.4); border-radius:18px;
+  padding:14px 18px; box-shadow:0 8px 32px rgba(0,0,0,.6);
+  opacity:0; transition:opacity .4s, transform .4s;
+}
+.narrative-toast.show {
+  opacity:1; transform:translateX(-50%) translateY(0);
+}
+.nt-icon { font-size:28px; margin-bottom:6px; }
+.nt-title {
+  font-family:var(--ff); font-size:14px; color:var(--sun); margin-bottom:4px;
+}
+.nt-text { font-size:13px; color:rgba(255,255,255,.8); font-weight:700; line-height:1.5; }
+
+/* Chaves progress bar */
+.keys-bar {
+  display:flex; gap:6px; padding:8px 18px;
+  position:relative; z-index:10;
+}
+.key-slot {
+  flex:1; height:32px; border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(255,255,255,.07); border:1.5px solid rgba(255,255,255,.1);
+  font-size:16px; transition:all .4s;
+}
+.key-slot.unlocked {
+  background:rgba(255,209,0,.12);
+  border-color:rgba(255,209,0,.45);
+  box-shadow:0 0 12px rgba(255,209,0,.3);
+}
+.key-slot.unlocked .key-emoji { filter:none; }
+.key-emoji { font-size:18px; filter:grayscale(1) opacity(.3); transition:filter .4s; }
+
 </style>
 </head>
 <body>
@@ -1331,6 +1414,8 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);
       </div>
     </div>
 
+    <!-- Chaves das 6 Personagens — narrativa das 10 temporadas -->
+    <div class="keys-bar" id="keys-bar"></div>
     <div class="map-sol-row">
       <div class="sol-host" style="width:90px;height:90px;">
         <div class="sol-aura" style="inset:-13px;"></div>
@@ -3240,6 +3325,8 @@ window.addEventListener('load',()=>{
     else setTimeout(tryBoot,220);
   }
   setTimeout(tryBoot,1000);
+  // Initialize narrative system
+  setTimeout(initNarrative,1200);
   // Auto-greet with music on home screen
   setTimeout(autoGreetHome, 1200);
 });
@@ -3800,6 +3887,204 @@ function enterRegion(){
 
 // Patch go() to init map when entering worldmap
 const _goPreMap = go;
+
+
+/* ═══════════════════════════════════════════════════════════════
+   NARRATIVA PRINCIPAL — NÉVOA DO SILÊNCIO
+   Connects real user behavior to in-world narrative:
+   — streak decay → Névoa advances visually
+   — returning after absence → Luna "rescues" the child
+   — completing categories → Chaves unlocked
+   — year milestone → Diário do Toyland generated
+═══════════════════════════════════════════════════════════════ */
+
+// ── NARRATIVE STATE ──
+const NARRATIVE = {
+  year:         1,        // current narrative year (increments every 365 days)
+  keysUnlocked: [],       // which of 6 chaves are collected
+  mistLevel:    0,        // 0-10: névoa coverage (0=clear, 10=critical)
+  daysSinceLogin: 0,      // calculated on load
+  diaryEvents:  [],       // log of narrative moments
+};
+
+const CHAVES = [
+  {id:'sol',   char:'solzinho', emoji:'☀️', name:'Chave do Sol',      trigger:'words_complete'},
+  {id:'mem',   char:'teddy',    emoji:'📖', name:'Chave da Memória',  trigger:'stories_complete'},
+  {id:'rtm',   char:'bunny',    emoji:'🎵', name:'Chave do Ritmo',    trigger:'songs_complete'},
+  {id:'data',  char:'robo',     emoji:'🤖', name:'Chave dos Dados',   trigger:'games_complete'},
+  {id:'move',  char:'dino',     emoji:'🦕', name:'Chave do Movimento',trigger:'streak_7'},
+  {id:'myst',  char:'luna',     emoji:'🔮', name:'Chave do Mistério', trigger:'rank_b'},
+];
+
+/* ── Mist level management ── */
+function updateMistLevel(){
+  // Mist increases with inactivity, decreases with practice
+  const days = NARRATIVE.daysSinceLogin;
+  if(days >= 7)       NARRATIVE.mistLevel = Math.min(10, NARRATIVE.mistLevel + 3);
+  else if(days >= 3)  NARRATIVE.mistLevel = Math.min(5,  NARRATIVE.mistLevel + 1);
+  else                NARRATIVE.mistLevel = Math.max(0,  NARRATIVE.mistLevel - 2);
+  renderMist();
+}
+
+function renderMist(){
+  const level = NARRATIVE.mistLevel;
+  // Apply mist to locked regions on world map
+  document.querySelectorAll('.map-region.mr-castle, .map-region.mr-secret').forEach(el=>{
+    if(level >= 3){
+      el.style.filter = `brightness(${1 - level*0.04}) saturate(${1 - level*0.06})`;
+    } else {
+      el.style.filter = '';
+    }
+  });
+  // Streak badge turns blue-grey if danger
+  const streakEl = document.querySelector('.streak');
+  if(streakEl){
+    if(level >= 5) streakEl.classList.add('streak-danger');
+    else           streakEl.classList.remove('streak-danger');
+  }
+}
+
+/* ── Chaves progress bar ── */
+function buildKeyBar(){
+  const bar = document.getElementById('keys-bar');
+  if(!bar) return;
+  bar.innerHTML = '';
+  CHAVES.forEach(k=>{
+    const slot = document.createElement('div');
+    slot.className = 'key-slot' + (NARRATIVE.keysUnlocked.includes(k.id)?' unlocked':'');
+    slot.title = k.name;
+    slot.innerHTML = `<span class="key-emoji">${k.emoji}</span>`;
+    bar.appendChild(slot);
+    if(NARRATIVE.keysUnlocked.includes(k.id)){
+      gsap.fromTo(slot,{scale:0},{scale:1,duration:.3,ease:'popIn'});
+    }
+  });
+}
+
+function unlockChave(id){
+  if(NARRATIVE.keysUnlocked.includes(id)) return;
+  NARRATIVE.keysUnlocked.push(id);
+  const k = CHAVES.find(c=>c.id===id);
+  if(!k) return;
+  buildKeyBar();
+  showNarrativeToast(k.emoji, k.name+' Desbloqueada!',
+    'Você provou seu domínio. O Toyland ficou mais forte! ✨');
+  burst(getMid(), 300, 20);
+  rainConfetti();
+  // If all 6 keys — GRAND FINALE
+  if(NARRATIVE.keysUnlocked.length === 6) triggerGrandFinale();
+}
+
+/* ── Narrative toast system ── */
+let toastTimer = null;
+function showNarrativeToast(icon, title, text, duration=4000){
+  let toast = document.getElementById('narrative-toast');
+  if(!toast){
+    toast = document.createElement('div');
+    toast.className = 'narrative-toast';
+    toast.id = 'narrative-toast';
+    toast.innerHTML = `
+      <div class="nt-icon" id="nt-icon"></div>
+      <div class="nt-title" id="nt-title"></div>
+      <div class="nt-text" id="nt-text"></div>`;
+    document.body.appendChild(toast);
+  }
+  document.getElementById('nt-icon').textContent  = icon;
+  document.getElementById('nt-title').textContent = title;
+  document.getElementById('nt-text').textContent  = text;
+  clearTimeout(toastTimer);
+  toast.classList.add('show');
+  toastTimer = setTimeout(()=>toast.classList.remove('show'), duration);
+}
+
+/* ── Returning player narrative ── */
+function checkReturnNarrative(){
+  const days = NARRATIVE.daysSinceLogin;
+  if(days >= 30){
+    setTimeout(()=>{
+      showNarrativeToast('🌙','Luna foi te buscar na Névoa...',
+        playerName+', o Toyland estava com saudade. A Névoa avançou. Mas você voltou. ✨', 6000);
+      setTimeout(()=>speakPT('Bem-vindo de volta! ... Estávamos com tanta saudade!',null), 1000);
+    }, 2000);
+  } else if(days >= 7){
+    setTimeout(()=>{
+      showNarrativeToast('☀️','O Solzinho estava preocupado...',
+        'A Névoa avançou enquanto você estava fora. Mas cada palavra sua a empurra de volta!', 5000);
+    }, 2000);
+  } else if(days === 0){
+    // Same day return — celebrate streak
+    setTimeout(()=>{
+      showNarrativeToast('🔥','Streak mantido!',
+        'Você voltou hoje! O Toyland brilha mais forte! +streak protegido.', 3000);
+    }, 3000);
+  }
+}
+
+/* ── Category complete → unlock Chave do Sol ── */
+const _origCollectWord = collectWord;
+function collectWord(idx, w, card, bbl, sol, collKey, u_enc, cfg){
+  _origCollectWord(idx, w, card, bbl, sol, collKey, u_enc, cfg);
+  // Check if first category ever completed
+  const totalCollected = Object.values(COLL).reduce((sum,s)=>sum+(s?.size||0),0);
+  if(totalCollected >= 6 && !NARRATIVE.keysUnlocked.includes('sol')){
+    setTimeout(()=>unlockChave('sol'), 1500);
+  }
+  if(totalCollected >= 20 && !NARRATIVE.keysUnlocked.includes('move')){
+    setTimeout(()=>unlockChave('move'), 1500);
+  }
+  // Narrative diary entry
+  NARRATIVE.diaryEvents.push({
+    type:'word_learned', word:w.en, world:currentWorld,
+    timestamp:Date.now()
+  });
+}
+
+/* ── Grand Finale — all 6 keys ── */
+function triggerGrandFinale(){
+  setTimeout(()=>{
+    showNarrativeToast('✨','AS 6 CHAVES REUNIDAS!',
+      'O Escudo Completo contra a Névoa foi formado! '+playerName+', você salvou o Toyland!', 8000);
+    rainConfetti();
+    burst(getMid(), 400, 40);
+    setTimeout(()=>{
+      speakPT('Parabéns! ... As seis chaves se uniram! ... Você salvou o Toyland!', null);
+    }, 500);
+  }, 500);
+}
+
+/* ── Narrative moments in solTap ── */
+const _origSolTap = solTap;
+function solTap(scr){
+  _origSolTap(scr);
+  // Occasional narrative hint (1 in 5 taps)
+  if(Math.random() < 0.2){
+    const hints = [
+      {icon:'🌫️', title:'A Névoa...', text:'Você sente? Ela recua quando você aprende. Continue!'},
+      {icon:'🔮', title:'Luna sussurra...', text:'Existe uma palavra feita especialmente para você. Ela espera.'},
+      {icon:'🧸', title:'Teddy lembra...', text:'A criança anterior também tocou aqui. Você está na mesma jornada.'},
+      {icon:'⭐', title:'Missão ativa...', text:'Cada palavra é uma Luz. Você já tem '+
+        Object.values(COLL).reduce((s,c)=>s+(c?.size||0),0)+' luzes acesas!'},
+    ];
+    const h = hints[Math.floor(Math.random()*hints.length)];
+    setTimeout(()=>showNarrativeToast(h.icon, h.title, h.text, 3500), 1200);
+  }
+}
+
+/* ── Initialize narrative on boot ── */
+function initNarrative(){
+  // Simulate days since login (in production: read from localStorage)
+  NARRATIVE.daysSinceLogin = 0; // fresh start
+  updateMistLevel();
+  checkReturnNarrative();
+  // Build key bar after a delay
+  setTimeout(buildKeyBar, 500);
+  // Seed a few keys for demo
+  setTimeout(()=>{
+    if(playerXP >= 100) NARRATIVE.keysUnlocked = ['sol'];
+    if(playerXP >= 300) NARRATIVE.keysUnlocked = ['sol','move'];
+    buildKeyBar();
+  }, 800);
+}
 
 </script>
 </body>
