@@ -512,7 +512,49 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);
 .streak-danger{border-color:rgba(100,100,120,.6)!important;background:linear-gradient(135deg,rgba(80,80,100,.3),rgba(40,40,60,.2))!important;animation:danger-pulse 1.5s ease-in-out infinite!important;}
 @keyframes danger-pulse{0%,100%{box-shadow:0 0 10px rgba(100,100,150,.3)}50%{box-shadow:0 0 24px rgba(100,100,150,.6)}}
 
-</style>
+
+/* ═══ FULL PET SYSTEM v9 ═══════════════════════════════════ */
+.pet-hud{position:fixed;bottom:88px;right:14px;z-index:9980;width:58px;height:58px;
+  border-radius:50%;border:2.5px solid rgba(255,255,255,.2);box-shadow:0 0 18px rgba(0,0,0,.5);
+  cursor:pointer;will-change:transform;background:rgba(10,0,30,.8);backdrop-filter:var(--blur);
+  display:none;align-items:center;justify-content:center;font-size:32px;
+  animation:pet-float 2.8s ease-in-out infinite;}
+@keyframes pet-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.pet-hud.bond10{border-color:var(--c-sun);box-shadow:0 0 24px rgba(255,209,0,.6),0 0 50px rgba(255,107,0,.3);}
+.pet-hud-bubble{position:fixed;bottom:154px;right:14px;z-index:9981;max-width:200px;
+  background:#fff;border-radius:14px 14px 14px 4px;padding:8px 12px;
+  font-family:var(--ff);font-size:12px;color:#0A001E;box-shadow:0 4px 16px rgba(0,0,0,.25);
+  border:2px solid rgba(255,209,0,.3);display:none;pointer-events:none;}
+.pet-hud-bubble::after{content:'';position:absolute;bottom:-10px;right:18px;
+  border:10px solid transparent;border-top-color:#fff;border-bottom:none;}
+.bond-bar{display:flex;gap:3px;margin-top:4px;}
+.bond-pip{height:4px;flex:1;border-radius:2px;background:rgba(255,255,255,.12);transition:background .4s;}
+.bond-pip.filled{background:linear-gradient(90deg,var(--c-sun),var(--c-fire));}
+.pet-detail-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9990;
+  display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;}
+.pet-detail-overlay.show{opacity:1;pointer-events:all;}
+.pet-detail-panel{width:390px;background:rgba(8,0,24,.98);backdrop-filter:var(--blur);
+  border-radius:28px 28px 0 0;border-top:1.5px solid rgba(255,255,255,.12);
+  padding:20px 22px 36px;transform:translateY(100%);
+  transition:transform .38s cubic-bezier(.34,1.56,.64,1);}
+.pet-detail-overlay.show .pet-detail-panel{transform:translateY(0);}
+.pd-handle{width:40px;height:4px;background:rgba(255,255,255,.2);border-radius:2px;margin:0 auto 16px;}
+.pd-header{display:flex;align-items:center;gap:16px;margin-bottom:16px;}
+.pd-emoji{font-size:64px;filter:drop-shadow(0 4px 12px rgba(0,0,0,.5));}
+.pd-main{flex:1;}
+.pd-name{font-family:var(--ff);font-size:24px;color:#fff;margin-bottom:3px;}
+.pd-species{font-size:13px;color:rgba(255,255,255,.6);font-weight:700;margin-bottom:6px;}
+.pd-rarity-badge{display:inline-block;padding:3px 10px;border-radius:10px;font-family:var(--ff);font-size:11px;letter-spacing:.5px;}
+.pd-stage-row{display:flex;gap:8px;margin-bottom:14px;}
+.stage-dot{flex:1;padding:8px;border-radius:12px;text-align:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);font-size:20px;}
+.stage-dot.current{border-color:var(--c-sun);background:rgba(255,209,0,.1);}
+.pd-pedagogy{font-size:13px;color:rgba(255,255,255,.7);font-weight:700;margin-bottom:14px;line-height:1.5;}
+.pd-actions{display:flex;gap:8px;}
+.pd-act-btn{flex:1;padding:12px;border-radius:14px;border:none;cursor:pointer;font-family:var(--ff);font-size:14px;will-change:transform;}
+.pd-feed{background:linear-gradient(135deg,#00DD88,#00AA66);color:#fff;box-shadow:0 5px 0 #006640;}
+.pd-play{background:linear-gradient(135deg,#FF6B00,#FFD100);color:#fff;box-shadow:0 5px 0 #8B3800;}
+.pd-equip-btn{background:linear-gradient(135deg,#9B59FF,#5500CC);color:#fff;box-shadow:0 5px 0 #330077;}
+
 </style>
 </head>
 <body>
@@ -575,6 +617,12 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);
           src="data:image/png;base64,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" alt="Solzinho" onclick="solTap('worldsel')">
         <div class="sol-bubble" id="bbl-worldsel"></div>
       </div>
+    </div>
+
+    <!-- Back button -->
+    <div style="position:relative;z-index:10;width:100%;display:flex;align-items:center;padding:0 0 10px;">
+      <button class="back-c" onclick="press(this);go('home')"
+        style="background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.2);">←</button>
     </div>
 
     <div class="talk-bubble">
@@ -1880,21 +1928,29 @@ function press(el){
 ═══════════════════════════════════════════════════════════════ */
 let selectedWorldId = 'kids';
 
+let worldSelectTimer = null;
 function selectWorld(worldId, btn){
   selectedWorldId = worldId;
   document.querySelectorAll('.wcard-sel').forEach(b=>b.classList.remove('sel'));
   btn.classList.add('sel');
-  gsap.fromTo(btn,{scale:1},{scale:1.05,duration:.2,ease:'spring',yoyo:true,repeat:1});
+  gsap.fromTo(btn,{scale:1},{scale:1.06,duration:.18,ease:'spring',yoyo:true,repeat:1});
   burst(getMid(),400,10);
   const cfg=WORLD_CONFIG[worldId];
   const msgs={
-    mini:'Mundo Mini! Perfeito para descobrirmos juntos!',
-    kids:'Mundo Kids! Vamos viver grandes aventuras!',
-    adventure:'Mundo Adventure! Inglês como superpoder!',
+    mini:      'Mundo Mini! Perfeito para descobrirmos juntos! ... Vamos entrar?',
+    kids:      'Mundo Kids! Vamos viver grandes aventuras! ... Vamos entrar?',
+    adventure: 'Mundo Adventure! Inglês como superpoder! ... Vamos entrar?',
   };
-  speakPT(msgs[worldId],null);
-  document.getElementById('worldsel-bbl').textContent=
-    cfg.label+' · '+cfg.ageRange+' · '+cfg.level;
+  const bbl=document.getElementById('worldsel-bbl');
+  if(bbl) bbl.textContent=cfg.label+' · '+cfg.ageRange+' · '+cfg.level;
+  // Speak then auto-confirm after speech ends
+  clearTimeout(worldSelectTimer);
+  speakPT(msgs[worldId], ()=>{
+    worldSelectTimer = setTimeout(confirmWorld, 800);
+  });
+  // Also update go-btn text
+  const goBtn=document.querySelector('.go-btn');
+  if(goBtn) goBtn.textContent='☀️ Entrar no '+cfg.label+'! 🚀';
 }
 
 function confirmWorld(){
@@ -2012,9 +2068,8 @@ function buildModuleGrid(){
 ═══════════════════════════════════════════════════════════════ */
 function go(name){
   if(name===curScr)return;
-  // Fade out background music when leaving home
+  // Music
   if(curScr==='home' && name!=='home') stopBgMusic();
-  // Restart music if coming back to home
   if(name==='home'){ try{ createBgMusic(); }catch(e){} }
   const outEl=document.getElementById('s-'+curScr);
   const inEl =document.getElementById('s-'+name);
@@ -2032,19 +2087,46 @@ function go(name){
     }});
   curScr=name;window.scrollTo(0,0);
 
-  // Entry voice per screen + world
+  // ── Screen-specific handlers ──
   const cfg=WORLD_CONFIG[currentWorld];
+
+  // Entry voice
   const em={
-    home:MSG.home.boot,
-    worldsel:'Qual mundo é o seu? ... Toque na sua opção!',
-    map:'Bem-vindo ao mapa! ... Escolha um módulo!',
-    words:'Escolha uma categoria e toque nela!',
-    reward:cfg.rewardMsg,
+    home:     MSG.home.boot,
+    worldsel: 'Qual mundo é o seu? ... Toque na sua opção!',
+    map:      'Bem-vindo ao mapa! ... Escolha um módulo!',
+    words:    'Escolha uma categoria e toque nela!',
+    reward:   cfg.rewardMsg,
   };
-  if(em[name])setTimeout(()=>speakPT(em[name],null),520);
-  if(name==='home') setTimeout(tryShowDailyGift, 3000);
-  if(name==='reward')animReward();
-  if(name==='map'){updateHUD();buildModuleGrid();}
+  if(em[name]) setTimeout(()=>speakPT(em[name],null), 520);
+
+  // Screen-specific inits
+  if(name==='home')        setTimeout(tryShowDailyGift, 3000);
+  if(name==='reward')      animReward();
+  if(name==='map'){
+    updateHUD();
+    buildModuleGrid();
+    setTimeout(()=>{
+      if(typeof buildCharBar!=='undefined')    buildCharBar();
+      if(typeof buildKeyBar!=='undefined')     buildKeyBar();
+      if(typeof updateMistLevel!=='undefined') updateMistLevel();
+      if(typeof initRetentionUI!=='undefined') initRetentionUI();
+      if(typeof buildCurrencyBar!=='undefined')buildCurrencyBar();
+    }, 400);
+  }
+  if(name==='friends')     setTimeout(openFriends, 400);
+  if(name==='worldmap')    setTimeout(initWorldMap, 300);
+  if(name==='album')       setTimeout(buildAlbumScreen, 300);
+
+  // Pet HUD visibility
+  if(['home','worldsel'].includes(name)){
+    const ph=document.getElementById('pet-hud');
+    if(ph) ph.style.display='none';
+  } else {
+    setTimeout(()=>{
+      if(typeof initPetHud!=='undefined'){ initPetHud(); updatePetHud(); }
+    }, 400);
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -2218,8 +2300,18 @@ function _spk(chunks,lang,pitch,rate,vol,v,cb){
   if(!('speechSynthesis' in window)){if(cb)cb();return;}
   window.speechSynthesis.cancel();
   let i=0;
-  
-
+  function nx(){
+    if(i>=chunks.length){const sol=getSol(curScr);if(sol)solIdle(sol);if(cb)cb();return;}
+    const chunk=chunks[i].trim();if(!chunk){i++;nx();return;}
+    const u=new SpeechSynthesisUtterance(chunk);
+    u.lang=lang;u.pitch=pitch;u.rate=rate;u.volume=vol;if(v)u.voice=v;
+    const sol=getSol(curScr);if(sol)solTalkLoop(sol);
+    const bblMap={worldsel:'worldsel-bbl',map:'map-bbl-txt',words:'words-bbl-txt',gallery:'gal-bbl-txt'};
+    const bblId=bblMap[curScr];if(bblId){const be=document.getElementById(bblId);if(be)be.textContent=chunk;}
+    u.onend=()=>{i++;setTimeout(nx,lang==='pt-BR'?180:320);};
+    u.onerror=()=>{i++;nx();};
+    window.speechSynthesis.speak(u);
+  }
   nx();
 }
 function chunkPT(t){return t.split(' ... ').flatMap(p=>p.split(',').map(s=>s.trim()).filter(Boolean));}
@@ -2591,6 +2683,7 @@ window.addEventListener('load',()=>{
   setTimeout(tryBoot,1000);
   // Initialize narrative system
   setTimeout(initNarrative,1200);
+  setTimeout(initPetSystem,1500);
   // Auto-greet with music on home screen
   setTimeout(autoGreetHome, 1200);
 });
@@ -2781,8 +2874,19 @@ function speakIntro(ch, onDone){
   const bubbleEN = document.getElementById('cib-en');
 
   let i=0;
-  
-
+  function nx(){
+    if(i>=segments.length){if(onDone)onDone();return;}
+    const seg=segments[i++];
+    if(seg.pause){setTimeout(nx,seg.pause);return;}
+    const u=new SpeechSynthesisUtterance(seg.t);
+    u.lang=seg.lang;u.pitch=seg.pitch;u.rate=seg.rate;u.volume=1.0;
+    if(seg.lang==='pt-BR'&&PT_V)u.voice=PT_V;
+    if(seg.lang==='en-US'&&EN_V)u.voice=EN_V;
+    if(seg.lang==='pt-BR'&&bubblePT)bubblePT.textContent='Olá! Meu nome é '+ch.ptName+'!';
+    if(seg.lang==='en-US'&&bubbleEN)bubbleEN.textContent='Hello! My name is '+ch.enName+'!';
+    u.onend=()=>setTimeout(nx,180);u.onerror=()=>nx();
+    window.speechSynthesis.speak(u);
+  }
   nx();
 }
 
@@ -2874,8 +2978,17 @@ function speakFinale(){
       {t:'Together!',            lang:'en-US', pitch:1.55, rate:0.92},
     ];
     let i=0;
-    
-
+    function nx(){
+      if(i>=segs.length)return;
+      const s=segs[i++];
+      if(s.pause){setTimeout(nx,s.pause);return;}
+      const u=new SpeechSynthesisUtterance(s.t);
+      u.lang=s.lang;u.pitch=s.pitch;u.rate=s.rate;u.volume=1.0;
+      if(s.lang==='pt-BR'&&PT_V)u.voice=PT_V;
+      if(s.lang==='en-US'&&EN_V)u.voice=EN_V;
+      u.onend=()=>setTimeout(nx,220);u.onerror=()=>nx();
+      window.speechSynthesis.speak(u);
+    }
     nx();
   },600);
 }
@@ -3563,11 +3676,186 @@ const COLLECTIBLES = {
     {id:'s_nevoa',  emoji:'🌫️', name:'Névoa',      rarity:'mythic',   owned:false, source:'6_chaves'},
   ],
   pets: [
-    {id:'pipoca',  emoji:'🐰', name:'Pipoca',   species:'Coelho Branco',  rarity:'common',   stage:1, progress:65, equipped:true },
-    {id:'brilho',  emoji:'🐱', name:'Brilho',   species:'Gatinho Solar',  rarity:'uncommon', stage:0, progress:20, equipped:false},
-    {id:'nemo',    emoji:'🐟', name:'Nemo',     species:'Peixe Lunar',    rarity:'rare',     stage:0, progress:0,  equipped:false},
-    {id:'rex',     emoji:'🐉', name:'Rex',      species:'Dragãozinho',    rarity:'epic',     stage:0, progress:0,  equipped:false},
-    {id:'aurora',  emoji:'🦉', name:'Aurora',   species:'Coruja da Luna', rarity:'epic',     stage:0, progress:0,  equipped:false},
+    {id:'pipoca0',emoji:'🐰',name:'Pipoca',species:'Coelho Branco',rarity:'common',stage:1,progress:65,equipped:true,bond:1,pedagogy:'Vocabulário básico',obtain:'Pet inicial gratuito'},
+    {id:'pintinho1',emoji:'🐤',name:'Pintinho',species:'Pintinho Dourado',rarity:'common',stage:1,progress:65,equipped:false,bond:1,pedagogy:'Cores (yellow)',obtain:'Fazenda Nível 1'},
+    {id:'nadadinha2',emoji:'🐟',name:'Nadadinha',species:'Peixinho Azul',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Ações (swim)',obtain:'5 dias de uso'},
+    {id:'bolinha3',emoji:'🐛',name:'Bolinha',species:'Lagartinha Verde',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Natureza A0',obtain:'Floresta Nível 1'},
+    {id:'zumbinha4',emoji:'🐝',name:'Zumbinha',species:'Abelhinha',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Sons animais',obtain:'Jardim do Toyland'},
+    {id:'devagar5',emoji:'🐢',name:'Devagar',species:'Tartaruga',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Números (contagem)',obtain:'Missão dia 3'},
+    {id:'queijinho6',emoji:'🐭',name:'Queijinho',species:'Camundongo',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Alimentos (cheese)',obtain:'Mercado Nível 1'},
+    {id:'bolsolinhos7',emoji:'🐹',name:'Bolsolinhos',species:'Hamster',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Ações (run,spin)',obtain:'Presente Dia 7'},
+    {id:'espinhos8',emoji:'🦔',name:'Espinhos',species:'Ouriço',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Adjetivos (spiky,round)',obtain:'Floresta'},
+    {id:'pulinho9',emoji:'🐸',name:'Pulinho',species:'Sapo Verde',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Ações (jump,hop)',obtain:'Rio das Ações'},
+    {id:'rastrinho10',emoji:'🦎',name:'Rastrinho',species:'Lagartixa',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Cores (green,brown)',obtain:'Fazenda'},
+    {id:'casinha11',emoji:'🐌',name:'Casinha',species:'Caracol',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Adjetivos (slow,small)',obtain:'Jardim'},
+    {id:'pintinhas12',emoji:'🐞',name:'Pintinhas',species:'Joaninha',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Números (spots)',obtain:'10 palavras'},
+    {id:'asazul13',emoji:'🦋',name:'Asazul',species:'Borboleta',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Cores e transformação',obtain:'Floresta'},
+    {id:'algodo14',emoji:'🐇',name:'Algodão',species:'Coelho Cinza',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Cores (gray,white)',obtain:'Semana 2'},
+    {id:'papagaio15',emoji:'🦜',name:'Papagaio',species:'Papagaio Verde',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Repetição fonética',obtain:'Floresta'},
+    {id:'neon16',emoji:'🐠',name:'Neon',species:'Peixe Tropical',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Cores (orange,blue)',obtain:'Ilha'},
+    {id:'dentinhos17',emoji:'🐊',name:'Dentinhos',species:'Crocodilaço',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Partes do corpo',obtain:'Rio'},
+    {id:'dino_jr18',emoji:'🦕',name:'Dino Jr',species:'Mini Dino',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Ações TPR básico',obtain:'Fazenda do Dino'},
+    {id:'cricri19',emoji:'🦗',name:'Cri-Cri',species:'Grilo Musical',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Sons e música',obtain:'Celeiro'},
+    {id:'cocoric20',emoji:'🐓',name:'Cocoricó',species:'Galinha',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Rotina (morning)',obtain:'Fazenda'},
+    {id:'quack21',emoji:'🦆',name:'Quack',species:'Pato Amarelo',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Cores e sons',obtain:'Lagoa'},
+    {id:'la22',emoji:'🐑',name:'La',species:'Ovelha',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Texturas (soft,fluffy)',obtain:'Fazenda'},
+    {id:'miazinha23',emoji:'🐈',name:'Miazinha',species:'Gatinha Listrada',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Adjetivos (striped)',obtain:'Cidade'},
+    {id:'toto24',emoji:'🐕',name:'Toto',species:'Cachorrinho',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário básico',obtain:'Casa'},
+    {id:'chifrinhos25',emoji:'🐐',name:'Chifrinhos',species:'Cabrito',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Fazenda básica',obtain:'Fazenda Nível 1'},
+    {id:'pescocinho26',emoji:'🦢',name:'Pescocinho',species:'Cisne Filhote',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Adjetivos (elegant)',obtain:'Lagoa'},
+    {id:'azulzinho27',emoji:'🐦',name:'Azulzinho',species:'Pardal Azul',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Cores e sons',obtain:'Floresta'},
+    {id:'ricachao28',emoji:'🐩',name:'Ricachao',species:'Poodle',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Adjetivos (curly,fancy)',obtain:'Cidade Nível 2'},
+    {id:'peru29',emoji:'🦃',name:'Peru',species:'Peru Selvagem',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário Thanksgiving',obtain:'Novembro'},
+    {id:'pavaozinho30',emoji:'🦚',name:'Pavaozinho',species:'Pavão Bebê',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Cores (blue,green)',obtain:'Castelo'},
+    {id:'nozes31',emoji:'🐿️',name:'Nozes',species:'Esquilo',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Verbos (collect,run)',obtain:'Floresta'},
+    {id:'pontinha32',emoji:'🦔',name:'Pontinha',species:'Ouriço Pigmeu',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Tamanhos (tiny)',obtain:'Floresta'},
+    {id:'rastro33',emoji:'🐾',name:'Rastro',species:'Pet das Pegadas',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Ações (walk,run)',obtain:'Fazenda'},
+    {id:'danada34',emoji:'🦋',name:'Danada',species:'Borboleta Monarca',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Migração',obtain:'Floresta e Fazenda'},
+    {id:'zumbida35',emoji:'🐝',name:'Zumbida',species:'Abelha Rainha',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Família (queen)',obtain:'Jardim'},
+    {id:'sedao36',emoji:'🐛',name:'Sedao',species:'Bicho-da-Seda',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Transformação',obtain:'Floresta Nível 1'},
+    {id:'cricri37',emoji:'🦗',name:'Cricri',species:'Grilo Noturno',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário noturno',obtain:'Sessão 20h'},
+    {id:'camuflado38',emoji:'🦎',name:'Camuflado',species:'Camaleão Filhote',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Cores (change)',obtain:'Floresta'},
+    {id:'pegadinha39',emoji:'🐾',name:'Pegadinha',species:'Pet Sombra',rarity:'common',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Mistério básico',obtain:'Evento surpresa'},
+    {id:'brilho40',emoji:'🐱',name:'Brilho',species:'Gatinho Solar',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário solar',obtain:'10 dias streak'},
+    {id:'rapozinha41',emoji:'🦊',name:'Rapozinha',species:'Raposa Vermelha',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Adjetivos (clever)',obtain:'Floresta Nível 2'},
+    {id:'mascarinha42',emoji:'🦝',name:'Mascarinha',species:'Guaxinim',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Cores (gray,black)',obtain:'Cidade Noturna'},
+    {id:'nadadao43',emoji:'🦦',name:'Nadadao',species:'Lontra',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Ações (swim,slide)',obtain:'Rio Nível 2'},
+    {id:'listradao44',emoji:'🦡',name:'Listradao',species:'Texugo',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Números e listras',obtain:'Floresta Noturna'},
+    {id:'bolsao45',emoji:'🦘',name:'Bolsao',species:'Canguru Filhote',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Família (baby,carry)',obtain:'Fazenda'},
+    {id:'paleto46',emoji:'🐧',name:'Paleto',species:'Pinguim',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Roupas (suit)',obtain:'Ilha Gelada'},
+    {id:'plumas47',emoji:'🦚',name:'Plumas',species:'Pavão Filhote',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Cores (colorful)',obtain:'Jardim do Castelo'},
+    {id:'rosinha48',emoji:'🦩',name:'Rosinha',species:'Flamingo',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Cores (pink)',obtain:'Ilha'},
+    {id:'loro49',emoji:'🦜',name:'Loro',species:'Arara Azul',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Fonética avançada',obtain:'Floresta Nível 2'},
+    {id:'delfim50',emoji:'🐬',name:'Delfim',species:'Golfinho',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Ações (jump,splash)',obtain:'Oceano'},
+    {id:'tubaraozinho51',emoji:'🦈',name:'Tubaraozinho',species:'Tubarão Bebê',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Partes do corpo',obtain:'Ilha'},
+    {id:'tentaculos52',emoji:'🐙',name:'Tentaculos',species:'Polvo',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Números (eight arms)',obtain:'Oceano'},
+    {id:'tinteiro53',emoji:'🦑',name:'Tinteiro',species:'Lula',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Cores (change,dark)',obtain:'Oceano'},
+    {id:'pincuda54',emoji:'🦀',name:'Pincuda',species:'Caranguejo',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Direções (left,right)',obtain:'Praia'},
+    {id:'iridescente55',emoji:'🦋',name:'Iridescente',species:'Borboleta Azul',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário poético',obtain:'20 dias'},
+    {id:'listras56',emoji:'🦓',name:'Listras',species:'Zebra Filhote',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Padrões (stripes)',obtain:'Savana'},
+    {id:'pescocudo57',emoji:'🦒',name:'Pescocudo',species:'Girafa Filhote',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Partes do corpo (neck)',obtain:'Savana'},
+    {id:'tromba58',emoji:'🐘',name:'Tromba',species:'Elefantinho',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Partes do corpo (trunk)',obtain:'Savana'},
+    {id:'juba59',emoji:'🦁',name:'Juba',species:'Leaozinho',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Adjetivos (brave)',obtain:'Savana'},
+    {id:'manchas60',emoji:'🐆',name:'Manchas',species:'Leopardo',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Padrões (spots,fast)',obtain:'Floresta'},
+    {id:'chifre61',emoji:'🦏',name:'Chifre',species:'Rinoceronte',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Adjetivos (big,gray)',obtain:'Savana'},
+    {id:'gorila62',emoji:'🦍',name:'Gorila',species:'Gorilinha',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Ações (climb,strong)',obtain:'Floresta'},
+    {id:'macaquinho63',emoji:'🐒',name:'Macaquinho',species:'Sagui',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Ações (swing,jump)',obtain:'Floresta'},
+    {id:'uivao64',emoji:'🐺',name:'Uivao',species:'Lobo Cinza',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Sons e família (pack)',obtain:'Floresta'},
+    {id:'peludo65',emoji:'🐻',name:'Peludo',species:'Urso Pardo',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Adjetivos (furry,brown)',obtain:'Floresta'},
+    {id:'bambu66',emoji:'🐼',name:'Bambu',species:'Panda Filhote',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Cores (black,white)',obtain:'Floresta'},
+    {id:'soneca67',emoji:'🐨',name:'Soneca',species:'Coala',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário do sono',obtain:'Modo Noturno'},
+    {id:'devagao68',emoji:'🦥',name:'Devagao',species:'Preguiça',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Adjetivos (slow,hang)',obtain:'Floresta'},
+    {id:'petalinha69',emoji:'🌸',name:'Petalinha',species:'Fada das Flores',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário flores',obtain:'Jardim Nível 2'},
+    {id:'estrelinha70',emoji:'⭐',name:'Estrelinha',species:'Estrela Cadente',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Espaço básico',obtain:'Planeta Colorido'},
+    {id:'ondinha71',emoji:'🌊',name:'Ondinha',species:'Espírito do Mar',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário oceano',obtain:'Arquipélago'},
+    {id:'cogumelin72',emoji:'🍄',name:'Cogumelin',species:'Espírito do Cogumelo',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Floresta mágica',obtain:'Gruta da Luna'},
+    {id:'luninha73',emoji:'🌙',name:'Luninha',species:'Espírito Lunar',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário noturno',obtain:'21h de uso'},
+    {id:'palito74',emoji:'🦩',name:'Palito',species:'Flamingo Filhote',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Equilíbrio (stand)',obtain:'Ilha'},
+    {id:'coco75',emoji:'🦜',name:'Coco',species:'Cacatua',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Fonética (repeat,echo)',obtain:'Floresta'},
+    {id:'baleininha76',emoji:'🐳',name:'Baleininha',species:'Baleia Filhote',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Tamanhos (big,huge)',obtain:'Oceano'},
+    {id:'deslizinha77',emoji:'🦦',name:'Deslizinha',species:'Lontra Marinha',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Ações (float,glide)',obtain:'Oceano'},
+    {id:'toca78',emoji:'🦡',name:'Toca',species:'Texugo Europeu',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Casa (burrow,home)',obtain:'Floresta'},
+    {id:'grizzly79',emoji:'🐻',name:'Grizzly',species:'Urso Grizzly',rarity:'uncommon',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Força (strong,powerful)',obtain:'Montanha'},
+    {id:'rex80',emoji:'🐉',name:'Rex',species:'Dragãozinho',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Narrativa (quest,brave)',obtain:'Rank B'},
+    {id:'sabia81',emoji:'🦉',name:'Sabia',species:'Coruja da Luna',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário raro',obtain:'Evento da Luna'},
+    {id:'alfa82',emoji:'🐺',name:'Alfa',species:'Lobo Branco',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Liderança (lead,pack)',obtain:'30 dias'},
+    {id:'metamorfose83',emoji:'🦋',name:'Metamorfose',species:'Borboleta Fenix',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Transformação',obtain:'Missão semanal'},
+    {id:'astucia84',emoji:'🦊',name:'Astucia',species:'Raposa Prateada',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário avançado',obtain:'Rank C+'},
+    {id:'alegria85',emoji:'🐬',name:'Alegria',species:'Golfinho Dourado',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Emoções em inglês',obtain:'Ilha do Esporte'},
+    {id:'tinta86',emoji:'🦑',name:'Tinta',species:'Lula Arco-Iris',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Cores avançadas',obtain:'Oceano Nível 2'},
+    {id:'sabio87',emoji:'🦜',name:'Sabio',species:'Papagaio Professor',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Fonética A2',obtain:'40 músicas'},
+    {id:'liberdade88',emoji:'🦅',name:'Liberdade',species:'Aguia',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário liberdade',obtain:'Espaço'},
+    {id:'real89',emoji:'🦚',name:'Real',species:'Pavão Real',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário realeza',obtain:'Castelo'},
+    {id:'elegancia90',emoji:'🦩',name:'Elegancia',species:'Flamingo Rosa',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário dança',obtain:'Ilha da Música'},
+    {id:'baleia91',emoji:'🐋',name:'Baleia',species:'Baleia Azul',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Tamanhos (huge,enormous)',obtain:'Oceano'},
+    {id:'focinha92',emoji:'🦭',name:'Focinha',species:'Foca Artica',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário polar',obtain:'Ilha Gelada'},
+    {id:'hipo93',emoji:'🦛',name:'Hipo',species:'Hipopótamo',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Partes do corpo',obtain:'Savana'},
+    {id:'veloz94',emoji:'🐆',name:'Veloz',species:'Guepardo',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Velocidade e adjetivos',obtain:'Savana'},
+    {id:'rei95',emoji:'🦁',name:'Rei',species:'Leão Dourado',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Liderança em inglês',obtain:'Rank C'},
+    {id:'sabio296',emoji:'🐘',name:'Sabio2',species:'Elefante Anciao',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Memória e narrativa',obtain:'50 dias'},
+    {id:'cintilante97',emoji:'🌟',name:'Cintilante',species:'Estrela do Mar',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Espaço e oceano',obtain:'Arquipélago'},
+    {id:'faisca98',emoji:'🔥',name:'Faisca',species:'Espírito do Fogo',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário calor',obtain:'7 dias streak'},
+    {id:'gelido99',emoji:'❄️',name:'Gelido',species:'Espírito do Gelo',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário frio',obtain:'Ilha Gelada'},
+    {id:'arco100',emoji:'🌈',name:'Arco',species:'Espírito do Arco-Iris',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Todas as cores A1',obtain:'Planeta Colorido'},
+    {id:'relampago101',emoji:'⚡',name:'Relampago',species:'Espírito do Trovão',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário tempo',obtain:'Flash Event'},
+    {id:'mare102',emoji:'🌊',name:'Mare',species:'Espírito do Oceano',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário marinho A2',obtain:'Arquipélago'},
+    {id:'broto103',emoji:'🌿',name:'Broto',species:'Espírito da Floresta',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário natureza',obtain:'Floresta Nível 3'},
+    {id:'rinaldo104',emoji:'🪐',name:'Rinaldo',species:'Espírito de Saturno',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Espaço A1',obtain:'Planeta dos Números'},
+    {id:'melodia105',emoji:'🎵',name:'Melodia',species:'Espírito Musical',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Todas músicas A0-A1',obtain:'30 músicas'},
+    {id:'mascaras106',emoji:'🎭',name:'Mascaras',species:'Espírito do Teatro',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Emoções A2',obtain:'Castelo Nível 3'},
+    {id:'paginas107',emoji:'📚',name:'Paginas',species:'Espírito dos Livros',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Histórias A2',obtain:'10 histórias'},
+    {id:'segredo108',emoji:'🗝️',name:'Segredo',species:'Espírito das Chaves',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Narrativa das 6 Chaves',obtain:'2 Chaves'},
+    {id:'kitsune109',emoji:'🦊',name:'Kitsune',species:'Raposa Mistica',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Narrativa japonesa',obtain:'Regiões Secretas'},
+    {id:'careca110',emoji:'🦅',name:'Careca',species:'Aguia Americana',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Liberdade (free,soar)',obtain:'Espaço'},
+    {id:'verde111',emoji:'🐉',name:'Verde',species:'Dragão Verde',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Natureza (forest,earth)',obtain:'Floresta Nível 3'},
+    {id:'netuno112',emoji:'🌊',name:'Netuno',species:'Espírito das Mares',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Oceano A2',obtain:'Arquipélago completo'},
+    {id:'vulcano113',emoji:'🔥',name:'Vulcano',species:'Espírito do Calor',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Temperatura (hot,warm)',obtain:'Fazenda'},
+    {id:'boreal114',emoji:'❄️',name:'Boreal',species:'Espírito do Norte',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário polar A2',obtain:'Ilha Gelada'},
+    {id:'estatico115',emoji:'⚡',name:'Estatico',species:'Espírito Eletrico',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Tecnologia básica',obtain:'Robo Nível 2'},
+    {id:'raiz116',emoji:'🌿',name:'Raiz',species:'Espírito da Terra',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário plantas A2',obtain:'Fazenda'},
+    {id:'harmonia117',emoji:'🎵',name:'Harmonia',species:'Espírito da Harmonia',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Música A2',obtain:'50 músicas'},
+    {id:'anciao118',emoji:'🏺',name:'Anciao',species:'Espírito Antigo',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Narrativa histórica',obtain:'Carta Antiga'},
+    {id:'estrelar119',emoji:'🔭',name:'Estrelar',species:'Espírito do Telescopio',rarity:'rare',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Espaço A2',obtain:'Módulo Espaço completo'},
+    {id:'fogo120',emoji:'🐉',name:'Fogo',species:'Dragão de Fogo',rarity:'epic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Narrativa épica',obtain:'Rank A'},
+    {id:'arcoiris121',emoji:'🦄',name:'Arco-Iris',species:'Unicornio',rarity:'epic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário mágico completo',obtain:'Mês perfeito'},
+    {id:'aurora122',emoji:'🦋',name:'Aurora',species:'Borboleta Cosmica',rarity:'epic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário A2 completo',obtain:'100 dias'},
+    {id:'tempestade123',emoji:'🦅',name:'Tempestade',species:'Aguia Dourada',rarity:'epic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Liderança A2',obtain:'Cambridge Movers'},
+    {id:'gelo124',emoji:'🐉',name:'Gelo',species:'Dragão de Gelo',rarity:'epic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário polar A2',obtain:'Ilha Gelada'},
+    {id:'mistico125',emoji:'🦊',name:'Mistico',species:'Raposa de 9 Caudas',rarity:'epic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Narrativa avançada',obtain:'6 meses'},
+    {id:'supernova126',emoji:'🌟',name:'Supernova',species:'Estrela Explosiva',rarity:'epic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Espaço A2 completo',obtain:'Galáxia das Frases'},
+    {id:'inferno127',emoji:'🔥',name:'Inferno',species:'Espírito do Vulcao',rarity:'epic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário intenso',obtain:'Missão × 10'},
+    {id:'blizzard128',emoji:'❄️',name:'Blizzard',species:'Tempestade de Neve',rarity:'epic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário invernal A2',obtain:'3 meses streak'},
+    {id:'thor129',emoji:'⚡',name:'Thor',species:'Espírito do Relampago',rarity:'epic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Velocidade e poder',obtain:'Flash Event especial'},
+    {id:'tsunami130',emoji:'🌊',name:'Tsunami',species:'Espírito do Abismo',rarity:'epic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Oceano A2 completo',obtain:'Todas as ilhas'},
+    {id:'galaxia131',emoji:'🌌',name:'Galaxia',species:'Espírito Cosmico',rarity:'epic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Espaço completo',obtain:'Estação Solzinho'},
+    {id:'fenrir132',emoji:'🐺',name:'Fenrir',species:'Lobo da Nevoa',rarity:'epic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Narrativa da Névoa',obtain:'6 semanas ativas'},
+    {id:'simba133',emoji:'🦁',name:'Simba',species:'Leão da Savana',rarity:'epic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Savana completa A2',obtain:'Rank A'},
+    {id:'ganesha134',emoji:'🐘',name:'Ganesha',species:'Elefante Sabio',rarity:'epic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário sabedoria',obtain:'200 palavras'},
+    {id:'morpho135',emoji:'🦋',name:'Morpho',species:'Borboleta do Sonho',rarity:'epic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário sonhos',obtain:'Narrativa Ano 5'},
+    {id:'poseidon136',emoji:'🐬',name:'Poseidon',species:'Golfinho Mestre',rarity:'epic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Oceano completo',obtain:'Arquipélago completo'},
+    {id:'merlin137',emoji:'🦜',name:'Merlin',species:'Papagaio Magico',rarity:'epic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário A2 mágico',obtain:'Castelo completo'},
+    {id:'sereia138',emoji:'🧜',name:'Sereia',species:'Sereia',rarity:'epic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Oceano e músicas A2',obtain:'Ilha da Música'},
+    {id:'fada139',emoji:'🧚',name:'Fada',species:'Fada do Ingles',rarity:'epic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário encantado',obtain:'Narrativa Ano 4'},
+    {id:'lendas140',emoji:'🐲',name:'Lendas',species:'Dragão Oriental',rarity:'epic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Narrativa histórica A2',obtain:'Salão das Lendas'},
+    {id:'iris141',emoji:'🦩',name:'Iris',species:'Flamingo Holografico',rarity:'epic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Todas as cores A2',obtain:'Planeta Colorido'},
+    {id:'selene142',emoji:'🌙',name:'Selene',species:'Espírito da Lua Cheia',rarity:'epic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário noturno A2',obtain:'Luna adulta'},
+    {id:'helio143',emoji:'☀️',name:'Helio',species:'Espírito do Sol',rarity:'epic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário solar completo',obtain:'Solzinho Dourado'},
+    {id:'vortex144',emoji:'🌪️',name:'Vortex',species:'Espírito do Tornado',rarity:'epic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário clima A2',obtain:'Todas estações'},
+    {id:'everest145',emoji:'🏔️',name:'Everest',species:'Espírito da Montanha',rarity:'epic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário altitude',obtain:'Missão × 20'},
+    {id:'krakatoa146',emoji:'🌋',name:'Krakatoa',species:'Espírito do Vulcao2',rarity:'epic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário força',obtain:'Rank A+'},
+    {id:'arlequim147',emoji:'🎭',name:'Arlequim',species:'Espírito do Carnaval',rarity:'epic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Carnaval completo',obtain:'Evento fevereiro'},
+    {id:'oraculo148',emoji:'🔮',name:'Oraculo',species:'Cristal Vivo',rarity:'epic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário profético',obtain:'4 Chaves obtidas'},
+    {id:'tutankhamon149',emoji:'🏺',name:'Tutankhamon',species:'Espírito Antigo2',rarity:'epic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Histórias A2 completas',obtain:'Caderno de Vocab'},
+    {id:'estrelado150',emoji:'🦄',name:'Estrelado',species:'Unicornio Cosmico',rarity:'legendary',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Vocabulário A2 completo',obtain:'Rank S'},
+    {id:'bahamut151',emoji:'🐉',name:'Bahamut',species:'Dragão Anciao',rarity:'legendary',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Narrativa completa Ano 7',obtain:'6 Chaves'},
+    {id:'fenix152',emoji:'🦅',name:'Fenix',species:'Fenix Dourada',rarity:'legendary',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Ressurreição',obtain:'Mês perfeito × 3'},
+    {id:'estrelar2153',emoji:'🌟',name:'Estrelar2',species:'Estrela Polar',rarity:'legendary',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Espaço A2+',obtain:'Cambridge Movers aprovado'},
+    {id:'fenrirdourado154',emoji:'🐺',name:'FenrirDourado',species:'Lobo Lendario',rarity:'legendary',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Narrativa Névoa resolvida',obtain:'Rank S'},
+    {id:'imperatriz155',emoji:'🦋',name:'Imperatriz',species:'Borboleta Lendaria',rarity:'legendary',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Todas as metamorfoses',obtain:'365 dias'},
+    {id:'poseidonjr156',emoji:'🧜',name:'PoseidonJr',species:'Sereia Lendaria',rarity:'legendary',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Oceano e músicas A2',obtain:'Todas as ilhas'},
+    {id:'andromeda157',emoji:'🌌',name:'Andromeda',species:'Galaxia Viva',rarity:'legendary',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Espaço completo e narrativa',obtain:'Rank A'},
+    {id:'selenemaxima158',emoji:'🌙',name:'SeleneMaxima',species:'Lua Cheia Lendaria',rarity:'legendary',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Luna Adulta e narrativa Ano 7',obtain:'Progressão'},
+    {id:'ra159',emoji:'☀️',name:'Ra',species:'Sol Lendario',rarity:'legendary',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Solzinho Lendário desbloqueado',obtain:'Progressão'},
+    {id:'scarredentor160',emoji:'🦁',name:'ScarRedentor',species:'Leão Lendario',rarity:'legendary',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Savana completa A2',obtain:'Cambridge'},
+    {id:'elefantedotemp161',emoji:'🐘',name:'ElefanteDoTempo',species:'Elefante Lendario',rarity:'legendary',stage:0,progress:0,equipped:false,bond:1,pedagogy:'500+ palavras',obtain:'2 anos'},
+    {id:'deusdosmares162',emoji:'🐬',name:'DeusDosMares',species:'Golfinho Lendario',rarity:'legendary',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Todas as ilhas e oceano A2',obtain:'Progressão'},
+    {id:'auroraboreal163',emoji:'🦄',name:'AuroraBoreal',species:'Unicornio Aurora',rarity:'legendary',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Todas as cores lendárias',obtain:'Ano 8'},
+    {id:'cristaldaluna164',emoji:'🔮',name:'CristalDaLuna',species:'Cristal Vivo Adulto',rarity:'legendary',stage:0,progress:0,equipped:false,bond:1,pedagogy:'300 dias e Rank B e Gruta',obtain:'Progressão'},
+    {id:'chaveiro165',emoji:'🗝️',name:'Chaveiro',species:'Guardiao das Chaves',rarity:'legendary',stage:0,progress:0,equipped:false,bond:1,pedagogy:'5 Chaves obtidas',obtain:'Progressão'},
+    {id:'epico166',emoji:'📖',name:'Epico',species:'Livro das Linguas',rarity:'legendary',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Todas as histórias A2',obtain:'Teddy Lendário'},
+    {id:'olimpico167',emoji:'🏆',name:'Olimpico',species:'Espírito Campeao',rarity:'legendary',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Cambridge Starters e Movers',obtain:'Progressão'},
+    {id:'prisma168',emoji:'🌈',name:'Prisma',species:'Unicornio Prisma',rarity:'legendary',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Todas categorias 100%',obtain:'Rank A'},
+    {id:'mestre169',emoji:'🧩',name:'Mestre',species:'Espírito Mestre',rarity:'legendary',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Todos os jogos completos',obtain:'Robo V2'},
+    {id:'nevoa170',emoji:'🌫️',name:'Nevoa',species:'Sombra Reformada',rarity:'mythic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'6 Chaves e ensinar a Névoa sua Palavra Especial',obtain:'Progressão'},
+    {id:'eterno171',emoji:'🦄',name:'Eterno',species:'Unicornio Mitico',rarity:'mythic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Rank S e Cambridge A2 e 10 anos',obtain:'Progressão'},
+    {id:'tiamat172',emoji:'🐉',name:'Tiamat',species:'Dragão das 5 Cores',rarity:'mythic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'5 Elementos completos',obtain:'Narrativa final'},
+    {id:'solzinhoespiri173',emoji:'☀️',name:'SolzinhoEspirito',species:'Avatar Solar',rarity:'mythic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Solzinho Mítico desbloqueado',obtain:'Rank S'},
+    {id:'bigbang174',emoji:'🌟',name:'BigBang',species:'Criador de Mundos',rarity:'mythic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Toyland completo',obtain:'Palavra Especial revelada'},
+    {id:'alma175',emoji:'🦋',name:'Alma',species:'Borboleta da Alma',rarity:'mythic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'10 anos de jornada',obtain:'Diário de 10 Anos'},
+    {id:'universo176',emoji:'🌌',name:'Universo',species:'Espírito do Cosmos',rarity:'mythic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Portal do Proximo Idioma aberto',obtain:'Progressão'},
+    {id:'onisciente177',emoji:'🔮',name:'Onisciente',species:'Cristal Primordial',rarity:'mythic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Todas as 6 Chaves e Luna Maxima',obtain:'Progressão'},
+    {id:'infinito178',emoji:'🌈',name:'Infinito',species:'Arco-Iris Eterno',rarity:'mythic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Todas as raridades coletadas',obtain:'1000 dias'},
+    {id:'rei179',emoji:'👑',name:'Rei',species:'Rei do Toyland',rarity:'mythic',stage:0,progress:0,equipped:false,bond:1,pedagogy:'Unico — primeiro Rank S de cada cidade',obtain:'Progressão'}
   ],
   outfits: [
     {id:'basic_yellow', emoji:'👕', name:'Camiseta Básica', rarity:'common',   owned:true,  worn:true,  cost:{stars:0}},
@@ -3801,6 +4089,186 @@ function showCollectDetail(item){
 
 
 
+
+
+/* ═══ PET SYSTEM v9 — 180 Pets, Growth, Bond, Pedagogy ═══ */
+const PET_STATE={activePetId:'pipoca0',hudBubbleTimer:null};
+const STAGE_LABELS=['Ovo 🥚','Filhote 🐣','Juvenil 🐥','Adulto 🐦'];
+const RARITY_COLORS_PET={
+  common:'#4A4A6A',uncommon:'#1A7A45',rare:'#1A3A8F',
+  epic:'#7700CC',legendary:'#B8860B',mythic:'#CC2200',
+};
+function getActivePet(){
+  return COLLECTIBLES.pets.find(p=>p.id===PET_STATE.activePetId)
+    ||COLLECTIBLES.pets.find(p=>p.equipped)
+    ||COLLECTIBLES.pets[0];
+}
+function initPetHud(){
+  let hud=document.getElementById('pet-hud');
+  if(!hud){
+    hud=document.createElement('div');hud.className='pet-hud';hud.id='pet-hud';
+    hud.onclick=()=>openPetDetail(getActivePet());
+    document.body.appendChild(hud);
+  }
+  let bubble=document.getElementById('pet-hud-bubble');
+  if(!bubble){
+    bubble=document.createElement('div');bubble.className='pet-hud-bubble';bubble.id='pet-hud-bubble';
+    document.body.appendChild(bubble);
+  }
+  updatePetHud();
+}
+function updatePetHud(){
+  const pet=getActivePet();if(!pet)return;
+  const hud=document.getElementById('pet-hud');if(!hud)return;
+  hud.textContent=pet.emoji;hud.style.display='flex';
+  hud.className='pet-hud'+(Math.floor(pet.bond||1)>=10?' bond10':'');
+}
+function petSpeak(text,dur=3000){
+  const b=document.getElementById('pet-hud-bubble');if(!b)return;
+  b.textContent=text;b.style.display='block';
+  clearTimeout(PET_STATE.hudBubbleTimer);
+  PET_STATE.hudBubbleTimer=setTimeout(()=>b.style.display='none',dur);
+}
+function petReactToWord(word){
+  const pet=getActivePet();if(!pet)return;
+  const s=pet.stage||0;
+  if(s===0)petSpeak(pet.emoji+' ...'+word[0]+'...');
+  else if(s===1)petSpeak(pet.emoji+' '+word.substring(0,Math.ceil(word.length/2))+'...');
+  else if(s===2)petSpeak(pet.emoji+' "'+word+'"! 🎉');
+  else petSpeak(pet.emoji+' "'+word+'"! I know this one! 🌟');
+  pet.bond=Math.min(10,(pet.bond||1)+0.1);
+  updatePetHud();
+}
+function checkPetEvolution(pet){
+  const old=pet.stage||0;
+  let ns=0;
+  if((pet.progress||0)>=33)ns=1;
+  if((pet.progress||0)>=66)ns=2;
+  if((pet.progress||0)>=100)ns=3;
+  if(ns>old){
+    pet.stage=ns;
+    rainConfetti();burst(getMid(),400,20);
+    showNarrativeToast(pet.emoji,pet.name+' evoluiu!',
+      pet.name+' agora é '+STAGE_LABELS[ns]+'! 🎉',5000);
+    speakPT(pet.name+'... evoluiu!',null);
+  }
+}
+function openPetDetail(pet){
+  if(!pet)return;
+  let ov=document.getElementById('pet-detail-overlay');
+  if(!ov){
+    ov=document.createElement('div');ov.className='pet-detail-overlay';ov.id='pet-detail-overlay';
+    ov.onclick=(e)=>{if(e.target===ov)closePetDetail();};
+    ov.innerHTML=`<div class="pet-detail-panel">
+      <div class="pd-handle"></div>
+      <div class="pd-header">
+        <div class="pd-emoji" id="pd-emoji"></div>
+        <div class="pd-main">
+          <div class="pd-name" id="pd-name"></div>
+          <div class="pd-species" id="pd-species"></div>
+          <div class="pd-rarity-badge" id="pd-rarity-badge"></div>
+        </div>
+      </div>
+      <div class="pd-stage-row" id="pd-stage-row"></div>
+      <div class="bond-bar" id="pd-bond-bar"></div>
+      <div style="margin:6px 0 10px;font-family:var(--ff);font-size:11px;color:rgba(255,255,255,.5);">
+        🔗 Vínculo: <span id="pd-bond-level">1</span>/10
+      </div>
+      <div class="pd-pedagogy" id="pd-pedagogy"></div>
+      <div class="pd-actions">
+        <button class="pd-act-btn pd-feed" onclick="feedPet()">🍎 Alimentar</button>
+        <button class="pd-act-btn pd-play" onclick="playWithPet()">🎮 Brincar</button>
+        <button class="pd-act-btn pd-equip-btn" id="pd-equip-btn" onclick="equipActivePet()">⚡ Equipar</button>
+      </div>
+    </div>`;
+    document.body.appendChild(ov);
+  }
+  const rc=RARITY_COLORS_PET[pet.rarity]||'#aaa';
+  document.getElementById('pd-emoji').textContent=pet.emoji;
+  document.getElementById('pd-name').textContent=pet.name;
+  document.getElementById('pd-species').textContent=pet.species;
+  const rb=document.getElementById('pd-rarity-badge');
+  rb.textContent=(RARITIES[pet.rarity]?.label||pet.rarity);
+  rb.style.cssText=`background:${rc}33;color:${rc};border:1px solid ${rc}66;display:inline-block;padding:3px 10px;border-radius:10px;font-family:var(--ff);font-size:11px;`;
+  const sr=document.getElementById('pd-stage-row');sr.innerHTML='';
+  STAGE_LABELS.forEach((l,i)=>{
+    const d=document.createElement('div');
+    d.className='stage-dot'+(i===(pet.stage||0)?' current':'');
+    d.textContent=l.split(' ')[1];d.title=l;sr.appendChild(d);
+  });
+  const bb=document.getElementById('pd-bond-bar');bb.innerHTML='';
+  const bl=Math.floor(pet.bond||1);
+  for(let i=0;i<10;i++){const p=document.createElement('div');p.className='bond-pip'+(i<bl?' filled':'');bb.appendChild(p);}
+  document.getElementById('pd-bond-level').textContent=bl;
+  document.getElementById('pd-pedagogy').textContent='📚 '+(pet.pedagogy||'Aprende inglês com você!');
+  document.getElementById('pd-equip-btn').textContent=pet.id===PET_STATE.activePetId?'✅ Ativo':'⚡ Equipar';
+  ov.classList.add('show');
+}
+function closePetDetail(){document.getElementById('pet-detail-overlay')?.classList.remove('show');}
+function equipActivePet(){
+  const nm=document.getElementById('pd-name')?.textContent;
+  const pet=COLLECTIBLES.pets.find(p=>p.name===nm);
+  if(pet){COLLECTIBLES.pets.forEach(p=>p.equipped=false);pet.equipped=true;PET_STATE.activePetId=pet.id;updatePetHud();burst(getMid(),400,12);showNarrativeToast(pet.emoji,'Pet Equipado!',pet.name+' vai te acompanhar! 🐾',3000);}
+  closePetDetail();
+}
+function feedPet(){
+  const pet=getActivePet();if(!pet)return;
+  pet.bond=Math.min(10,(pet.bond||1)+0.5);pet.progress=Math.min(100,(pet.progress||0)+5);
+  closePetDetail();burst(getMid(),400,8);petSpeak(pet.emoji+' Yummy! Thank you! 🍎');
+  showNarrativeToast(pet.emoji,'Pet alimentado!','Vínculo aumentou! 🔗',2000);
+  checkPetEvolution(pet);
+}
+function playWithPet(){
+  const pet=getActivePet();if(!pet)return;
+  pet.bond=Math.min(10,(pet.bond||1)+0.3);closePetDetail();
+  petSpeak(pet.emoji+' Yay! Lets play! 🎮');
+  showNarrativeToast(pet.emoji,'Brincou com '+pet.name+'!','Vínculo cresce! 💛',2000);
+}
+function equipPetById(id,btn){
+  COLLECTIBLES.pets.forEach(p=>p.equipped=false);
+  const pet=COLLECTIBLES.pets.find(p=>p.id===id);
+  if(pet){pet.equipped=true;PET_STATE.activePetId=id;}
+  document.querySelectorAll('.pet-card').forEach(c=>c.classList.remove('active-pet'));
+  document.querySelectorAll('.pet-equip').forEach(b=>{b.textContent='Equipar';b.classList.remove('equipped');});
+  if(btn){btn.textContent='Ativo';btn.classList.add('equipped');btn.closest('.pet-card')?.classList.add('active-pet');}
+  updatePetHud();
+  if(pet){burst(getMid(),400,12);showNarrativeToast(pet.emoji,'Pet Equipado!',pet.name+' vai te acompanhar! 🐾',2500);}
+}
+function equipPet(id,btn){equipPetById(id,btn);}
+function buildPetsTab(container){
+  const hdr=document.createElement('div');
+  hdr.style.cssText='display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;';
+  hdr.innerHTML=`<div style="font-family:var(--ff);font-size:14px;color:rgba(255,255,255,.7);">Seus Pets</div>
+    <div style="font-family:var(--ff);font-size:13px;color:var(--c-sun);">${COLLECTIBLES.pets.length} adotados</div>`;
+  container.appendChild(hdr);
+  COLLECTIBLES.pets.forEach(pet=>{
+    const rc=RARITY_COLORS_PET[pet.rarity]||'#aaa';
+    const rl=RARITIES[pet.rarity]?.label||pet.rarity;
+    const bl=Math.floor(pet.bond||1);
+    const pips=Array.from({length:10},(_,i)=>`<div class="bond-pip${i<bl?' filled':''}"></div>`).join('');
+    const card=document.createElement('div');
+    card.className='pet-card'+(pet.id===PET_STATE.activePetId?' active-pet':'');
+    card.innerHTML=`
+      <div class="pet-emoji" style="font-size:${(pet.stage||0)>=2?'48':'38'}px;">${pet.emoji}</div>
+      <div class="pet-info">
+        <div class="pet-name">${pet.name} <span style="font-size:11px;color:${rc};margin-left:4px;">● ${rl}</span></div>
+        <div class="pet-stage">${pet.species} · ${STAGE_LABELS[pet.stage||0]}</div>
+        <div class="pet-bar-bg"><div class="pet-bar-fill" style="width:${pet.progress||0}%"></div></div>
+        <div class="bond-bar">${pips}</div>
+      </div>
+      <button class="pet-equip${pet.id===PET_STATE.activePetId?' equipped':''}"
+        onclick="event.stopPropagation();equipPetById('${pet.id}',this)">
+        ${pet.id===PET_STATE.activePetId?'Ativo':'Equipar'}
+      </button>`;
+    card.onclick=()=>openPetDetail(pet);
+    container.appendChild(card);
+    gsap.from(card,{x:-20,opacity:0,duration:.35,ease:'spring',delay:COLLECTIBLES.pets.indexOf(pet)*.06});
+  });
+}
+function initPetSystem(){
+  initPetHud();
+  if(!['home','worldsel'].includes(curScr)) updatePetHud();
+}
 
 </script>
 </body>
