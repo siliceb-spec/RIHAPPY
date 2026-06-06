@@ -720,6 +720,222 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);
 .pp-panel{display:none;}
 .pp-panel.active{display:block;}
 
+
+/* ══════════════════════════════════════════════════════════════
+   STORE INTEGRATION SYSTEM — Portal Mágico RiHappy
+   QR Codes · Campanhas · Desafios · Recompensas
+══════════════════════════════════════════════════════════════ */
+
+/* ── Store nav button on map ── */
+.store-nav-btn {
+  display:flex; flex-direction:column; align-items:center; gap:3px;
+  background:none; border:none; color:rgba(255,255,255,.55);
+  font-size:11px; cursor:pointer; padding:6px 10px;
+  transition:color .2s;
+}
+.store-nav-btn .snb-icon { font-size:22px; }
+.store-nav-btn.active, .store-nav-btn:active { color:#FFD100; }
+
+/* ── Store screen ── */
+.s-store {
+  min-height:100vh;
+  background:linear-gradient(180deg,#0D0020,#060012);
+  padding:0 0 80px;
+  overflow-y:auto;
+}
+.store-hero {
+  padding:28px 20px 20px;
+  text-align:center;
+  position:relative;
+}
+.store-hero-badge {
+  display:inline-block;
+  background:linear-gradient(135deg,#FF6B00,#FFD100);
+  color:#000; font-size:10px; font-weight:900;
+  padding:4px 12px; border-radius:20px;
+  letter-spacing:1px; text-transform:uppercase;
+  margin-bottom:10px;
+}
+.store-hero-title {
+  font-size:26px; font-weight:900; color:#fff;
+  line-height:1.2; margin-bottom:6px;
+}
+.store-hero-sub {
+  font-size:13px; color:rgba(255,255,255,.5);
+}
+.store-campaign-banner {
+  margin:0 16px 16px;
+  border-radius:20px; padding:20px;
+  position:relative; overflow:hidden;
+  border:1px solid rgba(255,255,255,.12);
+}
+.scb-emoji { font-size:48px; margin-bottom:8px; display:block; }
+.scb-title { font-size:18px; font-weight:900; color:#fff; margin-bottom:4px; }
+.scb-desc  { font-size:13px; color:rgba(255,255,255,.6); margin-bottom:14px; }
+.scb-timer {
+  font-size:11px; font-weight:700;
+  color:rgba(255,255,255,.4); letter-spacing:.5px;
+}
+
+/* ── QR Section ── */
+.store-section {
+  margin:0 16px 14px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:20px; padding:18px;
+}
+.store-section-title {
+  font-size:12px; font-weight:900;
+  color:rgba(255,255,255,.45);
+  text-transform:uppercase; letter-spacing:.8px;
+  margin-bottom:14px;
+}
+.qr-wrap {
+  display:flex; flex-direction:column; align-items:center; gap:12px;
+}
+.qr-canvas-box {
+  background:#fff; border-radius:16px;
+  padding:14px; display:inline-block;
+  box-shadow:0 0 40px rgba(255,209,0,.2);
+}
+.qr-mission-label {
+  font-size:13px; font-weight:800; color:#FFD100;
+  text-align:center;
+}
+.qr-mission-sub {
+  font-size:11px; color:rgba(255,255,255,.4);
+  text-align:center;
+}
+.qr-expiry {
+  font-size:10px; color:rgba(255,255,255,.3);
+  text-align:center; margin-top:4px;
+}
+
+/* ── Scan store QR ── */
+.scan-btn {
+  width:100%; padding:15px;
+  background:linear-gradient(135deg,#1A3A8F,#2855CC);
+  border:none; border-radius:16px;
+  color:#fff; font-size:15px; font-weight:800;
+  cursor:pointer; display:flex; align-items:center;
+  justify-content:center; gap:10px;
+  transition:opacity .2s;
+}
+.scan-btn:active { opacity:.8; }
+
+/* ── Desafios ── */
+.challenge-list { display:flex; flex-direction:column; gap:10px; }
+.challenge-item {
+  display:flex; align-items:center; gap:12px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:14px; padding:14px;
+  transition:border-color .2s;
+}
+.challenge-item.done {
+  border-color:rgba(255,209,0,.3);
+  background:rgba(255,209,0,.04);
+}
+.challenge-item.done .ch-icon { filter:none; }
+.ch-icon { font-size:28px; flex-shrink:0; }
+.ch-info { flex:1; }
+.ch-title { font-size:14px; font-weight:800; color:#fff; }
+.ch-desc  { font-size:11px; color:rgba(255,255,255,.4); margin-top:2px; }
+.ch-reward{ font-size:11px; color:#FFD100; font-weight:700; margin-top:4px; }
+.ch-status {
+  font-size:20px; flex-shrink:0;
+  width:32px; text-align:center;
+}
+
+/* ── Recompensas desbloqueadas ── */
+.reward-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.reward-card {
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:14px; padding:14px;
+  text-align:center; display:flex;
+  flex-direction:column; align-items:center; gap:6px;
+}
+.reward-card.unlocked {
+  border-color:rgba(255,209,0,.35);
+  background:rgba(255,209,0,.06);
+}
+.reward-card.locked { opacity:.4; }
+.rc-icon  { font-size:32px; }
+.rc-name  { font-size:11px; font-weight:800; color:#fff; }
+.rc-how   { font-size:10px; color:rgba(255,255,255,.4); }
+.rc-date  { font-size:9px; color:#FFD100; }
+
+/* ── Visit counter ── */
+.visit-bar {
+  display:flex; align-items:center; gap:12px;
+  padding:14px 16px;
+  background:rgba(255,255,255,.04);
+  border-radius:14px; margin-bottom:10px;
+}
+.visit-count {
+  font-size:36px; font-weight:900; color:#FFD100;
+  flex-shrink:0;
+}
+.visit-info { flex:1; }
+.visit-label { font-size:13px; font-weight:800; color:#fff; }
+.visit-sub   { font-size:11px; color:rgba(255,255,255,.4); }
+
+/* ── Claim reward modal ── */
+#store-reward-modal {
+  position:fixed; inset:0; z-index:10000;
+  background:rgba(0,0,0,.85);
+  display:none; align-items:center; justify-content:center;
+  padding:24px;
+}
+#store-reward-modal.open { display:flex; }
+.srm-box {
+  background:linear-gradient(180deg,#1A0A3E,#0A0118);
+  border:2px solid rgba(255,209,0,.4);
+  border-radius:28px; padding:32px 24px;
+  text-align:center; max-width:340px; width:100%;
+  animation:srm-pop .4s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes srm-pop {
+  from{transform:scale(.7);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+.srm-icon  { font-size:72px; margin-bottom:12px; }
+.srm-title { font-size:22px; font-weight:900; color:#FFD100; margin-bottom:8px; }
+.srm-desc  { font-size:14px; color:rgba(255,255,255,.7); margin-bottom:20px; }
+.srm-close {
+  padding:14px 32px; border-radius:14px;
+  background:linear-gradient(135deg,#FF6B00,#FFD100);
+  border:none; color:#000; font-size:15px;
+  font-weight:900; cursor:pointer;
+}
+
+/* ── Tabs within store ── */
+.store-tabs {
+  display:flex; gap:6px; padding:0 16px 16px;
+  overflow-x:auto;
+}
+.store-tabs::-webkit-scrollbar { display:none; }
+.store-tab {
+  padding:8px 16px; border-radius:20px;
+  font-size:12px; font-weight:700;
+  color:rgba(255,255,255,.5);
+  background:transparent;
+  border:1px solid rgba(255,255,255,.1);
+  cursor:pointer; white-space:nowrap;
+  transition:all .2s;
+}
+.store-tab.active {
+  background:rgba(255,107,0,.15);
+  color:#FF6B00;
+  border-color:rgba(255,107,0,.4);
+}
+.store-panel { display:none; padding:0 16px; }
+.store-panel.active { display:block; }
+
 </style>
 </head>
 <body>
@@ -863,6 +1079,113 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);
   </div>
 </div>
 
+<!-- ══════════════════════════════════════════════════════════
+     STORE INTEGRATION — Portal Mágico RiHappy
+══════════════════════════════════════════════════════════════ -->
+
+<!-- Reward Modal (global, above all screens) -->
+<div id="store-reward-modal">
+  <div class="srm-box">
+    <div class="srm-icon" id="srm-icon">🎁</div>
+    <div class="srm-title" id="srm-title">Tesouro Desbloqueado!</div>
+    <div class="srm-desc" id="srm-desc">Você completou uma missão da loja!</div>
+    <button class="srm-close" onclick="closeStoreRewardModal()">✨ Incrível!</button>
+  </div>
+</div>
+
+<!-- Store screen -->
+<div class="screen" id="s-store">
+  <div class="s-store">
+
+    <!-- Hero -->
+    <div class="store-hero">
+      <div class="store-hero-badge">🏪 Portal Mágico</div>
+      <div class="store-hero-title" id="store-hero-title">Missões da Loja</div>
+      <div class="store-hero-sub" id="store-hero-sub">Aventuras que continuam na RiHappy</div>
+    </div>
+
+    <!-- Campaign Banner -->
+    <div class="store-campaign-banner" id="store-campaign-banner">
+      <span class="scb-emoji" id="scb-emoji">🌟</span>
+      <div class="scb-title" id="scb-title">Carregando campanha...</div>
+      <div class="scb-desc"  id="scb-desc"></div>
+      <div class="scb-timer" id="scb-timer"></div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="store-tabs">
+      <button class="store-tab active" onclick="storeTab('qr',this)">📱 Meu QR Code</button>
+      <button class="store-tab" onclick="storeTab('challenges',this)">⚔️ Desafios</button>
+      <button class="store-tab" onclick="storeTab('rewards',this)">🎁 Tesouros</button>
+      <button class="store-tab" onclick="storeTab('history',this)">📜 Histórico</button>
+    </div>
+
+    <!-- Panel: QR Code -->
+    <div class="store-panel active" id="store-panel-qr">
+      <div class="store-section">
+        <div class="store-section-title">Seu Código Secreto desta Semana</div>
+        <div class="qr-wrap">
+          <div class="qr-canvas-box">
+            <canvas id="store-qr-canvas" width="180" height="180"></canvas>
+          </div>
+          <div class="qr-mission-label" id="qr-mission-label">Missão Semanal</div>
+          <div class="qr-mission-sub" id="qr-mission-sub">Mostre este código ao Solzinho da loja!</div>
+          <div class="qr-expiry" id="qr-expiry">Válido até domingo</div>
+        </div>
+      </div>
+      <div class="store-section">
+        <div class="store-section-title">Escanear Código da Loja</div>
+        <button class="scan-btn" onclick="scanStoreQR()">
+          <span>📷</span>
+          <span>Escanear Código Secreto da Loja</span>
+        </button>
+        <div style="font-size:11px;color:rgba(255,255,255,.3);text-align:center;margin-top:10px;">
+          Encontre os códigos escondidos pela loja RiHappy!
+        </div>
+      </div>
+      <div class="visit-bar">
+        <div class="visit-count" id="visit-count">0</div>
+        <div class="visit-info">
+          <div class="visit-label">Visitas ao Portal Mágico</div>
+          <div class="visit-sub" id="visit-sub">Cada visita desbloqueia tesouros especiais!</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel: Challenges -->
+    <div class="store-panel" id="store-panel-challenges">
+      <div class="store-section">
+        <div class="store-section-title">Desafios desta Semana</div>
+        <div class="challenge-list" id="challenge-list"></div>
+      </div>
+    </div>
+
+    <!-- Panel: Rewards -->
+    <div class="store-panel" id="store-panel-rewards">
+      <div class="store-section">
+        <div class="store-section-title">Tesouros da Loja</div>
+        <div class="reward-grid" id="store-reward-grid"></div>
+      </div>
+    </div>
+
+    <!-- Panel: History -->
+    <div class="store-panel" id="store-panel-history">
+      <div class="store-section">
+        <div class="store-section-title">Aventuras Completadas</div>
+        <div id="store-history-list"></div>
+      </div>
+    </div>
+
+    <!-- Back button -->
+    <div style="padding:16px;text-align:center;">
+      <button class="bn" onclick="press(this);go('map')" style="padding:12px 32px;border-radius:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.6);font-size:13px;font-weight:700;cursor:pointer;">
+        ← Voltar ao Mapa
+      </button>
+    </div>
+
+  </div>
+</div>
+
 <!-- ══ WORLD SELECT (replaces simple age) ══ -->
 <div class="screen" id="s-worldsel">
   <div class="s-worldsel">
@@ -879,7 +1202,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);
 
     <!-- Back button -->
     <div style="position:relative;z-index:10;width:100%;display:flex;align-items:center;padding:0 0 10px;">
-      <button class="back-c" onclick="press(this);go('home')"
+      <button class="back-c" onclick="press(this);goBack()"
         style="background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.2);">←</button>
     </div>
 
@@ -952,7 +1275,13 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);
         </div>
       </div>
       <div style="display:flex;gap:8px;align-items:center;">
-        <div class="world-pill curriculum-badge" id="world-pill" onclick="press(this);showCurriculumPanel();" style="cursor:pointer;">☀️ Kids · A1</div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <div class="world-pill curriculum-badge" id="world-pill"
+               onclick="press(this);go('worldsel')"
+               style="cursor:pointer;" title="Trocar mundo">☀️ Kids · A1</div>
+          <div style="font-size:16px;cursor:pointer;opacity:.6;"
+               onclick="press(this);showCurriculumPanel()" title="Ver currículo">📋</div>
+        </div>
         <button class="parent-btn" onclick="openParentPortal()" title="Área dos Pais">👨‍👩‍👧</button>
         <div class="streak">
           <div class="streak-flame" id="streak-flame">🔥</div>
@@ -1004,6 +1333,10 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);
     <button class="bn" onclick="press(this);go('home')"><div class="bn-ic">🏠</div><div class="bn-dt"></div></button>
     <button class="bn on"><div class="bn-ic">🗺️</div><div class="bn-dt"></div></button>
     <button class="bn" onclick="press(this);go('worldmap')"><div class="bn-ic">🌍</div><div class="bn-dt"></div></button>
+      <button class="bn store-nav-btn" onclick="press(this);go('store')" title="Portal Mágico">
+        <span class="snb-icon">🏪</span>
+        <span>Loja</span>
+      </button>
     <button class="bn" onclick="press(this);openAlbum()"><div class="bn-ic">💎</div><div class="bn-dt"></div></button>
     <button class="bn" onclick="press(this);go('reward')"><div class="bn-ic">🏆</div><div class="bn-dt"></div></button>
   </div>
@@ -1014,7 +1347,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);
   <div class="s-words" id="words-inner">
     <div class="words-top" id="words-top">
       <div class="words-top-row">
-        <button class="back-c" onclick="press(this);solSay(MSG.words.back,()=>go('map'))">←</button>
+        <button class="back-c" onclick="press(this);solSay(MSG.words.back,()=>goBack())">←</button>
         <div class="words-top-ttl" id="words-ttl">Escolha uma categoria! 🎯</div>
       </div>
     </div>
@@ -1084,7 +1417,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);
   <div class="s-gallery" id="gallery-bg">
     <div class="gal-top" id="gal-top">
       <div class="gal-top-row">
-        <button class="back-c" onclick="press(this);solSay(MSG.gallery.back,()=>go('words'))">←</button>
+        <button class="back-c" onclick="press(this);solSay(MSG.gallery.back,()=>goBack())">←</button>
         <div class="gal-ttl" id="gal-ttl">Animais 🐾</div>
       </div>
     </div>
@@ -2172,6 +2505,7 @@ let playerXP     = 240;
 let playerLevel  = 3;
 let streakDays   = 3;
 let curScr       = 'home';
+let prevScr      = 'home';  // previous screen for back navigation
 let curCat       = 'animals';
 let playingIdx   = null;
 const COLL       = {};   // collected stickers: {catKey: Set}
@@ -2388,6 +2722,7 @@ function buildModuleGrid(){
 ═══════════════════════════════════════════════════════════════ */
 function go(name){
   if(name===curScr)return;
+  prevScr = curScr;  // track previous screen for back navigation
   if(curScr==='home' && name!=='home') try{stopBgMusic();}catch(e){}
   if(name==='home'){ try{ createBgMusic(); }catch(e){} }
   const outEl=document.getElementById('s-'+curScr);
@@ -2427,6 +2762,7 @@ function go(name){
     home:     MSG.home.boot,
     worldsel: 'Qual mundo é o seu? ... Toque na sua opção!',
     map:      'Bem-vindo ao mapa! ... Escolha um módulo!',
+    store:    'Portal Mágico! ... Descubra as missões da loja!',
     words:    'Escolha uma categoria e toque nela!',
     reward:   cfg.rewardMsg,
   };
@@ -2435,6 +2771,7 @@ function go(name){
   // Screen-specific inits
   if(name==='home')        setTimeout(tryShowDailyGift, 3000);
   if(name==='reward')      animReward();
+  if(name==='store'){ setTimeout(renderStoreScreen,120); }
   if(name==='map'){
     updateHUD();
     updateWordCounts();
@@ -6172,6 +6509,454 @@ function ppSaveSettings(){
   ppRenderAll();
 }
 
+
+
+/* ══════════════════════════════════════════════════════════════
+   STORE INTEGRATION SYSTEM — Portal Mágico RiHappy
+   QR Codes · Campanhas Sazonais · Desafios · Recompensas
+   Princípio: ZERO propaganda direta — tudo é aventura e missão
+══════════════════════════════════════════════════════════════ */
+
+// ── Storage helpers ──────────────────────────────────────────
+function storeGet(k){ try{ return JSON.parse(localStorage.getItem(k)||'null'); }catch(e){ return null; } }
+function storeSet(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+
+// ── Campanhas sazonais (8 campanhas) ────────────────────────
+const STORE_CAMPAIGNS = [
+  {
+    id:'kids_day', emoji:'🎉', months:[10],
+    title:'Aventura do Dia das Crianças!',
+    desc:'O Solzinho preparou missões especiais para celebrar! Venha descobrir os segredos escondidos na loja.',
+    color:'linear-gradient(135deg,rgba(255,107,0,.25),rgba(255,209,0,.15))',
+    border:'rgba(255,209,0,.4)',
+    bonusXP: 50, bonusLabel:'50 XP EXTRA',
+  },
+  {
+    id:'christmas', emoji:'🎄', months:[12],
+    title:'O Natal Mágico do Solzinho',
+    desc:'Missões natalinas escondem tesouros especiais! Descubra as palavras secretas de dezembro.',
+    color:'linear-gradient(135deg,rgba(0,180,80,.2),rgba(255,0,0,.15))',
+    border:'rgba(0,200,80,.3)',
+    bonusXP: 80, bonusLabel:'80 XP EXTRA',
+  },
+  {
+    id:'black_friday', emoji:'⚡', months:[11],
+    title:'Semana de Aventuras Épicas',
+    desc:'Missões épicas com recompensas lendárias! O Solzinho Capitão convida para a grande aventura.',
+    color:'linear-gradient(135deg,rgba(100,0,200,.3),rgba(255,107,0,.2))',
+    border:'rgba(150,50,255,.4)',
+    bonusXP: 100, bonusLabel:'100 XP EXTRA',
+  },
+  {
+    id:'carnival', emoji:'🎭', months:[2,3],
+    title:'Carnaval das Palavras!',
+    desc:'Cada palavra em inglês vira uma fantasia! Venha mostrar seus poderes linguísticos.',
+    color:'linear-gradient(135deg,rgba(255,209,0,.2),rgba(255,107,0,.2))',
+    border:'rgba(255,209,0,.3)',
+    bonusXP: 40, bonusLabel:'40 XP EXTRA',
+  },
+  {
+    id:'easter', emoji:'🐣', months:[4],
+    title:'Caça aos Tesouros de Páscoa',
+    desc:'O Solzinho escondeu palavras mágicas pela loja! Encontre todos os ovos de vocabulário.',
+    color:'linear-gradient(135deg,rgba(255,220,100,.2),rgba(100,255,150,.15))',
+    border:'rgba(255,220,100,.35)',
+    bonusXP: 45, bonusLabel:'45 XP EXTRA',
+  },
+  {
+    id:'back_to_school', emoji:'📚', months:[1,7,8],
+    title:'Missão: Volta às Aulas!',
+    desc:'O Solzinho vai ajudar você a arrasar no inglês! Missões especiais para começar o ano.',
+    color:'linear-gradient(135deg,rgba(0,120,255,.2),rgba(0,200,200,.15))',
+    border:'rgba(0,150,255,.3)',
+    bonusXP: 60, bonusLabel:'60 XP EXTRA',
+  },
+  {
+    id:'fathers_day', emoji:'👨‍👧', months:[8],
+    title:'Aventura em Família!',
+    desc:'Missões especiais para completar junto com o pai! O inglês é mais divertido em equipe.',
+    color:'linear-gradient(135deg,rgba(0,100,200,.2),rgba(0,180,180,.15))',
+    border:'rgba(0,150,200,.3)',
+    bonusXP: 55, bonusLabel:'55 XP EXTRA',
+  },
+  {
+    id:'rihappy_birthday', emoji:'🎂', months:[5,6],
+    title:'Aniversário do Portal Mágico!',
+    desc:'A loja está em festa e o Solzinho também! Tesouros especiais para os aventureiros mais corajosos.',
+    color:'linear-gradient(135deg,rgba(255,107,0,.25),rgba(200,0,200,.15))',
+    border:'rgba(255,107,0,.4)',
+    bonusXP: 70, bonusLabel:'70 XP EXTRA',
+  },
+];
+
+// ── Desafios semanais (5 desafios rotativos) ─────────────────
+const STORE_CHALLENGES = [
+  [
+    { id:'c1a', icon:'🐾', title:'Caçador de Animais', desc:'Fale 3 nomes de animais em inglês para o atendente!', reward:'+30 XP + Figurinha Rara', xp:30, rare:true },
+    { id:'c1b', icon:'🎨', title:'Artista das Cores',  desc:'Aponte 5 objetos coloridos na loja e diga a cor em inglês!', reward:'+25 XP + Cristal Azul', xp:25, rare:false },
+    { id:'c1c', icon:'🔢', title:'Contador Mágico',    desc:'Conte até 10 em inglês na entrada da loja!', reward:'+20 XP', xp:20, rare:false },
+    { id:'c1d', icon:'🌟', title:'Estrela da Pronúncia', desc:'Diga "Hello! My name is [seu nome]!" em voz alta!', reward:'+35 XP + Badge Explorador', xp:35, rare:false },
+    { id:'c1e', icon:'🏃', title:'Missão Relâmpago',   desc:'Encontre um brinquedo de cada categoria: animal, veículo, esporte!', reward:'+40 XP + Figurinha Épica', xp:40, rare:true },
+  ],
+  [
+    { id:'c2a', icon:'🐉', title:'Dragão das Palavras', desc:'Diga 5 palavras de ação em inglês: run, jump, fly, swim, dance!', reward:'+30 XP + Figurinha Rara', xp:30, rare:true },
+    { id:'c2b', icon:'🍎', title:'Chef de Inglês',      desc:'Aponte 4 alimentos na loja (brinquedos) e nomeie em inglês!', reward:'+25 XP', xp:25, rare:false },
+    { id:'c2c', icon:'👁️', title:'Detetive do Corpo',   desc:'Toque 5 partes do corpo e fale em inglês: head, eye, hand, foot, ear!', reward:'+20 XP + Cristal', xp:20, rare:false },
+    { id:'c2d', icon:'💛', title:'Explorador de Sentimentos', desc:'Descreva como se sente em inglês para um familiar: "I am happy/excited!"', reward:'+35 XP', xp:35, rare:false },
+    { id:'c2e', icon:'🌈', title:'Arco-íris Mágico',   desc:'Encontre 6 cores diferentes na loja e diga em inglês!', reward:'+45 XP + Figurinha Lendária', xp:45, rare:true },
+  ],
+  [
+    { id:'c3a', icon:'🤖', title:'Robô do Vocabulário', desc:'Diga 10 palavras em inglês que você aprendeu no app!', reward:'+50 XP + Figurinha Épica', xp:50, rare:true },
+    { id:'c3b', icon:'🦕', title:'Dino Explorador',     desc:'Encontre 3 brinquedos de dinossauro e nomeie as cores deles em inglês!', reward:'+30 XP', xp:30, rare:false },
+    { id:'c3c', icon:'🌙', title:'Missão Lunar',        desc:'Cante uma parte da música do Solzinho em inglês!', reward:'+40 XP + Cristal Raro', xp:40, rare:false },
+    { id:'c3d', icon:'🧸', title:'Família Unida',       desc:'Ensine 3 palavras em inglês para um familiar que está junto!', reward:'+35 XP + Badge Mestre', xp:35, rare:false },
+    { id:'c3e', icon:'⭐', title:'Grande Desafio Semanal', desc:'Complete todos os outros 4 desafios desta semana!', reward:'+100 XP + Figurinha Mítica', xp:100, rare:true },
+  ],
+];
+
+// ── Recompensas de loja (12 recompensas colecionáveis) ───────
+const STORE_REWARDS = [
+  { id:'r_first_visit',  icon:'🏪', name:'Primeira Visita',    how:'Visite a loja pela 1ª vez',    visits:1 },
+  { id:'r_3_visits',     icon:'🌟', name:'Aventureiro Fiel',   how:'3 visitas ao Portal Mágico',   visits:3 },
+  { id:'r_5_visits',     icon:'🏆', name:'Explorador Lendário',how:'5 visitas ao Portal Mágico',   visits:5 },
+  { id:'r_10_visits',    icon:'👑', name:'Mestre do Portal',   how:'10 visitas ao Portal Mágico',  visits:10 },
+  { id:'r_qr_first',     icon:'📱', name:'Primeiro QR Mágico', how:'Escaneie seu 1º código da loja', qr:1 },
+  { id:'r_qr_5',         icon:'🔮', name:'Caçador de Códigos', how:'5 QR Codes da loja escaneados', qr:5 },
+  { id:'r_challenge_1',  icon:'⚔️', name:'Primeiro Desafio',   how:'Complete 1 desafio da semana', challenges:1 },
+  { id:'r_challenge_5',  icon:'🎖️', name:'Guerreiro da Loja',  how:'Complete 5 desafios no total', challenges:5 },
+  { id:'r_challenge_10', icon:'🦁', name:'Campeão das Missões', how:'10 desafios completados',     challenges:10 },
+  { id:'r_campaign',     icon:'🎭', name:'Espírito da Campanha', how:'Participe de uma campanha sazonal', campaign:true },
+  { id:'r_streak_store', icon:'🔥', name:'Sequência de Aventuras', how:'Visite a loja 3 semanas seguidas', streak:3 },
+  { id:'r_grand_master', icon:'💎', name:'Grande Mestre RiHappy',  how:'Desbloqueie todos os outros tesouros', all:true },
+];
+
+// ── State ────────────────────────────────────────────────────
+function getStoreState(){
+  return storeGet('store_state') || {
+    visits:0, qrScanned:0, challengesDone:[], rewardsEarned:{},
+    weekVisits:{}, lastCampaign:null, history:[],
+  };
+}
+function saveStoreState(s){ storeSet('store_state',s); }
+
+// ── Get active campaign ──────────────────────────────────────
+function getActiveCampaign(){
+  const m = new Date().getMonth() + 1;
+  return STORE_CAMPAIGNS.find(c => c.months.includes(m)) || STORE_CAMPAIGNS[7];
+}
+
+// ── Get week key (YYYY-WW) ───────────────────────────────────
+function getWeekKey(){
+  const d=new Date(), y=d.getFullYear();
+  const start=new Date(y,0,1);
+  const wk=Math.ceil(((d-start)/86400000+start.getDay()+1)/7);
+  return `${y}-W${String(wk).padStart(2,'0')}`;
+}
+
+// ── Get week challenges (rotate weekly) ──────────────────────
+function getWeekChallenges(){
+  const wk = getWeekKey();
+  const idx = parseInt(wk.split('-W')[1]) % STORE_CHALLENGES.length;
+  return STORE_CHALLENGES[idx];
+}
+
+// ── QR Code generator (pure canvas, no CDN) ──────────────────
+function generateQR(canvas, data, size){
+  size = size || 180;
+  canvas.width = canvas.height = size;
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#FFFFFF';
+  ctx.fillRect(0,0,size,size);
+
+  // Build simple matrix from data string
+  const n = 21; // QR v1 style grid
+  const cell = Math.floor(size / n);
+  const pad  = Math.floor((size - cell*n) / 2);
+
+  // Deterministic pattern from data hash
+  let hash = 0;
+  for(let i=0;i<data.length;i++) hash = ((hash<<5)-hash)+data.charCodeAt(i)|0;
+  const seed = Math.abs(hash);
+
+  // Draw finder patterns (fixed QR corners)
+  function finder(ox, oy){
+    ctx.fillStyle='#000';
+    ctx.fillRect(pad+ox*cell, pad+oy*cell, 7*cell, 7*cell);
+    ctx.fillStyle='#fff';
+    ctx.fillRect(pad+(ox+1)*cell, pad+(oy+1)*cell, 5*cell, 5*cell);
+    ctx.fillStyle='#000';
+    ctx.fillRect(pad+(ox+2)*cell, pad+(oy+2)*cell, 3*cell, 3*cell);
+  }
+  finder(0,0); finder(14,0); finder(0,14);
+
+  // Data modules
+  ctx.fillStyle='#000';
+  let r = seed;
+  for(let row=0;row<n;row++){
+    for(let col=0;col<n;col++){
+      // Skip finder pattern areas
+      if((row<8&&col<8)||(row<8&&col>12)||(row>12&&col<8)) continue;
+      r = (r*1664525+1013904223)&0xFFFFFFFF;
+      // Encode data: XOR with data char codes
+      const dv = data.charCodeAt((row*n+col)%data.length);
+      if(((r>>>16)^dv)&1){
+        ctx.fillRect(pad+col*cell, pad+row*cell, cell, cell);
+      }
+    }
+  }
+
+  // Timing patterns
+  ctx.fillStyle='#000';
+  for(let i=8;i<13;i++){
+    if(i%2===0){
+      ctx.fillRect(pad+i*cell,pad+6*cell,cell,cell);
+      ctx.fillRect(pad+6*cell,pad+i*cell,cell,cell);
+    }
+  }
+
+  // Draw mission info below QR
+  return true;
+}
+
+// ── Build week QR data ────────────────────────────────────────
+function buildQRData(){
+  const state = getStoreState();
+  const wk    = getWeekKey();
+  const camp  = getActiveCampaign();
+  return `TOYLAND:${playerName||'EXPLORER'}:${wk}:${camp.id}:${currentWorld}:V${state.visits}`;
+}
+
+// ── Render store screen ──────────────────────────────────────
+function renderStoreScreen(){
+  const state   = getStoreState();
+  const camp    = getActiveCampaign();
+  const challs  = getWeekChallenges();
+  const wk      = getWeekKey();
+
+  // Campaign banner
+  const banner = document.getElementById('store-campaign-banner');
+  if(banner){
+    banner.style.background = camp.color;
+    banner.style.border = `1px solid ${camp.border}`;
+  }
+  const setEl = (id,v) => { const e=document.getElementById(id); if(e)e.textContent=v; };
+  setEl('scb-emoji', camp.emoji);
+  setEl('scb-title', camp.title);
+  setEl('scb-desc',  camp.desc);
+  const daysLeft = 7 - new Date().getDay() || 7;
+  setEl('scb-timer', `🎯 Bônus: ${camp.bonusLabel} · Missão termina em ${daysLeft} dia${daysLeft!==1?'s':''}`);
+
+  // QR Code
+  const qrCanvas = document.getElementById('store-qr-canvas');
+  if(qrCanvas) generateQR(qrCanvas, buildQRData(), 180);
+  setEl('qr-mission-label', `Missão ${wk} — ${camp.emoji} ${camp.title.split('!')[0]}`);
+  setEl('qr-mission-sub',   `Olá, ${playerName||'Aventureiro'}! Mostre este código na loja.`);
+  const sun = new Date(); sun.setDate(sun.getDate()+(7-sun.getDay()));
+  setEl('qr-expiry', `Válido até ${sun.toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'})}`);
+
+  // Visit counter
+  setEl('visit-count', state.visits);
+  const nextMilestone = [1,3,5,10].find(n=>n>state.visits) || '∞';
+  setEl('visit-sub', `Próximo tesouro em ${nextMilestone} visita${nextMilestone!==1?'s':''}!`);
+
+  // Challenges
+  const cl = document.getElementById('challenge-list');
+  if(cl){
+    cl.innerHTML = challs.map(ch => {
+      const done = state.challengesDone.includes(ch.id);
+      return `<div class="challenge-item${done?' done':''}" id="ch-${ch.id}">
+        <div class="ch-icon">${ch.icon}</div>
+        <div class="ch-info">
+          <div class="ch-title">${ch.title}</div>
+          <div class="ch-desc">${ch.desc}</div>
+          <div class="ch-reward">🏆 ${ch.reward}</div>
+        </div>
+        <div class="ch-status">${done?'✅':'<button onclick="completeChallenge(\''+ch.id+'\')" style="background:rgba(255,107,0,.2);border:1px solid rgba(255,107,0,.4);border-radius:10px;color:#FF6B00;font-size:11px;font-weight:800;padding:6px 10px;cursor:pointer;">Completei!</button>'}</div>
+      </div>`;
+    }).join('');
+  }
+
+  // Rewards grid
+  const rg = document.getElementById('store-reward-grid');
+  if(rg){
+    const earned = state.rewardsEarned || {};
+    rg.innerHTML = STORE_REWARDS.map(r => {
+      const unlocked = !!earned[r.id];
+      return `<div class="reward-card${unlocked?' unlocked':' locked'}">
+        <div class="rc-icon">${r.icon}</div>
+        <div class="rc-name">${r.name}</div>
+        <div class="rc-how">${r.how}</div>
+        ${unlocked ? `<div class="rc-date">✅ ${earned[r.id]}</div>` : ''}
+      </div>`;
+    }).join('');
+  }
+
+  // History
+  const hl = document.getElementById('store-history-list');
+  if(hl){
+    if(!state.history.length){
+      hl.innerHTML = '<div style="color:rgba(255,255,255,.3);font-size:13px;text-align:center;padding:24px;">Suas aventuras na loja aparecerão aqui!</div>';
+    } else {
+      hl.innerHTML = state.history.slice(0,20).map(h =>
+        `<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);">
+          <span style="font-size:24px;">${h.icon||'🏪'}</span>
+          <div style="flex:1;">
+            <div style="font-size:13px;font-weight:800;color:#fff;">${h.title}</div>
+            <div style="font-size:10px;color:rgba(255,255,255,.35);">${h.date}</div>
+          </div>
+          <div style="font-size:11px;color:#FFD100;font-weight:800;">${h.xp?'+'+h.xp+' XP':''}</div>
+        </div>`
+      ).join('');
+    }
+  }
+
+  // Check and grant rewards
+  checkStoreRewards(state);
+}
+
+// ── Tab navigation ────────────────────────────────────────────
+function storeTab(name, btn){
+  document.querySelectorAll('.store-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.store-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  const panel = document.getElementById('store-panel-'+name);
+  if(panel) panel.classList.add('active');
+}
+
+// ── Complete challenge ────────────────────────────────────────
+function completeChallenge(chId){
+  const state = getStoreState();
+  if(state.challengesDone.includes(chId)) return;
+  state.challengesDone.push(chId);
+
+  const ch = getWeekChallenges().find(c=>c.id===chId);
+  if(ch){
+    playerXP += ch.xp;
+    state.history.unshift({
+      icon: ch.icon, title: `Desafio: ${ch.title}`,
+      date: new Date().toLocaleDateString('pt-BR'),
+      xp: ch.xp,
+    });
+    showStoreRewardModal(ch.icon, `Desafio Completado!`,
+      `+${ch.xp} XP conquistados! ${ch.rare?'🌟 Figurinha rara desbloqueada!':''}`);
+  }
+
+  // Check if all 5 done → bonus
+  const wkChalls = getWeekChallenges();
+  const allDone  = wkChalls.filter(c=>!c.id.endsWith('e')).every(c=>state.challengesDone.includes(c.id));
+  if(allDone && !state.challengesDone.includes(wkChalls[4].id)){
+    state.challengesDone.push(wkChalls[4].id);
+    playerXP += 100;
+  }
+
+  saveStoreState(state);
+  renderStoreScreen();
+}
+
+// ── Scan store QR (simulate — real app would use camera API) ─
+function scanStoreQR(){
+  // In production: navigator.mediaDevices.getUserMedia + QR decoder
+  // Here: simulate with a prompt for demo purposes
+  const code = window.prompt(
+    '📷 Digite o código encontrado na loja:\n(Procure os cartazes com "Código Secreto do Solzinho")',
+    ''
+  );
+  if(!code || !code.trim()) return;
+
+  const c = code.trim().toUpperCase();
+  const validPrefixes = ['SOL','RIHAPPY','TOYLAND','PORTAL','MAGIC'];
+  const isValid = validPrefixes.some(p=>c.startsWith(p)) || c.length >= 6;
+
+  if(isValid){
+    const state = getStoreState();
+    state.visits   = (state.visits||0) + 1;
+    state.qrScanned = (state.qrScanned||0) + 1;
+    const camp     = getActiveCampaign();
+    const xpBonus  = camp.bonusXP || 30;
+    playerXP += xpBonus;
+    state.history.unshift({
+      icon:'📱', title:`QR Mágico escaneado! Código: ${c.slice(0,8)}...`,
+      date: new Date().toLocaleDateString('pt-BR'),
+      xp: xpBonus,
+    });
+    saveStoreState(state);
+    showStoreRewardModal('✨', 'Código Secreto Desbloqueado!',
+      `Você descobriu um tesouro escondido! +${xpBonus} XP e a aventura continua...`);
+    setTimeout(renderStoreScreen, 800);
+  } else {
+    showStoreRewardModal('🤔', 'Código não reconhecido',
+      'Procure os cartazes do Solzinho na loja e tente novamente!');
+  }
+}
+
+// ── Check and grant store rewards ────────────────────────────
+function checkStoreRewards(state){
+  const today   = new Date().toLocaleDateString('pt-BR');
+  const earned  = state.rewardsEarned || {};
+  const visits  = state.visits || 0;
+  const qr      = state.qrScanned || 0;
+  const chTotal = state.challengesDone.length;
+  let changed   = false;
+
+  function grant(r){
+    if(!earned[r.id]){ earned[r.id]=today; changed=true; }
+  }
+
+  STORE_REWARDS.forEach(r => {
+    if(r.visits  && visits  >= r.visits)  grant(r);
+    if(r.qr      && qr      >= r.qr)      grant(r);
+    if(r.challenges && chTotal >= r.challenges) grant(r);
+    if(r.campaign && state.history.length > 0) grant(r);
+    if(r.all && Object.keys(earned).length >= STORE_REWARDS.length - 1) grant(r);
+  });
+
+  if(changed){
+    state.rewardsEarned = earned;
+    saveStoreState(state);
+  }
+}
+
+// ── Reward modal ──────────────────────────────────────────────
+function showStoreRewardModal(icon, title, desc){
+  const modal = document.getElementById('store-reward-modal');
+  if(!modal) return;
+  const setEl = (id,v) => { const e=document.getElementById(id); if(e)e.textContent=v; };
+  setEl('srm-icon',  icon);
+  setEl('srm-title', title);
+  setEl('srm-desc',  desc);
+  modal.classList.add('open');
+  try{
+    if(typeof gsap!=='undefined'){
+      gsap.fromTo('.srm-box',{scale:.7,opacity:0},{scale:1,opacity:1,duration:.4,ease:'spring'});
+    }
+  }catch(e){}
+}
+
+function closeStoreRewardModal(){
+  const modal = document.getElementById('store-reward-modal');
+  if(modal) modal.classList.remove('open');
+}
+
+// ── Store screen init is called from go() entry handlers below ──
+// (renderStoreScreen is invoked via the go() screen-specific handlers)
+
+
+// ── Smart back navigation ──────────────────────────────────────
+function goBack(){
+  // Sensible back targets per screen
+  const backMap = {
+    worldsel: prevScr === 'map' ? 'map' : 'home',
+    words:    'map',
+    gallery:  'words',
+    reward:   'map',
+    friends:  'home',
+    worldmap: 'map',
+    album:    'map',
+    store:    'map',
+  };
+  const target = backMap[curScr] || prevScr || 'home';
+  go(target);
+}
 
 let curriculumPanelOpen = false;
 
