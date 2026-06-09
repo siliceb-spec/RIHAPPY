@@ -936,6 +936,117 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);
 .store-panel { display:none; padding:0 16px; }
 .store-panel.active { display:block; }
 
+/* ══ MUNDO DOS BRINQUEDOS — CSS ══ */
+.s-toyworld {
+  display:flex; flex-direction:column;
+  height:100%; background:linear-gradient(180deg,#1A0A00,#060012);
+  overflow-y:auto; padding-bottom:20px;
+}
+.tw-header {
+  padding:14px 16px 10px;
+  background:rgba(255,107,53,.15);
+  border-bottom:1px solid rgba(255,107,53,.3);
+  text-align:center; position:relative;
+}
+.tw-header .back-c {
+  position:absolute; left:12px; top:50%; transform:translateY(-50%);
+}
+.tw-title {
+  font-size:20px; font-weight:700;
+  color:#FFB347; letter-spacing:.5px;
+}
+.tw-section {
+  padding:14px 14px 6px;
+}
+.tw-section-title {
+  font-size:13px; font-weight:700;
+  color:rgba(255,255,255,.7); text-transform:uppercase;
+  letter-spacing:1px; margin-bottom:10px;
+  border-left:3px solid #FF6B35; padding-left:8px;
+}
+.tw-chars-grid {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:8px;
+}
+.tw-char-card {
+  background:rgba(255,255,255,.06); border-radius:12px;
+  padding:10px 6px; text-align:center; cursor:pointer;
+  border:1px solid rgba(255,255,255,.1);
+  transition:transform .15s;
+}
+.tw-char-card:active { transform:scale(.93); }
+.tw-char-card .tc-emoji { font-size:26px; }
+.tw-char-card .tc-name {
+  font-size:9px; color:rgba(255,255,255,.75);
+  margin-top:4px; font-weight:600;
+}
+.tw-char-card .tc-type {
+  font-size:8px; color:rgba(255,179,71,.8);
+  margin-top:2px;
+}
+.tw-stories-list, .tw-missions-list {
+  display:flex; flex-direction:column; gap:8px;
+}
+.tw-story-card, .tw-mission-card {
+  background:rgba(255,255,255,.06); border-radius:12px;
+  padding:12px 14px; cursor:pointer;
+  border:1px solid rgba(255,255,255,.1);
+  display:flex; align-items:center; gap:12px;
+  transition:transform .15s;
+}
+.tw-story-card:active, .tw-mission-card:active { transform:scale(.97); }
+.tw-card-icon { font-size:28px; flex-shrink:0; }
+.tw-card-body { flex:1; }
+.tw-card-title { font-size:13px; font-weight:700; color:#fff; }
+.tw-card-sub {
+  font-size:10px; color:rgba(255,255,255,.5);
+  margin-top:2px;
+}
+.tw-card-world {
+  font-size:9px; padding:2px 6px; border-radius:8px;
+  font-weight:700; margin-top:4px; display:inline-block;
+}
+.tw-world-mini  { background:rgba(255,182,193,.25); color:#FFB6C1; }
+.tw-world-kids  { background:rgba(255,215,0,.2);    color:#FFD700; }
+.tw-world-adv   { background:rgba(100,200,255,.2);  color:#64C8FF; }
+.tw-coll-grid {
+  display:grid; grid-template-columns:repeat(5,1fr); gap:7px;
+}
+.tw-coll-item {
+  background:rgba(255,255,255,.06); border-radius:10px;
+  padding:8px 4px; text-align:center; cursor:pointer;
+  border:1px solid rgba(255,255,255,.08);
+  transition:transform .15s;
+}
+.tw-coll-item:active { transform:scale(.9); }
+.tw-coll-item.locked { opacity:.35; }
+.tw-coll-emoji { font-size:22px; }
+.tw-coll-name {
+  font-size:7px; color:rgba(255,255,255,.6);
+  margin-top:3px; line-height:1.2;
+}
+.tw-coll-rarity { font-size:9px; margin-top:2px; }
+.tw-modal-overlay {
+  position:fixed; inset:0; z-index:9000;
+  background:rgba(0,0,0,.75); display:none;
+  align-items:center; justify-content:center;
+}
+.tw-modal-overlay.active { display:flex; }
+.tw-modal-box {
+  background:linear-gradient(135deg,#1A0A00,#0A0020);
+  border:1px solid rgba(255,107,53,.4); border-radius:20px;
+  padding:24px; max-width:320px; width:90%;
+  text-align:center;
+}
+.tw-modal-emoji { font-size:56px; margin-bottom:8px; }
+.tw-modal-title { font-size:18px; font-weight:700; color:#FFB347; margin-bottom:6px; }
+.tw-modal-sub   { font-size:12px; color:rgba(255,255,255,.65); margin-bottom:4px; }
+.tw-modal-vocab { font-size:11px; color:#FF9500; margin-bottom:14px; }
+.tw-modal-close {
+  background:#FF6B35; border:none; color:#fff;
+  font-size:14px; font-weight:700; padding:10px 24px;
+  border-radius:20px; cursor:pointer;
+}
+
 </style>
 </head>
 <body>
@@ -971,6 +1082,12 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);
       </div>
       <button class="cta" onclick="press(this);solSay(MSG.home.start,()=>go('worldsel'))">
         <span style="font-size:28px;">☀️</span> Começar! <span style="font-size:22px;">→</span>
+      </button>
+      <!-- Mundo dos Brinquedos button -->
+      <button class="friends-btn" style="background:linear-gradient(135deg,#FF6B35,#FF9500);border:2px solid #FFB347;margin-bottom:10px;" onclick="press(this);go('toyworld')">
+        <span class="friends-btn-icons">🧸🚀🎨🏎️🥁🧩</span>
+        <span class="friends-btn-label">Mundo dos Brinquedos!</span>
+        <span style="font-size:18px;">→</span>
       </button>
       <!-- Friends button -->
       <button class="friends-btn" onclick="press(this);go('friends')">
@@ -1707,7 +1824,61 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);
   </div>
 </div>
 
+<!-- ══ MUNDO DOS BRINQUEDOS ══ -->
+<div class="screen" id="s-toyworld">
+  <div class="s-toyworld">
+    <div class="tw-header">
+      <button class="back-c" onclick="press(this);goBack()">←</button>
+      <div class="tw-title">🧸 Mundo dos Brinquedos</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:2px;">Aprenda inglês brincando!</div>
+    </div>
+
+    <!-- Personagens-Brinquedo -->
+    <div class="tw-section">
+      <div class="tw-section-title">🎭 Personagens</div>
+      <div class="tw-chars-grid" id="tw-chars-grid">
+        <!-- gerado por JS -->
+      </div>
+    </div>
+
+    <!-- Histórias -->
+    <div class="tw-section">
+      <div class="tw-section-title">📖 Histórias</div>
+      <div class="tw-stories-list" id="tw-stories-list">
+        <!-- gerado por JS -->
+      </div>
+    </div>
+
+    <!-- Missões -->
+    <div class="tw-section">
+      <div class="tw-section-title">⚔️ Missões</div>
+      <div class="tw-missions-list" id="tw-missions-list">
+        <!-- gerado por JS -->
+      </div>
+    </div>
+
+    <!-- Colecionáveis -->
+    <div class="tw-section">
+      <div class="tw-section-title">💎 Colecionáveis</div>
+      <div class="tw-coll-grid" id="tw-coll-grid">
+        <!-- gerado por JS -->
+      </div>
+    </div>
+  </div>
+</div>
+
 </div><!-- /device -->
+
+<!-- TOYWORLD MODAL -->
+<div class="tw-modal-overlay" id="tw-modal-overlay">
+  <div class="tw-modal-box">
+    <div class="tw-modal-emoji">🧸</div>
+    <div class="tw-modal-title">Título</div>
+    <div class="tw-modal-sub">Sub</div>
+    <div class="tw-modal-vocab"></div>
+    <button class="tw-modal-close">Fechar</button>
+  </div>
+</div>
 
 <script>
 
@@ -2787,6 +2958,7 @@ function go(name){
   if(name==='friends')     setTimeout(openFriends, 400);
   if(name==='worldmap')    setTimeout(initWorldMap, 300);
   if(name==='album')       setTimeout(buildAlbumScreen, 300);
+  if(name==='toyworld')    setTimeout(renderToyWorld, 200);
 
   // Pet HUD visibility
   if(['home','worldsel'].includes(name)){
@@ -5599,6 +5771,290 @@ function tryShowDailyGift(){
 /* ═══════════════════════════════════════════════════════════════
    COLLECTIBLES SYSTEM — 7 Categories, 6 Rarities, Full Economy
 ═══════════════════════════════════════════════════════════════ */
+
+// ══════════════════════════════════════════════════════════════
+// MUNDO DOS BRINQUEDOS — Dados e Lógica
+// ══════════════════════════════════════════════════════════════
+
+const TOYS_CHARACTERS = [
+  {id:'blocky',   emoji:'🧱', name:'Blocky',    type:'Blocos',     role:'Construção',  vocab:'big · small · tall · red · blue',   world:'mini'},
+  {id:'spina',    emoji:'🌀', name:'Spina',     type:'Pião',       role:'Ação',        vocab:'fast · slow · spin · go · stop',    world:'mini'},
+  {id:'rocketinha',emoji:'🚀',name:'Rocketinha',type:'Foguete',    role:'Aventura',    vocab:'up · down · stars · round · fly',   world:'mini'},
+  {id:'pinty',    emoji:'🎨', name:'Pinty',     type:'Pintura',    role:'Arte',        vocab:'color · brush · draw · beautiful',  world:'mini'},
+  {id:'drummie',  emoji:'🥁', name:'Drummie',   type:'Tambor',     role:'Música',      vocab:'loud · quiet · one · two · three',  world:'mini'},
+  {id:'puzzley',  emoji:'🧩', name:'Puzzley',   type:'Puzzle',     role:'Detetive',    vocab:'where · find · match · piece',      world:'kids'},
+  {id:'cubby',    emoji:'🟥', name:'Cubby',     type:'Cubo',       role:'Matemático',  vocab:'color · turn · solve · smart',      world:'kids'},
+  {id:'doly',     emoji:'🪆', name:'Doly',      type:'Boneca',     role:'Família',     vocab:'mom · dad · sister · brother',      world:'kids'},
+  {id:'racey',    emoji:'🏎️', name:'Racey',     type:'Carrinho',   role:'Velocista',   vocab:'fast · winner · race · vroom',      world:'kids'},
+  {id:'kity',     emoji:'🍳', name:'Kity',      type:'Cozinha',    role:'Chef',        vocab:'cook · eat · yummy · kitchen · hot',world:'kids'},
+  {id:'bally',    emoji:'⚽', name:'Bally',     type:'Bola',       role:'Esportivo',   vocab:'kick · run · team · goal · play',   world:'kids'},
+  {id:'bricky',   emoji:'🏗️', name:'Bricky',    type:'LEGO',       role:'Arquiteto',   vocab:'build · fall · again · strong',     world:'kids'},
+  {id:'stringy',  emoji:'🎭', name:'Stringy',   type:'Fantoche',   role:'Contador',    vocab:'once · upon · time · brave',        world:'kids'},
+  {id:'floppy',   emoji:'🧸', name:'Floppy',    type:'Pelúcia',    role:'Cuidado',     vocab:'share · friend · kind · happy',     world:'kids'},
+  {id:'zoomy',    emoji:'🚁', name:'Zoomy',     type:'Drone',      role:'Explorador',  vocab:'fly · high · map · north · south',  world:'kids'},
+  {id:'splashy',  emoji:'🌊', name:'Splashy',   type:'Aquático',   role:'Mergulhador', vocab:'swim · deep · wave · fish · wet',   world:'adventure'},
+  {id:'rolly',    emoji:'🛹', name:'Rolly',     type:'Skate',      role:'Radical',     vocab:'balance · jump · trick · cool',     world:'adventure'},
+  {id:'starry',   emoji:'🔭', name:'Starry',    type:'Telescópio', role:'Astronômico', vocab:'planet · orbit · galaxy · light',   world:'adventure'},
+  {id:'crafty',   emoji:'✂️', name:'Crafty',    type:'Artesanato', role:'Criativo',    vocab:'create · glue · cut · art',         world:'adventure'},
+  {id:'chompy',   emoji:'🦕', name:'Chompy',    type:'Dinossauro', role:'Pré-histórico',vocab:'ancient · huge · roar · fossil',   world:'adventure'},
+  {id:'twisty',   emoji:'🎩', name:'Twisty',    type:'Slime',      role:'Mágico',      vocab:'magic · appear · disappear · wow',  world:'adventure'},
+  {id:'bouncy',   emoji:'🏀', name:'Bouncy',    type:'Trampolim',  role:'Saltador',    vocab:'high · jump · record · bounce',     world:'adventure'},
+  {id:'wheely',   emoji:'🚲', name:'Wheely',    type:'Bicicleta',  role:'Aventureiro', vocab:'street · turn · left · right',      world:'adventure'},
+  {id:'sparky',   emoji:'🤖', name:'Sparky',    type:'Robô',       role:'Tecnológico', vocab:'robot · beep · save · mission',     world:'adventure'},
+  {id:'melody',   emoji:'🎵', name:'Melody',    type:'Instrumento',role:'Musical',     vocab:'music · note · sing · hear · feel', world:'adventure'},
+];
+
+const TOYS_STORIES = [
+  {id:'s01',emoji:'🧱',title:'Blocky Builds a Castle',   char:'blocky',   vocab:'big · small · tall · red · blue',       world:'mini',   desc:'Blocky usa blocos coloridos para construir um castelo incrível!'},
+  {id:'s02',emoji:'🌀',title:"Spina's Big Race",         char:'spina',    vocab:'fast · slow · spin · go · stop',        world:'mini',   desc:'Spina desafia todos para a maior corrida de piões do Brasil!'},
+  {id:'s03',emoji:'🚀',title:'Rocketinha Goes to the Moon',char:'rocketinha',vocab:'up · down · stars · round · fly',     world:'mini',   desc:'Rocketinha decola rumo à lua numa aventura espacial inesquecível!'},
+  {id:'s04',emoji:'🎨',title:'Pinty Paints the World',   char:'pinty',    vocab:'colors · brush · draw · beautiful',     world:'mini',   desc:'Pinty tem um pincel mágico que transforma tudo em arte colorida!'},
+  {id:'s05',emoji:'🥁',title:"Drummie's Concert",        char:'drummie',  vocab:'loud · quiet · one · two · three',      world:'mini',   desc:'Drummie convida toda a turma para um show musical incrível!'},
+  {id:'s06',emoji:'🧩',title:"Puzzley's Missing Piece",  char:'puzzley',  vocab:'where · find · match · piece · look',   world:'kids',   desc:'Puzzley precisa encontrar a peça perdida antes que o tempo acabe!'},
+  {id:'s07',emoji:'🟥',title:"Cubby's Color Challenge",  char:'cubby',    vocab:'colors · turn · solve · smart · win',   world:'kids',   desc:'Cubby desafia você a resolver o cubo usando apenas inglês!'},
+  {id:'s08',emoji:'🪆',title:"Doly's Family Day",        char:'doly',     vocab:'mom · dad · sister · brother · love',   world:'kids',   desc:'Doly apresenta toda sua família numa tarde especial juntos!'},
+  {id:'s09',emoji:'🏎️',title:'Racey Wins the Trophy',   char:'racey',    vocab:'fast · winner · race · vroom · go',     world:'kids',   desc:'Racey treina muito para vencer o campeonato mundial de carrinhos!'},
+  {id:'s10',emoji:'🍳',title:'Kity Cooks a Surprise',    char:'kity',     vocab:'cook · eat · yummy · kitchen · hot',    world:'kids',   desc:'Kity prepara uma receita secreta para surpreender seus amigos!'},
+  {id:'s11',emoji:'⚽',title:"Bally's Big Match",        char:'bally',    vocab:'kick · run · team · goal · play',       world:'kids',   desc:'Bally lidera o time na final mais emocionante da temporada!'},
+  {id:'s12',emoji:'🏗️',title:'Bricky and the Tall Tower',char:'bricky',  vocab:'build · fall · again · strong · high',  world:'kids',   desc:'Bricky não desiste e constrói a torre mais alta do mundo!'},
+  {id:'s13',emoji:'🎭',title:'Stringy Tells a Story',    char:'stringy',  vocab:'once · upon · time · brave · dragon',   world:'kids',   desc:'Stringy narra uma aventura épica com heróis e dragões!'},
+  {id:'s14',emoji:'🧸',title:'Floppy Learns to Share',   char:'floppy',   vocab:'share · friend · kind · happy · give',  world:'kids',   desc:'Floppy descobre que compartilhar é a maior aventura de todas!'},
+  {id:'s15',emoji:'🚁',title:'Zoomy Explores the City',  char:'zoomy',    vocab:'fly · high · map · north · south · see',world:'kids',   desc:'Zoomy sobrevoa a cidade descobrindo lugares incríveis!'},
+  {id:'s16',emoji:'🌊',title:"Splashy's Ocean Adventure",char:'splashy',  vocab:'swim · deep · wave · fish · wet · blue',world:'adventure',desc:'Splashy mergulha nas profundezas do oceano em busca de tesouros!'},
+  {id:'s17',emoji:'🛹',title:"Rolly's Street Tricks",    char:'rolly',    vocab:'balance · jump · trick · cool · street',world:'adventure',desc:'Rolly treina manobras radicais para o campeonato mundial!'},
+  {id:'s18',emoji:'🔭',title:'Starry Discovers a New Planet',char:'starry',vocab:'planet · orbit · galaxy · light · far', world:'adventure',desc:'Starry faz uma descoberta astronômica que mudará a história!'},
+  {id:'s19',emoji:'✂️',title:'Crafty Creates a Masterpiece',char:'crafty',vocab:'create · glue · cut · beautiful · art', world:'adventure',desc:'Crafty usa materiais recicláveis para criar uma obra de arte!'},
+  {id:'s20',emoji:'🦕',title:"Chompy's Time Machine",    char:'chompy',   vocab:'ancient · huge · roar · fossil · time', world:'adventure',desc:'Chompy viaja ao passado para conhecer outros dinossauros!'},
+  {id:'s21',emoji:'🎩',title:"Twisty's Magic Show",      char:'twisty',   vocab:'magic · appear · disappear · wow · how',world:'adventure',desc:'Twisty apresenta um show de mágica usando apenas palavras inglesas!'},
+  {id:'s22',emoji:'🏀',title:"Bouncy's World Record",    char:'bouncy',   vocab:'high · jump · record · bounce · wow',   world:'adventure',desc:'Bouncy tenta bater o recorde mundial de saltos no trampolim!'},
+  {id:'s23',emoji:'🚲',title:'Wheely Crosses the City',  char:'wheely',   vocab:'street · turn · left · right · fast',   world:'adventure',desc:'Wheely planeja a rota perfeita para atravessar a cidade toda!'},
+  {id:'s24',emoji:'🤖',title:'Sparky Saves the Day',     char:'sparky',   vocab:'robot · beep · save · mission · brave', world:'adventure',desc:'Sparky ativa seu modo herói para salvar todos os amigos!'},
+  {id:'s25',emoji:'🎵',title:'Melody and the Lost Song', char:'melody',   vocab:'music · note · sing · hear · feel · play',world:'adventure',desc:'Melody parte em busca da melodia perdida nos confins do mundo!'},
+];
+
+const TOYS_MISSIONS = [
+  {id:'m01',emoji:'🧱',title:'Monte o Castelo',    char:'blocky',   desc:'Ordene as palavras de tamanho em inglês',       reward:'toy_blocky_common',   xp:20},
+  {id:'m02',emoji:'🏎️',title:'Corrida de Palavras', char:'racey',    desc:'10 palavras corretas em 60 segundos',           reward:'toy_racey_epic',      xp:50},
+  {id:'m03',emoji:'🚀',title:'Missão Espacial',    char:'rocketinha',desc:'Sequência numérica 1-10 em inglês',             reward:'toy_rocketinha_common',xp:20},
+  {id:'m04',emoji:'🎨',title:'Pinte o Arco-íris',  char:'pinty',    desc:'Match de 6 cores EN→PT',                        reward:'toy_pinty_common',    xp:20},
+  {id:'m05',emoji:'🥁',title:'Ritmo do Drummie',   char:'drummie',  desc:'Repita o padrão sonoro com palavras',           reward:'toy_drummie_common',  xp:20},
+  {id:'m06',emoji:'🧩',title:'Resolva o Puzzle',   char:'puzzley',  desc:'Associe 10 imagens às palavras corretas',       reward:'toy_puzzley_rare',    xp:35},
+  {id:'m07',emoji:'🟥',title:'Cubby Color Dash',   char:'cubby',    desc:'6 cores corretas em 30 segundos',               reward:'toy_cubby_common',    xp:25},
+  {id:'m08',emoji:'🪆',title:'Família da Doly',    char:'doly',     desc:'Complete vocabulário de família',               reward:'toy_doly_common',     xp:20},
+  {id:'m09',emoji:'🍳',title:'Receita do Kity',    char:'kity',     desc:'5 comidas + 3 ações de cozinha',                reward:'toy_kity_rare',       xp:35},
+  {id:'m10',emoji:'⚽',title:'Gol do Bally',        char:'bally',    desc:'Siga a instrução e marque o gol!',              reward:'toy_bally_common',    xp:25},
+  {id:'m11',emoji:'🏗️',title:'Torre do Bricky',    char:'bricky',   desc:'3 adjetivos de tamanho em sequência',           reward:'toy_bricky_common',   xp:20},
+  {id:'m12',emoji:'🎭',title:'História do Stringy', char:'stringy',  desc:'Complete 5 frases narrativas',                  reward:'toy_stringy_common',  xp:30},
+  {id:'m13',emoji:'🧸',title:'Abrace o Floppy',    char:'floppy',   desc:'5 emoções em inglês',                           reward:'toy_floppy_common',   xp:20},
+  {id:'m14',emoji:'🚁',title:'Rota do Zoomy',       char:'zoomy',    desc:'Left · Right · Up · Down sequência',           reward:'toy_zoomy_rare',      xp:35},
+  {id:'m15',emoji:'🌊',title:'Mergulho do Splashy', char:'splashy',  desc:'8 animais aquáticos em inglês',                 reward:'toy_splashy_common',  xp:30},
+  {id:'m16',emoji:'🛹',title:'Manobra do Rolly',    char:'rolly',    desc:'5 verbos de movimento avançado',                reward:'toy_rolly_common',    xp:30},
+  {id:'m17',emoji:'🔭',title:'Constelação Starry',  char:'starry',   desc:'Números e formas geométricas',                  reward:'toy_starry_common',   xp:25},
+  {id:'m18',emoji:'✂️',title:'Ateliê do Crafty',    char:'crafty',   desc:'6 materiais + 4 cores em inglês',               reward:'toy_crafty_common',   xp:25},
+  {id:'m19',emoji:'🦕',title:'Fóssil do Chompy',    char:'chompy',   desc:'10 animais pré-históricos',                     reward:'toy_chompy_epic',     xp:50},
+  {id:'m20',emoji:'🎩',title:'Magia do Twisty',     char:'twisty',   desc:'5 adjetivos mágicos em inglês',                 reward:'toy_twisty_common',   xp:25},
+  {id:'m21',emoji:'🏀',title:'Recorde do Bouncy',   char:'bouncy',   desc:'Adjetivos comparativos: higher/faster/stronger',reward:'toy_bouncy_common',   xp:30},
+  {id:'m22',emoji:'🚲',title:'Trilha do Wheely',    char:'wheely',   desc:'Vocabulário urbano: street/road/bridge',        reward:'toy_wheely_common',   xp:25},
+  {id:'m23',emoji:'🤖',title:'Missão do Sparky',    char:'sparky',   desc:'Comandos: start/stop/turn/go/beep',             reward:'toy_sparky_epic',     xp:50},
+  {id:'m24',emoji:'🎵',title:'Concerto do Melody',  char:'melody',   desc:'8 palavras musicais em inglês',                 reward:'toy_melody_rare',     xp:35},
+  {id:'m25',emoji:'🏆',title:'Grande Final!',        char:'sparky',   desc:'Complete todas as 24 missões anteriores',       reward:'toy_set_complete',    xp:100},
+];
+
+const TOYS_COLLECTIBLES = [
+  {id:'toy_blocky_common', emoji:'🧱', name:'Blocky Construtor',     rarity:'⭐',       locked:true},
+  {id:'toy_blocky_rare',   emoji:'🏰', name:'Blocky Castelo Dourado',rarity:'⭐⭐',      locked:true},
+  {id:'toy_spina_common',  emoji:'🌀', name:'Spina Girando',         rarity:'⭐',       locked:true},
+  {id:'toy_rocketinha_common',emoji:'🚀',name:'Rocketinha Decolando',rarity:'⭐',       locked:true},
+  {id:'toy_rocketinha_epic',emoji:'🌙',name:'Rocketinha na Lua',     rarity:'⭐⭐⭐',    locked:true},
+  {id:'toy_pinty_common',  emoji:'🎨', name:'Pinty com Pincel',      rarity:'⭐',       locked:true},
+  {id:'toy_pinty_rare',    emoji:'🌈', name:'Pinty Arco-íris',       rarity:'⭐⭐',      locked:true},
+  {id:'toy_drummie_common',emoji:'🥁', name:'Drummie Tocando',       rarity:'⭐',       locked:true},
+  {id:'toy_puzzley_common',emoji:'🧩', name:'Puzzley Pensando',      rarity:'⭐',       locked:true},
+  {id:'toy_puzzley_rare',  emoji:'🔍', name:'Puzzley Resolvido',     rarity:'⭐⭐',      locked:true},
+  {id:'toy_cubby_common',  emoji:'🟥', name:'Cubby Colorido',        rarity:'⭐',       locked:true},
+  {id:'toy_doly_common',   emoji:'🪆', name:'Doly Sorrindo',         rarity:'⭐',       locked:true},
+  {id:'toy_doly_rare',     emoji:'💕', name:'Doly Família Feliz',    rarity:'⭐⭐',      locked:true},
+  {id:'toy_racey_common',  emoji:'🏎️', name:'Racey na Linha',        rarity:'⭐',       locked:true},
+  {id:'toy_racey_epic',    emoji:'🏆', name:'Racey Campeão',         rarity:'⭐⭐⭐',    locked:true},
+  {id:'toy_kity_common',   emoji:'🍳', name:'Kity Cozinhando',       rarity:'⭐',       locked:true},
+  {id:'toy_kity_rare',     emoji:'👨‍🍳',name:'Kity Chef Estrela',    rarity:'⭐⭐',      locked:true},
+  {id:'toy_bally_common',  emoji:'⚽', name:'Bally na Quadra',       rarity:'⭐',       locked:true},
+  {id:'toy_bricky_common', emoji:'🏗️', name:'Bricky Arquiteto',      rarity:'⭐',       locked:true},
+  {id:'toy_floppy_common', emoji:'🧸', name:'Floppy Aconchego',      rarity:'⭐',       locked:true},
+  {id:'toy_zoomy_rare',    emoji:'🗺️', name:'Zoomy Vista Aérea',     rarity:'⭐⭐',      locked:true},
+  {id:'toy_splashy_common',emoji:'🌊', name:'Splashy Mergulhador',   rarity:'⭐',       locked:true},
+  {id:'toy_sparky_epic',   emoji:'⚡', name:'Sparky Hero Mode',      rarity:'⭐⭐⭐',    locked:true},
+  {id:'toy_chompy_epic',   emoji:'🦕', name:'Chompy Lendário',       rarity:'⭐⭐⭐',    locked:true},
+  {id:'toy_melody_rare',   emoji:'🎶', name:'Melody Concerto',       rarity:'⭐⭐',      locked:true},
+  {id:'toy_set_complete',  emoji:'🎊', name:'Coleção Completa!',     rarity:'🏆',       locked:true},
+];
+
+// Estado do Mundo dos Brinquedos (localStorage)
+var twState = { collected:[], missions_done:[] };
+function twLoadState(){
+  try {
+    var s = localStorage.getItem('tw_state');
+    if(s) twState = JSON.parse(s);
+    if(!twState.collected)    twState.collected    = [];
+    if(!twState.missions_done)twState.missions_done = [];
+  } catch(e){ twState = {collected:[],missions_done:[]}; }
+}
+function twSaveState(){
+  try{ localStorage.setItem('tw_state', JSON.stringify(twState)); }catch(e){}
+}
+function twUnlock(id){
+  if(!twState.collected.includes(id)){
+    twState.collected.push(id);
+    twSaveState();
+  }
+}
+
+// Renderiza a tela do Mundo dos Brinquedos
+function renderToyWorld(){
+  twLoadState();
+
+  // Personagens
+  var cgEl = document.getElementById('tw-chars-grid');
+  if(cgEl){
+    var worldClass={'mini':'tw-world-mini','kids':'tw-world-kids','adventure':'tw-world-adv'};
+    cgEl.innerHTML = TOYS_CHARACTERS.map(function(c){
+      return '<div class="tw-char-card" data-tid="' + c.id + '">'
+        + '<div class="tc-emoji">' + c.emoji + '</div>'
+        + '<div class="tc-name">' + c.name + '</div>'
+        + '<div class="tc-type tw-card-world ' + worldClass[c.world] + '">' + c.type + '</div>'
+        + '</div>';
+    }).join('');
+    cgEl.onclick = function(e){
+      var card = e.target.closest('[data-tid]');
+      if(card) twShowChar(card.getAttribute('data-tid'));
+    };
+  }
+
+  // Historias
+  var slEl = document.getElementById('tw-stories-list');
+  if(slEl){
+    var worldLabel={'mini':'🌸 Mini','kids':'☀️ Kids','adventure':'⚡ Aventura'};
+    var worldCls  ={'mini':'tw-world-mini','kids':'tw-world-kids','adventure':'tw-world-adv'};
+    slEl.innerHTML = TOYS_STORIES.map(function(s){
+      return '<div class="tw-story-card" data-sid="' + s.id + '">'
+        + '<div class="tw-card-icon">' + s.emoji + '</div>'
+        + '<div class="tw-card-body">'
+          + '<div class="tw-card-title">' + s.title + '</div>'
+          + '<div class="tw-card-sub">' + s.desc + '</div>'
+          + '<div class="tw-card-world ' + worldCls[s.world] + '">' + worldLabel[s.world] + '</div>'
+        + '</div>'
+        + '</div>';
+    }).join('');
+    slEl.onclick = function(e){
+      var card = e.target.closest('[data-sid]');
+      if(card) twShowStory(card.getAttribute('data-sid'));
+    };
+  }
+
+  // Missoes
+  var mlEl = document.getElementById('tw-missions-list');
+  if(mlEl){
+    mlEl.innerHTML = TOYS_MISSIONS.map(function(m){
+      var done = twState.missions_done.includes(m.id);
+      return '<div class="tw-mission-card" data-mid="' + m.id + '" style="'
+        + (done ? 'border-color:rgba(100,255,100,.4);' : '') + '">'
+        + '<div class="tw-card-icon">' + m.emoji + '</div>'
+        + '<div class="tw-card-body">'
+          + '<div class="tw-card-title">' + (done ? '✅ ' : '') + m.title + '</div>'
+          + '<div class="tw-card-sub">' + m.desc + '</div>'
+          + '<div style="font-size:10px;color:#FFB347;margin-top:3px;">+' + m.xp + ' XP</div>'
+        + '</div>'
+        + '</div>';
+    }).join('');
+    mlEl.onclick = function(e){
+      var card = e.target.closest('[data-mid]');
+      if(card) twDoMission(card.getAttribute('data-mid'));
+    };
+  }
+
+  // Colecaonaveis
+  var cgridEl = document.getElementById('tw-coll-grid');
+  if(cgridEl){
+    cgridEl.innerHTML = TOYS_COLLECTIBLES.map(function(c){
+      var unlocked = twState.collected.includes(c.id);
+      return '<div class="tw-coll-item' + (unlocked ? '' : ' locked') + '" data-cid="' + c.id + '">'
+        + '<div class="tw-coll-emoji">' + c.emoji + '</div>'
+        + '<div class="tw-coll-rarity">' + c.rarity + '</div>'
+        + '<div class="tw-coll-name">' + c.name + '</div>'
+        + '</div>';
+    }).join('');
+    cgridEl.onclick = function(e){
+      var card = e.target.closest('[data-cid]');
+      if(card) twShowColl(card.getAttribute('data-cid'));
+    };
+  }
+}
+
+// Modal compartilhado
+function twModal(emoji, title, sub, vocab, btnLabel, onBtn){
+  var ov = document.getElementById('tw-modal-overlay');
+  if(!ov) return;
+  ov.querySelector('.tw-modal-emoji').textContent  = emoji;
+  ov.querySelector('.tw-modal-title').textContent  = title;
+  ov.querySelector('.tw-modal-sub').textContent    = sub || '';
+  ov.querySelector('.tw-modal-vocab').textContent  = vocab ? '📚 '+vocab : '';
+  var btn = ov.querySelector('.tw-modal-close');
+  btn.textContent = btnLabel || 'Fechar';
+  btn.onclick = function(){ ov.classList.remove('active'); if(onBtn) onBtn(); };
+  ov.classList.add('active');
+}
+
+function twShowChar(id){
+  var c = TOYS_CHARACTERS.find(function(x){return x.id===id;});
+  if(!c) return;
+  twModal(c.emoji, c.name, c.role+' — '+c.type, c.vocab, 'Conhecer!', function(){
+    speakEN(c.name, null);
+  });
+}
+
+function twShowStory(id){
+  var s = TOYS_STORIES.find(function(x){return x.id===id;});
+  if(!s) return;
+  twModal(s.emoji, s.title, s.desc, s.vocab, 'Ouvir história!', function(){
+    speakEN(s.title, null);
+  });
+}
+
+function twDoMission(id){
+  var m = TOYS_MISSIONS.find(function(x){return x.id===id;});
+  if(!m) return;
+  var done = twState.missions_done.includes(id);
+  if(!done){
+    twState.missions_done.push(id);
+    twUnlock(m.reward);
+    addXP(m.xp);
+    twSaveState();
+  }
+  twModal(m.emoji, m.title,
+    done ? '✅ Missão já concluída!' : '🎉 Missão concluída! +'+m.xp+' XP',
+    m.desc,
+    'Fechar',
+    function(){ renderToyWorld(); }
+  );
+}
+
+function twShowColl(id){
+  var c = TOYS_COLLECTIBLES.find(function(x){return x.id===id;});
+  if(!c) return;
+  var unlocked = twState.collected.includes(id);
+  twModal(c.emoji, c.name,
+    unlocked ? '✅ Desbloqueado!' : '🔒 Complete a missão para desbloquear!',
+    c.rarity, 'Fechar', null
+  );
+}
+
+// Adiciona XP ao player (se a função existir)
+function addXP(n){
+  if(typeof playerXP !== 'undefined'){
+    playerXP += n;
+    try{ localStorage.setItem('playerXP', playerXP); }catch(e){}
+  }
+}
 
 // ── CURRENCY STATE ──
 const WALLET = {
