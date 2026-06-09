@@ -1047,88 +1047,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);
   border-radius:20px; cursor:pointer;
 }
 
-/* ══ FASE 2 — PP FAMÍLIA + REGION KEYS ══ */
-.pp-panel { display:none; }
-.pp-panel.active { display:block; }
-.rp-key-unlocked { border-color:rgba(100,255,100,.4) !important; background:rgba(100,255,100,.08) !important; }
-.region-btn.key-unlocked::after {
-  content:'🗝️'; position:absolute; top:-4px; right:-4px;
-  font-size:14px; filter:drop-shadow(0 0 4px rgba(255,179,71,.8));
-}
-
-/* ══ ETHICAL ENGAGEMENT — CSS ══ */
-.ee-mission-card {
-  background:rgba(255,255,255,.06); border-radius:14px;
-  padding:14px; border:1px solid rgba(255,179,71,.25);
-  margin-bottom:8px;
-}
-.ee-mission-card .ee-mc-header {
-  display:flex; align-items:center; gap:10px; margin-bottom:8px;
-}
-.ee-mission-card .ee-mc-emoji { font-size:28px; }
-.ee-mission-card .ee-mc-title {
-  font-size:14px; font-weight:700; color:#FFB347;
-}
-.ee-mission-card .ee-mc-desc {
-  font-size:12px; color:rgba(255,255,255,.65); line-height:1.5;
-  margin-bottom:8px;
-}
-.ee-mission-card .ee-mc-vocab {
-  font-size:10px; color:#FF9500; margin-bottom:10px;
-}
-.ee-mission-card .ee-mc-narrative {
-  font-size:11px; color:rgba(255,255,255,.4); font-style:italic;
-  margin-bottom:10px;
-}
-.ee-mc-btn {
-  background:linear-gradient(135deg,#FF6B35,#FF9500);
-  border:none; color:#fff; font-size:12px; font-weight:700;
-  padding:8px 18px; border-radius:12px; cursor:pointer;
-  width:100%;
-}
-.ee-mc-btn.done {
-  background:rgba(100,255,100,.15);
-  border:1px solid rgba(100,255,100,.3); color:rgba(100,255,100,.8);
-}
-.ee-mc-xp {
-  font-size:10px; color:#FFB347; margin-top:6px; text-align:center;
-}
-.ee-episodes-list {
-  display:flex; flex-direction:column; gap:8px;
-}
-.ee-episode-card {
-  background:rgba(255,255,255,.05); border-radius:12px;
-  padding:12px; border:1px solid rgba(255,255,255,.08);
-  display:flex; align-items:center; gap:10px;
-}
-.ee-episode-card.locked { opacity:.35; }
-.ee-ep-emoji { font-size:24px; flex-shrink:0; }
-.ee-ep-body { flex:1; }
-.ee-ep-title { font-size:12px; font-weight:700; color:#fff; }
-.ee-ep-sub   { font-size:10px; color:rgba(255,255,255,.45); margin-top:2px; }
-.ee-ep-vocab { font-size:9px; color:#FF9500; margin-top:3px; }
-.ee-ep-duration { font-size:9px; color:rgba(255,255,255,.3); }
-.ee-album-grid {
-  display:grid; grid-template-columns:repeat(4,1fr); gap:7px;
-}
-.ee-album-item {
-  background:rgba(255,255,255,.06); border-radius:10px;
-  padding:8px 4px; text-align:center;
-  border:1px solid rgba(255,255,255,.08);
-}
-.ee-album-item.earned {
-  border-color:rgba(255,179,71,.5);
-  background:rgba(255,179,71,.1);
-}
-.ee-album-item.locked { opacity:.3; }
-.ee-album-emoji { font-size:20px; }
-.ee-album-name  { font-size:7px; color:rgba(255,255,255,.6); margin-top:3px; line-height:1.2; }
-.ee-parent-note {
-  font-size:10px; color:rgba(255,255,255,.35); font-style:italic;
-  padding:6px 10px; background:rgba(255,255,255,.03);
-  border-radius:8px; margin-top:6px;
-}
-
 </style>
 </head>
 <body>
@@ -1152,17 +1070,17 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);
     </div>
     <div class="home-over">
       <div class="trio">
-        <button class="t-btn tb-l" onclick="press(this);solSay(MSG.home.learn,()=>go('words'))">
+        <button class="t-btn tb-l" onclick="press(this);go('words');solSay(MSG.home.learn,null)">
           <div class="t-icon">📚</div><div class="t-lbl">Aprender</div>
         </button>
-        <button class="t-btn tb-s" onclick="press(this);solSay(MSG.home.sing,()=>go('map'))">
+        <button class="t-btn tb-s" onclick="press(this);go('map');solSay(MSG.home.sing,null)">
           <div class="t-icon">🎤</div><div class="t-lbl">Cantar</div>
         </button>
-        <button class="t-btn tb-p" onclick="press(this);solSay(MSG.home.play,()=>go('map'))">
+        <button class="t-btn tb-p" onclick="press(this);go('map');solSay(MSG.home.play,null)">
           <div class="t-icon">🎮</div><div class="t-lbl">Jogar</div>
         </button>
       </div>
-      <button class="cta" onclick="press(this);solSay(MSG.home.start,()=>go('worldsel'))">
+      <button class="cta" onclick="press(this);go('worldsel');solSay(MSG.home.start,null)">
         <span style="font-size:28px;">☀️</span> Começar! <span style="font-size:22px;">→</span>
       </button>
       <!-- Mundo dos Brinquedos button -->
@@ -1230,7 +1148,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);
       <button class="pp-tab" onclick="ppTab('certificates',this)">🎓 Certificados</button>
       <button class="pp-tab" onclick="ppTab('recordings',this)">🎤 Palavras</button>
       <button class="pp-tab" onclick="ppTab('settings',this)">⚙️ Config</button>
-      <button class="pp-tab" onclick="ppTab('family',this)">👨‍👩‍👧 Família</button>
     </div>
     <div class="pp-content">
       <div class="pp-panel active" id="pp-panel-dashboard">
@@ -1274,32 +1191,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);
           <input class="pp-input" type="password" id="pp-s-pin" placeholder="Novo PIN (4 dígitos)" maxlength="4" inputmode="numeric">
           <button class="pp-save-btn" onclick="ppSaveSettings()">💾 Salvar Configurações</button>
         </div>
-              <div class="pp-panel" id="pp-panel-family">
-          <!-- Missão da Semana -->
-          <div class="pp-card">
-            <div class="pp-card-title">🗓️ Missão da Semana na Loja</div>
-            <div id="pp-weekly-mission" style="padding:4px 0;"></div>
-            <div style="font-size:10px;color:rgba(255,255,255,.3);margin-top:8px;font-style:italic;">
-              Sem compras obrigatórias · Atividade pedagógica aprovada
-            </div>
-          </div>
-          <!-- Desafio Família -->
-          <div class="pp-card">
-            <div class="pp-card-title">🤝 Desafio do Mês — Pai &amp; Filho</div>
-            <div id="pp-family-challenge" style="padding:4px 0;"></div>
-          </div>
-          <!-- Álbum da Loja -->
-          <div class="pp-card">
-            <div class="pp-card-title">💎 Álbum da Loja — Progresso</div>
-            <div id="pp-store-album-progress" style="padding:4px 0;"></div>
-          </div>
-          <!-- Episódios -->
-          <div class="pp-card">
-            <div class="pp-card-title">📖 Episódios Descobertos na Loja</div>
-            <div id="pp-episodes-progress" style="padding:4px 0;"></div>
-          </div>
-        </div>
-</div>
+      </div>
     </div>
   </div>
 </div>
@@ -1343,7 +1235,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);
       <button class="store-tab" onclick="storeTab('challenges',this)">⚔️ Desafios</button>
       <button class="store-tab" onclick="storeTab('rewards',this)">🎁 Tesouros</button>
       <button class="store-tab" onclick="storeTab('history',this)">📜 Histórico</button>
-      <button class="store-tab" onclick="storeTab('missions',this)">🗓️ Missões</button>
     </div>
 
     <!-- Panel: QR Code -->
@@ -1399,40 +1290,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);
       <div class="store-section">
         <div class="store-section-title">Aventuras Completadas</div>
         <div id="store-history-list"></div>
-      </div>
-    </div>
-
-    <!-- Panel: Missions (Ethical Engagement) -->
-    <div class="store-panel" id="store-panel-missions">
-      <div class="store-section">
-        <div class="store-section-title">🗓️ Missão da Semana na Loja</div>
-        <div id="ee-weekly-mission-card" class="ee-mission-card">
-          <!-- preenchido por renderEEMissions() -->
-        </div>
-      </div>
-      <div class="store-section">
-        <div class="store-section-title">📖 Episódios Desbloqueados</div>
-        <div id="ee-episodes-list" class="ee-episodes-list">
-          <!-- preenchido por renderEEMissions() -->
-        </div>
-        <div style="font-size:11px;color:rgba(255,255,255,.3);text-align:center;margin-top:8px;">
-          Novos episódios desbloqueados a cada visita à loja!
-        </div>
-      </div>
-      <div class="store-section">
-        <div class="store-section-title">👨‍👩‍👧 Desafio Pai &amp; Filho</div>
-        <div id="ee-family-challenge-card" class="ee-mission-card">
-          <!-- preenchido por renderEEMissions() -->
-        </div>
-        <div style="font-size:11px;color:rgba(255,255,255,.3);text-align:center;margin-top:8px;">
-          Aprovado pelos pais · Sem compras obrigatórias · ~20 min
-        </div>
-      </div>
-      <div class="store-section">
-        <div class="store-section-title">💎 Álbum da Loja</div>
-        <div id="ee-album-grid" class="ee-album-grid">
-          <!-- preenchido por renderEEMissions() -->
-        </div>
       </div>
     </div>
 
@@ -1752,7 +1609,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);
       <div class="tc"><div class="tc-ic" id="tc3i">💯</div><div class="tc-lbl" id="tc3">Nota<br>10!</div></div>
     </div>
     <button class="next-btn" id="next-btn"
-      onclick="press(this);solSay(MSG.reward.more,()=>go('words'))">
+      onclick="press(this);go('words');solSay(MSG.reward.more,null)">
       ☀️ Mais Palavras! 🚀
     </button>
   </div>
@@ -1935,14 +1792,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);
         </div>
         <div class="rp-body" id="rp-body">
           <!-- Locations populated by JS -->
-        </div>
-        <!-- Region Key Badge — Ethical Engagement -->
-        <div id="rp-key-badge" style="display:none;align-items:center;gap:8px;padding:10px 14px;background:rgba(255,179,71,.1);border:1px solid rgba(255,179,71,.3);border-radius:12px;margin-bottom:10px;">
-          <span style="font-size:20px;">🗝️</span>
-          <div>
-            <div style="font-size:12px;font-weight:700;color:#FFB347;" id="rp-key-title">Chave da Região</div>
-            <div style="font-size:10px;color:rgba(255,255,255,.5);" id="rp-key-sub">Visite a loja para desbloquear!</div>
-          </div>
         </div>
         <button class="rp-enter" id="rp-enter" onclick="enterRegion()">
           Explorar! →
@@ -3013,7 +2862,7 @@ function buildModuleGrid(){
         // Swap words-sol image to module character
         const wordsSolImg = document.getElementById('sol-words');
         if(wordsSolImg){ const src=CHAR_IMG_MAP[modFinal]; if(src)wordsSolImg.src=src; }
-        if(m.id==='words') solSay(MSG.map.words,()=>go('words'));
+        if(m.id==='words'){ go('words'); solSay(MSG.map.words,null); }
         else if(m.id==='songs'){ activateChar('bunny','welcome',()=>go('map')); solSay(MSG.map.songs,null); }
         else if(m.id==='battles') activateChar('robo','battle',()=>solSay('Hora de batalhar em inglês!',null));
         else if(m.id==='cambridge') activateChar('luna','welcome',()=>solSay('Simulado Cambridge!',null));
@@ -4375,8 +4224,6 @@ function openRegion(id){
     secret:'As Regiões Secretas! ... Apenas para exploradores lendários!',
   };
   speakPT(regionMsgs[id]||'Que lugar incrível!', null);
-  // Ethical Engagement: mostrar badge de chave
-  try{ updateRegionKeyBadge(id); }catch(e){}
 }
 
 function closeRegionPanel(){
@@ -6042,332 +5889,7 @@ const TOYS_COLLECTIBLES = [
   {id:'toy_set_complete',  emoji:'🎊', name:'Coleção Completa!',     rarity:'🏆',       locked:true},
 ];
 
-// ══════════════════════════════════════════════════════════════
-// ETHICAL ENGAGEMENT SYSTEM — Fase 1
-// Mecanismos éticos de reengajamento com a loja RiHappy
-// ══════════════════════════════════════════════════════════════
-
-// MECANISMO 1 — Missões Semanais (12 rotativas, ciclo anual)
-const WEEKLY_MISSIONS = [
-  {id:'wm01',week:1,  emoji:'🧱',title:'Castelo de Palavras',
-   desc:'Encontre 3 brinquedos de montar e diga o nome em inglês para um adulto.',
-   vocab:['block','tower','castle'],xp:40,narrative:'Blocky precisa de ajuda para construir o castelo!'},
-  {id:'wm02',week:2,  emoji:'🎨',title:'Caçador de Cores',
-   desc:'Aponte 5 objetos coloridos na loja e diga a cor em inglês.',
-   vocab:['red','blue','green','yellow','purple'],xp:35,narrative:'Pinty perdeu suas tintas pela loja. Ajude a encontrar!'},
-  {id:'wm03',week:3,  emoji:'🔢',title:'Contador Espacial',
-   desc:'Conte 10 brinquedos em inglês do one ao ten.',
-   vocab:['one','two','three','four','five','six','seven','eight','nine','ten'],xp:30,narrative:'Rocketinha precisa de combustível — cada número é energia!'},
-  {id:'wm04',week:4,  emoji:'🐾',title:'Safari de Animais',
-   desc:'Encontre 4 brinquedos de animais e diga o nome em inglês.',
-   vocab:['dog','cat','lion','elephant'],xp:35,narrative:'Dino convocou os animais para uma reunião!'},
-  {id:'wm05',week:5,  emoji:'⚽',title:'Desafio Esportivo',
-   desc:'Encontre 3 brinquedos esportivos e diga a ação em inglês.',
-   vocab:['run','kick','jump'],xp:35,narrative:'Bally está treinando para o campeonato!'},
-  {id:'wm06',week:6,  emoji:'🎵',title:'Concerto Secreto',
-   desc:'Encontre instrumentos musicais e diga loud ou quiet para cada um.',
-   vocab:['loud','quiet','music'],xp:30,narrative:'Drummie escondeu notas musicais pela loja!'},
-  {id:'wm07',week:7,  emoji:'🚀',title:'Missão Espacial',
-   desc:'Encontre brinquedos de espaço e diga up, down, fly ou star.',
-   vocab:['up','down','fly','star'],xp:40,narrative:'Rocketinha precisa decolar — ajude contando estrelas!'},
-  {id:'wm08',week:8,  emoji:'🧩',title:'Detetive de Formas',
-   desc:'Encontre 4 formas geométricas em brinquedos e diga o nome em inglês.',
-   vocab:['circle','square','triangle','star'],xp:35,narrative:'Puzzley perdeu as peças! Encontre os formatos!'},
-  {id:'wm09',week:9,  emoji:'🍳',title:'Chef Explorador',
-   desc:'Encontre a cozinha de brinquedo e nomeie 5 alimentos em inglês.',
-   vocab:['apple','bread','cake','milk','egg'],xp:35,narrative:'Kity está preparando uma festa surpresa!'},
-  {id:'wm10',week:10, emoji:'🤖',title:'Missão Robótica',
-   desc:'Encontre robôs ou brinquedos tecnológicos e diga start, stop, go.',
-   vocab:['start','stop','go','beep'],xp:40,narrative:'Sparky perdeu o manual de instruções na loja!'},
-  {id:'wm11',week:11, emoji:'🦕',title:'Era dos Dinossauros',
-   desc:'Encontre dinossauros e diga big ou small e o nome em inglês.',
-   vocab:['big','small','dinosaur','ancient'],xp:40,narrative:'Chompy quer apresentar seus amigos pré-históricos!'},
-  {id:'wm12',week:12, emoji:'🎭',title:'Show de Fantoches',
-   desc:'Use um fantoche e apresente 3 frases em inglês para um adulto.',
-   vocab:['hello','my name is','I like'],xp:50,narrative:'Stringy preparou um espetáculo especial — você é o ator!'},
-];
-
-// MECANISMO 2 — Álbum Físico × Digital (12 figurinhas exclusivas da loja)
-const STORE_STICKER_ALBUM = [
-  {id:'sa_01',emoji:'🏪',name:'Primeira Aventura',      desc:'Sua primeira visita ao Portal Mágico!',     visits:1},
-  {id:'sa_02',emoji:'🗝️',name:'Chave da Loja',          desc:'Você desbloqueou o Portal Mágico!',         qr:1},
-  {id:'sa_03',emoji:'🌟',name:'Explorador Fiel',         desc:'3 visitas à loja com o Solzinho.',          visits:3},
-  {id:'sa_04',emoji:'🧩',name:'Peça Encontrada',         desc:'Completou um desafio na loja.',             challenges:1},
-  {id:'sa_05',emoji:'🎨',name:'Artista da Loja',         desc:'Encontrou todas as cores na loja.',         challenges:2},
-  {id:'sa_06',emoji:'🏆',name:'Campeão do Portal',       desc:'5 visitas ao Portal Mágico.',               visits:5},
-  {id:'sa_07',emoji:'🚀',name:'Astronauta Fiel',         desc:'Completou uma Missão Espacial.',            missionId:'wm07'},
-  {id:'sa_08',emoji:'👨‍👩‍👧','name':'Aventura em Família', desc:'Completou um Desafio Pai & Filho.',          familyChallenge:1},
-  {id:'sa_09',emoji:'🌈',name:'Caçador de Cores',        desc:'Completou o desafio das 5 cores.',          missionId:'wm02'},
-  {id:'sa_10',emoji:'🦕',name:'Era Pré-histórica',       desc:'Encontrou todos os dinossauros.',           missionId:'wm11'},
-  {id:'sa_11',emoji:'👑',name:'Mestre do Portal',        desc:'10 visitas ao Portal Mágico.',              visits:10},
-  {id:'sa_12',emoji:'🌟',name:'Lenda RiHappy',           desc:'Completou o Álbum inteiro da Loja!',        albumComplete:true},
-];
-
-// MECANISMO 3 — Episódios Especiais (desbloqueados por visita)
-const STORE_EPISODES = [
-  {id:'ep01',emoji:'🧱',title:'O Castelo Perdido de Blocky',
-   duration:'3 min',vocab:'big · small · tall · strong',
-   story:'Blocky estava construindo o maior castelo do mundo quando uma peça sumiu. Ele precisava de ajuda para encontrar as palavras certas...'},
-  {id:'ep02',emoji:'🌀',title:'A Grande Corrida de Spina',
-   duration:'3 min',vocab:'fast · slow · spin · go · stop',
-   story:'Spina desafiou todos os brinquedos para uma corrida épica pelo corredor da loja. Mas havia um segredo: o mais rápido não era o vencedor...'},
-  {id:'ep03',emoji:'🚀',title:'Rocketinha e a Estrela Perdida',
-   duration:'3 min',vocab:'up · down · far · close · bright',
-   story:'Uma estrela caiu do céu da loja e Rocketinha partiu em missão de resgate. Cada palavra em inglês era combustível para a viagem...'},
-  {id:'ep04',emoji:'🦕',title:'O Segredo de Chompy',
-   duration:'3 min',vocab:'ancient · huge · brave · discover',
-   story:'Chompy guardava um segredo há 65 milhões de anos. Hoje, finalmente, ele contaria para quem soubesse as palavras mágicas em inglês...'},
-  {id:'ep05',emoji:'🎵',title:'A Melodia Escondida',
-   duration:'3 min',vocab:'loud · quiet · music · hear · feel',
-   story:'Melody escondeu uma melodia especial em algum lugar da loja. Quem aprendesse as palavras certas conseguiria ouvi-la...'},
-  {id:'ep06',emoji:'🤖',title:'Sparky Salva o Portal',
-   duration:'3 min',vocab:'brave · mission · save · beep · go',
-   story:'O Portal Mágico estava em perigo! Sparky precisava de um parceiro corajoso que soubesse dar comandos em inglês...'},
-  {id:'ep07',emoji:'🎨',title:'O Arco-íris de Pinty',
-   duration:'3 min',vocab:'red · orange · yellow · green · blue',
-   story:'Pinty descobriu que cada cor do arco-íris guardava um brinquedo especial. Para encontrá-los era preciso dizer as cores em inglês...'},
-];
-
-// MECANISMO 4 — Desafios Pai & Filho (6 mensais)
-const FAMILY_CHALLENGES = [
-  {id:'fc01',month:1,  emoji:'🏗️',title:'Arquitetos Juntos',
-   duration:'20 min',
-   desc:'Encontrem juntos 3 brinquedos de construção. Cada um escolhe 1 e conta em inglês quantas peças tem.',
-   parentNote:'Atividade alinhada ao vocabulário de números e formas. Não requer compra.',
-   vocab:['build','count','together','big','small'],reward:'Certificado Família Arquiteta'},
-  {id:'fc02',month:2,  emoji:'🎨',title:'Galeria de Arte',
-   duration:'15 min',
-   desc:'Criem juntos uma história usando 5 brinquedos da loja como personagens. Cada personagem tem um nome em inglês.',
-   parentNote:'Desenvolve narrativa e vocabulário. Fotografia da história recomendada.',
-   vocab:['once','upon','time','hero','friend'],reward:'Certificado Família Narradora'},
-  {id:'fc03',month:3,  emoji:'🔬',title:'Cientistas Exploradores',
-   duration:'20 min',
-   desc:'Explorem a loja e classifiquem 6 brinquedos: big ou small, soft ou hard, fast ou slow.',
-   parentNote:'Atividade de classificação científica com adjetivos opostos.',
-   vocab:['big','small','soft','hard','fast','slow'],reward:'Certificado Família Cientista'},
-  {id:'fc04',month:4,  emoji:'🌍',title:'Volta ao Mundo',
-   duration:'25 min',
-   desc:'Escolham juntos um brinquedo de cada "mundo" (animais, espaço, esportes). Criem uma aventura conectando os 3.',
-   parentNote:'Integração entre categorias de vocabulário. Estimula criatividade narrativa.',
-   vocab:['adventure','explore','discover','world'],reward:'Certificado Família Exploradora'},
-  {id:'fc05',month:5,  emoji:'🎭',title:'Peça de Teatro',
-   duration:'25 min',
-   desc:'Escolham 2 brinquedos e criem um diálogo de 5 frases em inglês entre eles. Apresentem para um funcionário.',
-   parentNote:'Expressão oral em inglês em ambiente seguro. Funcionário RiHappy orientado.',
-   vocab:['hello','my name','I like','let us','goodbye'],reward:'Certificado Família Artista'},
-  {id:'fc06',month:6,  emoji:'🏆',title:'Grande Final',
-   duration:'30 min',
-   desc:'Revisitem seus brinquedos favoritos do ano e criem o "Dicionário da Família" — 10 palavras em inglês que aprenderam juntos.',
-   parentNote:'Consolidação de aprendizado do semestre. Documento imprimível disponível.',
-   vocab:['favorite','remember','learn','together','proud'],reward:'Certificado Família Campeã'},
-];
-
-// Estado do Ethical Engagement
-var eeState = {
-  weeklyMissionsDone: [],
-  storeStickerAlbum:  [],
-  episodesUnlocked:   [],
-  familyChallengesDone: [],
-  lastEpisodeIndex:   0,
-};
-function eeLoadState(){
-  try{
-    var s = localStorage.getItem('ee_state');
-    if(s) eeState = Object.assign({weeklyMissionsDone:[],storeStickerAlbum:[],episodesUnlocked:[],familyChallengesDone:[],lastEpisodeIndex:0}, JSON.parse(s));
-  }catch(e){}
-}
-function eeSaveState(){
-  try{ localStorage.setItem('ee_state', JSON.stringify(eeState)); }catch(e){}
-}
-
-// Retorna missão semanal atual (baseado na semana do ano)
-function getCurrentWeeklyMission(){
-  var weekOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(),0,1)) / 604800000) % 12;
-  return WEEKLY_MISSIONS[weekOfYear] || WEEKLY_MISSIONS[0];
-}
-
-// Completa missão semanal
-function completeWeeklyMission(id){
-  eeLoadState();
-  if(!eeState.weeklyMissionsDone.includes(id)){
-    eeState.weeklyMissionsDone.push(id);
-    var m = WEEKLY_MISSIONS.find(function(x){return x.id===id;});
-    if(m && typeof playerXP !== 'undefined') playerXP += m.xp;
-    eeSaveState();
-  }
-}
-
-// Desbloqueia episódio especial (chamado após scan QR bem-sucedido)
-function unlockNextEpisode(){
-  eeLoadState();
-  var idx = eeState.lastEpisodeIndex % STORE_EPISODES.length;
-  var ep  = STORE_EPISODES[idx];
-  if(!eeState.episodesUnlocked.includes(ep.id)){
-    eeState.episodesUnlocked.push(ep.id);
-    eeState.lastEpisodeIndex = idx + 1;
-    eeSaveState();
-  }
-  return ep;
-}
-
-// Verifica e atribui figurinhas do álbum da loja
-function checkStoreStickerAlbum(state){
-  eeLoadState();
-  var earned = eeState.storeStickerAlbum;
-  var visits  = state.visits || 0;
-  var qr      = state.qrScanned || 0;
-  var chDone  = (state.challengesDone || []).length;
-  STORE_STICKER_ALBUM.forEach(function(s){
-    if(earned.includes(s.id)) return;
-    var grant = false;
-    if(s.visits  && visits  >= s.visits)  grant = true;
-    if(s.qr      && qr      >= s.qr)      grant = true;
-    if(s.challenges && chDone >= s.challenges) grant = true;
-    if(s.missionId && eeState.weeklyMissionsDone.includes(s.missionId)) grant = true;
-    if(s.familyChallenge && eeState.familyChallengesDone.length >= s.familyChallenge) grant = true;
-    if(s.albumComplete && earned.length >= STORE_STICKER_ALBUM.length - 1) grant = true;
-    if(grant){ earned.push(s.id); }
-  });
-  eeState.storeStickerAlbum = earned;
-  eeSaveState();
-}
-
-// MECANISMO 5 — Chaves de Região (1 por visita à loja)
-const REGION_KEYS = {
-  space:   {id:'rk_space',   emoji:'🚀', name:'Chave Espacial',    desc:'Desbloqueada na sua 1ª visita à loja!',   visits:1},
-  castle:  {id:'rk_castle',  emoji:'🏰', name:'Chave do Castelo',  desc:'Desbloqueada na sua 2ª visita à loja!',   visits:2},
-  forest:  {id:'rk_forest',  emoji:'🌲', name:'Chave da Floresta', desc:'Desbloqueada na sua 3ª visita à loja!',   visits:3},
-  city:    {id:'rk_city',    emoji:'🏙️', name:'Chave da Cidade',   desc:'Desbloqueada na sua 4ª visita à loja!',   visits:4},
-  farm:    {id:'rk_farm',    emoji:'🌾', name:'Chave da Fazenda',  desc:'Desbloqueada na sua 5ª visita à loja!',   visits:5},
-  islands: {id:'rk_islands', emoji:'🏝️', name:'Chave das Ilhas',   desc:'Desbloqueada na sua 7ª visita à loja!',   visits:7},
-  secret:  {id:'rk_secret',  emoji:'⭐', name:'Chave Secreta',     desc:'Desbloqueada na sua 10ª visita à loja!',  visits:10},
-};
-
-// Atualiza keys ao escanear QR (chamado após scanStoreQR)
-function updateRegionKeys(visits){
-  eeLoadState();
-  var changed = false;
-  Object.values(REGION_KEYS).forEach(function(rk){
-    if(visits >= rk.visits && !eeState.storeStickerAlbum.includes(rk.id)){
-      eeState.storeStickerAlbum.push(rk.id);
-      changed = true;
-    }
-  });
-  if(changed) eeSaveState();
-}
-
-// Mostra badge de chave no region-panel
-function updateRegionKeyBadge(regionId){
-  var badge = document.getElementById('rp-key-badge');
-  if(!badge) return;
-  eeLoadState();
-  var state = getStoreState();
-  var rk = REGION_KEYS[regionId];
-  if(!rk){ badge.style.display='none'; return; }
-  var unlocked = eeState.storeStickerAlbum.includes(rk.id) || (state.visits||0) >= rk.visits;
-  badge.style.display = 'flex';
-  badge.className = unlocked ? 'rk-key-unlocked' : '';
-  document.getElementById('rp-key-title').textContent = unlocked ? '🗝️ '+rk.name+' Desbloqueada!' : rk.name;
-  document.getElementById('rp-key-sub').textContent   = unlocked ? 'Esta região brilha especialmente para você!' : rk.desc;
-  badge.style.borderColor  = unlocked ? 'rgba(100,255,100,.4)' : 'rgba(255,179,71,.3)';
-  badge.style.background   = unlocked ? 'rgba(100,255,100,.08)': 'rgba(255,179,71,.1)';
-}
-
-// ── Renderiza painel de Missões no store
-function renderEEMissions(){
-  eeLoadState();
-
-  // Missão da Semana
-  var mCard = document.getElementById('ee-weekly-mission-card');
-  if(mCard){
-    var m = getCurrentWeeklyMission();
-    var done = eeState.weeklyMissionsDone.includes(m.id);
-    mCard.innerHTML =
-      '<div class="ee-mc-header">'
-        +'<div class="ee-mc-emoji">'+m.emoji+'</div>'
-        +'<div class="ee-mc-title">'+m.title+'</div>'
-      +'</div>'
-      +'<div class="ee-mc-narrative">'+m.narrative+'</div>'
-      +'<div class="ee-mc-desc">'+m.desc+'</div>'
-      +'<div class="ee-mc-vocab">📚 '+m.vocab.join(' · ')+'</div>'
-      +'<button class="ee-mc-btn'+(done?' done':'')+'" data-wmid="'+m.id+'">'
-        +(done ? '✅ Missão Concluída!' : '🎯 Marcar como Concluída')
-      +'</button>'
-      +'<div class="ee-mc-xp">+'+m.xp+' XP</div>';
-    mCard.querySelector('[data-wmid]').onclick = function(){
-      completeWeeklyMission(this.getAttribute('data-wmid'));
-      renderEEMissions();
-      showStoreRewardModal('🎯','Missão Concluída!','Parabéns! +'+m.xp+' XP conquistados!');
-    };
-  }
-
-  // Episódios
-  var epList = document.getElementById('ee-episodes-list');
-  if(epList){
-    if(eeState.episodesUnlocked.length === 0){
-      epList.innerHTML = '<div style="text-align:center;color:rgba(255,255,255,.3);font-size:12px;padding:16px;">Escaneie um QR Code na loja para desbloquear o primeiro episódio!</div>';
-    } else {
-      epList.innerHTML = STORE_EPISODES.map(function(ep){
-        var unlocked = eeState.episodesUnlocked.includes(ep.id);
-        return '<div class="ee-episode-card'+(unlocked?'':' locked')+'">'
-          +'<div class="ee-ep-emoji">'+ep.emoji+'</div>'
-          +'<div class="ee-ep-body">'
-            +'<div class="ee-ep-title">'+(unlocked?'':'🔒 ')+ep.title+'</div>'
-            +(unlocked?'<div class="ee-ep-sub">'+ep.story.slice(0,60)+'...</div>':'<div class="ee-ep-sub">Visite a loja para desbloquear</div>')
-            +(unlocked?'<div class="ee-ep-vocab">📚 '+ep.vocab+'</div>':'')
-            +'<div class="ee-ep-duration">'+ep.duration+'</div>'
-          +'</div>'
-          +'</div>';
-      }).join('');
-    }
-  }
-
-  // Desafio Família
-  var fCard = document.getElementById('ee-family-challenge-card');
-  if(fCard){
-    var month = new Date().getMonth();
-    var fc = FAMILY_CHALLENGES[month % FAMILY_CHALLENGES.length];
-    var fcDone = eeState.familyChallengesDone.includes(fc.id);
-    fCard.innerHTML =
-      '<div class="ee-mc-header">'
-        +'<div class="ee-mc-emoji">'+fc.emoji+'</div>'
-        +'<div class="ee-mc-title">'+fc.title+'</div>'
-      +'</div>'
-      +'<div class="ee-mc-desc">'+fc.desc+'</div>'
-      +'<div class="ee-mc-vocab">📚 '+fc.vocab.join(' · ')+'</div>'
-      +'<div class="ee-parent-note">👨‍👩‍👧 Para os pais: '+fc.parentNote+'</div>'
-      +'<button class="ee-mc-btn'+(fcDone?' done':'')+'" data-fcid="'+fc.id+'">'
-        +(fcDone?'✅ Desafio Concluído!':'👨‍👩‍👧 Marcar Desafio como Concluído')
-      +'</button>';
-    fCard.querySelector('[data-fcid]').onclick = function(){
-      eeLoadState();
-      var id = this.getAttribute('data-fcid');
-      if(!eeState.familyChallengesDone.includes(id)){
-        eeState.familyChallengesDone.push(id);
-        var fc2 = FAMILY_CHALLENGES.find(function(x){return x.id===id;});
-        if(fc2 && typeof playerXP !== 'undefined') playerXP += 60;
-        eeSaveState();
-        checkStoreStickerAlbum(getStoreState());
-      }
-      renderEEMissions();
-      showStoreRewardModal('👨‍👩‍👧','Família Incrível!','Desafio em família concluído! Certificado disponível.');
-    };
-  }
-
-  // Álbum da Loja
-  var albumGrid = document.getElementById('ee-album-grid');
-  if(albumGrid){
-    albumGrid.innerHTML = STORE_STICKER_ALBUM.map(function(s){
-      var earned = eeState.storeStickerAlbum.includes(s.id);
-      return '<div class="ee-album-item'+(earned?' earned':' locked')+'">'
-        +'<div class="ee-album-emoji">'+s.emoji+'</div>'
-        +'<div class="ee-album-name">'+s.name+'</div>'
-        +'</div>';
-    }).join('');
-  }
-}
-
-// ── Estado do Mundo dos Brinquedos (localStorage)
+// Estado do Mundo dos Brinquedos (localStorage)
 var twState = { collected:[], missions_done:[] };
 function twLoadState(){
   try {
@@ -7234,7 +6756,6 @@ function ppRenderAll(){
   ppRenderCertificates();
   ppRenderRecordings();
   ppRenderSettings();
-  ppRenderFamily();
 }
 
 /* ── 1. DASHBOARD ── */
@@ -7432,94 +6953,6 @@ function ppRenderSettings(){
   if(w)w.textContent=cfg.pill||cfg.label;
   if(l)l.textContent='Nível '+(playerLevel||1);
   if(g)g.value=ppGetGoal();
-}
-
-/* ── FAMILY TAB ── */
-function ppRenderFamily(){
-  eeLoadState();
-  var storeState = getStoreState();
-
-  // Missão da Semana
-  var wmEl = document.getElementById('pp-weekly-mission');
-  if(wmEl){
-    var m = getCurrentWeeklyMission();
-    var done = eeState.weeklyMissionsDone.includes(m.id);
-    wmEl.innerHTML =
-      '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">'
-        +'<span style="font-size:28px;">'+m.emoji+'</span>'
-        +'<div>'
-          +'<div style="font-size:13px;font-weight:700;color:#FFB347;">'+m.title+'</div>'
-          +'<div style="font-size:11px;color:rgba(255,255,255,.5);margin-top:2px;">'+m.desc+'</div>'
-        +'</div>'
-      +'</div>'
-      +'<div style="font-size:10px;color:#FF9500;margin-bottom:6px;">📚 '+m.vocab.join(' · ')+'</div>'
-      +'<div style="font-size:11px;color:rgba(255,255,255,.35);font-style:italic;">'+m.narrative+'</div>'
-      +'<div style="margin-top:8px;font-size:11px;color:'+(done?'rgba(100,255,100,.7)':'rgba(255,255,255,.3)')+';">'
-        +(done?'✅ Concluída esta semana':'⏳ Disponível até domingo')
-      +'</div>';
-  }
-
-  // Desafio Família
-  var fcEl = document.getElementById('pp-family-challenge');
-  if(fcEl){
-    var month = new Date().getMonth();
-    var fc = FAMILY_CHALLENGES[month % FAMILY_CHALLENGES.length];
-    var fcDone = eeState.familyChallengesDone.includes(fc.id);
-    fcEl.innerHTML =
-      '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">'
-        +'<span style="font-size:28px;">'+fc.emoji+'</span>'
-        +'<div>'
-          +'<div style="font-size:13px;font-weight:700;color:#FFB347;">'+fc.title+'</div>'
-          +'<div style="font-size:11px;color:rgba(255,255,255,.5);margin-top:2px;">'+fc.desc+'</div>'
-        +'</div>'
-      +'</div>'
-      +'<div style="font-size:10px;color:#FF9500;margin-bottom:6px;">📚 '+fc.vocab.join(' · ')+'</div>'
-      +'<div style="font-size:10px;color:rgba(255,255,255,.35);font-style:italic;padding:6px 8px;background:rgba(255,255,255,.03);border-radius:6px;">'
-        +'Para os pais: '+fc.parentNote
-      +'</div>'
-      +'<div style="font-size:11px;color:'+(fcDone?'rgba(100,255,100,.7)':'rgba(255,255,255,.3)')+'margin-top:6px;">'
-        +(fcDone?'✅ Desafio Concluído!':'⏳ Tempo estimado: '+fc.duration)
-      +'</div>';
-  }
-
-  // Álbum progresso
-  var apEl = document.getElementById('pp-store-album-progress');
-  if(apEl){
-    var earned = eeState.storeStickerAlbum.length;
-    var total  = STORE_STICKER_ALBUM.length;
-    var pct    = Math.round(earned/total*100);
-    apEl.innerHTML =
-      '<div style="display:flex;justify-content:space-between;margin-bottom:6px;">'
-        +'<span style="font-size:13px;color:#fff;">'+earned+' / '+total+' figurinhas</span>'
-        +'<span style="font-size:13px;color:#FFB347;font-weight:700;">'+pct+'%</span>'
-      +'</div>'
-      +'<div style="background:rgba(255,255,255,.08);border-radius:8px;height:8px;overflow:hidden;">'
-        +'<div style="background:linear-gradient(90deg,#FF6B35,#FFB347);height:100%;width:'+pct+'%;border-radius:8px;transition:width .4s;"></div>'
-      +'</div>'
-      +'<div style="font-size:10px;color:rgba(255,255,255,.35);margin-top:6px;">'
-        +(earned===0?'Visite a loja para começar a colecionar!'
-         :earned===total?'🏆 Coleção completa! Incrível!'
-         :'Continue visitando a loja para completar o álbum.')
-      +'</div>';
-  }
-
-  // Episódios descobertos
-  var epEl = document.getElementById('pp-episodes-progress');
-  if(epEl){
-    var unlockedEps = eeState.episodesUnlocked.length;
-    var totalEps    = STORE_EPISODES.length;
-    epEl.innerHTML =
-      '<div style="font-size:13px;color:#fff;margin-bottom:6px;">'+unlockedEps+' / '+totalEps+' episódios descobertos</div>'
-      +STORE_EPISODES.map(function(ep){
-        var u = eeState.episodesUnlocked.includes(ep.id);
-        return '<div style="display:flex;align-items:center;gap:8px;padding:4px 0;">'
-          +'<span>'+ep.emoji+'</span>'
-          +'<span style="font-size:11px;color:'+(u?'rgba(255,255,255,.8)':'rgba(255,255,255,.25)')+';">'
-            +(u?ep.title:'🔒 Episódio bloqueado')
-          +'</span>'
-          +'</div>';
-      }).join('');
-  }
 }
 
 function ppSaveSettings(){
@@ -7844,7 +7277,6 @@ function storeTab(name, btn){
   btn.classList.add('active');
   const panel = document.getElementById('store-panel-'+name);
   if(panel) panel.classList.add('active');
-  if(name==='missions') setTimeout(renderEEMissions, 100);
 }
 
 // ── Complete challenge ────────────────────────────────────────
@@ -7904,11 +7336,8 @@ function scanStoreQR(){
       xp: xpBonus,
     });
     saveStoreState(state);
-    var ep = unlockNextEpisode();
-    checkStoreStickerAlbum(state);
-    try{ updateRegionKeys(state.visits||0); }catch(e){}
     showStoreRewardModal('✨', 'Código Secreto Desbloqueado!',
-      `Você descobriu um tesouro escondido! +${xpBonus} XP e desbloqueou: "${ep.title}"!`);
+      `Você descobriu um tesouro escondido! +${xpBonus} XP e a aventura continua...`);
     setTimeout(renderStoreScreen, 800);
   } else {
     showStoreRewardModal('🤔', 'Código não reconhecido',
