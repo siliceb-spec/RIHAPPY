@@ -1262,6 +1262,56 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);
   }
 }
 
+/* ═══ SONGS SCREEN — Mundo Mini ════════════════════════════════ */
+.s-songs{height:100%;display:flex;flex-direction:column;overflow:hidden;background:radial-gradient(ellipse at 50% -10%,#1A0010 0%,#0A0018 50%,#060012 100%);}
+.world-mini  .s-songs{background:radial-gradient(ellipse at 50% -10%,#3A0820 0%,#1A0010 50%,#060012 100%);}
+.world-kids  .s-songs{background:radial-gradient(ellipse at 28% 18%,rgba(0,198,255,.1) 0%,transparent 52%),radial-gradient(ellipse at 78% 62%,rgba(155,89,255,.1) 0%,transparent 52%),linear-gradient(180deg,#040016 0%,#08002A 55%,#050018 100%);}
+.songs-header{padding:50px 18px 16px;background:linear-gradient(90deg,var(--w-primary),var(--w-accent));box-shadow:0 4px 34px var(--w-glow);flex-shrink:0;}
+.songs-header-row{display:flex;align-items:center;gap:12px;}
+.songs-header-ttl{font-family:var(--ff);font-size:21px;color:#fff;}
+.songs-list{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;padding-bottom:8px;}
+.songs-list::-webkit-scrollbar{width:4px;}
+.songs-list::-webkit-scrollbar-track{background:transparent;}
+.songs-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2);border-radius:4px;}
+
+/* Song Card */
+.song-card{border-radius:20px;background:rgba(255,255,255,.06);backdrop-filter:var(--blur);border:2px solid rgba(255,255,255,.1);padding:14px 16px;display:flex;align-items:center;gap:14px;cursor:pointer;will-change:transform;transition:border-color .25s,background .25s;position:relative;overflow:hidden;}
+.song-card::before{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(135deg,rgba(255,255,255,.08) 0%,transparent 55%);pointer-events:none;}
+.song-card.active{border-color:var(--w-primary);background:rgba(255,255,255,.07);box-shadow:0 0 22px var(--w-glow);}
+.song-card.active::after{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--w-primary);border-radius:20px 0 0 20px;}
+.song-thumb{width:58px;height:58px;border-radius:16px;background:linear-gradient(135deg,var(--w-primary),var(--w-accent));display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;box-shadow:0 4px 14px var(--w-glow);}
+.song-info{flex:1;min-width:0;}
+.song-title{font-family:var(--ff);font-size:15px;color:#fff;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.song-meta{font-size:11px;color:rgba(255,255,255,.45);}
+.song-ctrl{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.song-play-btn{width:42px;height:42px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(135deg,var(--w-primary),var(--w-accent));display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;box-shadow:0 4px 12px var(--w-glow);will-change:transform;transition:transform .15s;}
+.song-play-btn:active{transform:scale(.9);}
+
+/* Player Bar */
+.songs-player{flex-shrink:0;padding:14px 16px 12px;background:rgba(10,0,24,.95);border-top:1.5px solid rgba(255,255,255,.1);backdrop-filter:blur(16px);}
+.player-song-name{font-family:var(--ff);font-size:14px;color:var(--w-primary);text-align:center;margin-bottom:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.player-progress-wrap{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.player-time{font-size:11px;color:rgba(255,255,255,.5);flex-shrink:0;min-width:34px;}
+.player-time.right{text-align:right;}
+.player-progress{flex:1;height:5px;border-radius:5px;background:rgba(255,255,255,.15);position:relative;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.player-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--w-primary),var(--w-accent));width:0%;transition:width .25s linear;pointer-events:none;}
+.player-thumb{position:absolute;top:50%;right:-1px;transform:translateY(-50%);width:13px;height:13px;border-radius:50%;background:var(--w-primary);box-shadow:0 0 8px var(--w-glow);pointer-events:none;}
+.player-controls{display:flex;align-items:center;justify-content:center;gap:20px;}
+.player-btn{width:44px;height:44px;border-radius:50%;border:none;background:rgba(255,255,255,.08);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff;will-change:transform;transition:background .2s,transform .15s;}
+.player-btn:active{transform:scale(.88);}
+.player-btn.main{width:56px;height:56px;font-size:22px;background:linear-gradient(135deg,var(--w-primary),var(--w-accent));box-shadow:0 4px 18px var(--w-glow);}
+.player-btn.main:active{transform:scale(.9);}
+.player-empty{text-align:center;color:rgba(255,255,255,.3);font-size:13px;padding:10px 0;}
+
+/* Waveform animation for active card */
+.song-wave{display:flex;align-items:center;gap:2px;height:20px;flex-shrink:0;}
+.song-wave span{display:block;width:3px;border-radius:3px;background:var(--w-primary);}
+.song-wave.playing span{animation:sw .7s ease-in-out infinite alternate;}
+.song-wave.playing span:nth-child(2){animation-delay:.15s;}
+.song-wave.playing span:nth-child(3){animation-delay:.3s;}
+.song-wave.playing span:nth-child(4){animation-delay:.1s;}
+@keyframes sw{from{height:4px}to{height:18px}}
+
 </style>
 </head>
 <body>
@@ -2185,6 +2235,52 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);
     <div class="tw-modal-sub">Sub</div>
     <div class="tw-modal-vocab"></div>
     <button class="tw-modal-close">Fechar</button>
+  </div>
+</div>
+
+<!-- ══ SONGS — Mundo Mini ══ -->
+<div class="screen" id="s-songs">
+  <div class="s-songs">
+    <!-- Header -->
+    <div class="songs-header">
+      <div class="songs-header-row">
+        <button class="back-c" onclick="press(this);songsStop();solSay('Voltando para o mapa!',()=>goBack())">←</button>
+        <div class="songs-header-ttl" id="songs-header-ttl">🎵 Músicas</div>
+      </div>
+    </div>
+
+    <!-- Lista de músicas (gerada por JS) -->
+    <div class="songs-list" id="songs-list">
+      <!-- gerado por renderSongsList() -->
+    </div>
+
+    <!-- Player fixo na base -->
+    <div class="songs-player" id="songs-player">
+      <div class="player-empty" id="player-empty">Toque em uma música para começar! 🎵</div>
+      <div id="player-active" style="display:none;">
+        <div class="player-song-name" id="player-song-name">—</div>
+        <div class="player-progress-wrap">
+          <span class="player-time" id="player-cur">0:00</span>
+          <div class="player-progress" id="player-progress" onclick="playerSeek(event)">
+            <div class="player-fill" id="player-fill"></div>
+            <div class="player-thumb" id="player-thumb"></div>
+          </div>
+          <span class="player-time right" id="player-dur">0:00</span>
+        </div>
+        <div class="player-controls">
+          <button class="player-btn" onclick="songsPrev()" title="Anterior">⏮</button>
+          <button class="player-btn main" id="player-main-btn" onclick="songsToggle()">▶</button>
+          <button class="player-btn" onclick="songsNext()" title="Próxima">⏭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Nav bar -->
+  <div class="bnav">
+    <button class="bn" onclick="press(this);songsStop();go('home')"><div class="bn-ic">🏠</div><div class="bn-dt"></div></button>
+    <button class="bn" onclick="press(this);songsStop();go('map')"><div class="bn-ic">🗺️</div><div class="bn-dt"></div></button>
+    <button class="bn" onclick="press(this);go('reward')"><div class="bn-ic">🏆</div><div class="bn-dt"></div></button>
+    <button class="bn on"><div class="bn-ic">🎵</div><div class="bn-dt"></div></button>
   </div>
 </div>
 
@@ -3193,7 +3289,15 @@ function buildModuleGrid(){
         const wordsSolImg = document.getElementById('sol-words');
         if(wordsSolImg){ const src=CHAR_IMG_MAP[modFinal]; if(src)wordsSolImg.src=src; }
         if(m.id==='words') solSay(MSG.map.words,()=>go('words'));
-        else if(m.id==='songs'){ activateChar('bunny','welcome',()=>go('map')); solSay(MSG.map.songs,null); }
+        else if(m.id==='songs'){
+          if(currentWorld === 'mini' || currentWorld === 'kids'){
+            activateChar('bunny','welcome',()=>go('songs'));
+            solSay(MSG.map.songs, null);
+          } else {
+            activateChar('bunny','welcome',()=>go('map'));
+            solSay(MSG.map.songs, null);
+          }
+        }
         else if(m.id==='battles') activateChar('robo','battle',()=>solSay('Hora de batalhar em inglês!',null));
         else if(m.id==='cambridge') activateChar('luna','welcome',()=>solSay('Simulado Cambridge!',null));
         else solSay('Vamos explorar!',null);
@@ -3225,6 +3329,7 @@ function go(name){
   if(name===curScr)return;
   prevScr = curScr;  // track previous screen for back navigation
   if(curScr==='home' && name!=='home') try{stopBgMusic();}catch(e){}
+  if(curScr==='songs' && name!=='songs') try{songsStop();}catch(e){}
   if(name==='home'){ try{ createBgMusic(); }catch(e){} }
   const outEl=document.getElementById('s-'+curScr);
   const inEl =document.getElementById('s-'+name);
@@ -3290,6 +3395,7 @@ function go(name){
   if(name==='worldmap')    setTimeout(initWorldMap, 300);
   if(name==='album')       setTimeout(buildAlbumScreen, 300);
   if(name==='toyworld')    setTimeout(renderToyWorld, 200);
+  if(name==='songs')       setTimeout(openSongsScreen, 150);
 
   // Pet HUD visibility
   if(['home','worldsel'].includes(name)){
@@ -3525,6 +3631,466 @@ const MSG={
   gallery:{back:'Voltando! Escolhe outra categoria!'},
   reward:{more:'Oba! Vamos aprender mais palavras!'},
 };
+
+/* ═══════════════════════════════════════════════════════════════
+   SONGS MODULE — Mundo Mini
+   Catálogo centralizado, escalável para Kids/Adventure no futuro.
+   Estrutura preparada para: video HeyGen, thumbnail, lyrics, karaokê.
+   Caminhos relativos: assets/music/mini/<filename>
+═══════════════════════════════════════════════════════════════ */
+const SONGS_CATALOG = {
+  mini: [
+    {
+      id: 'M001',
+      title: 'Lion Sunshine',
+      subtitle: 'Animais · Cores',
+      emoji: '🦁',
+      audio: 'assets/music/mini/M001-Lion_Sunshine.mp3',
+      video: null,
+      thumbnail: null,
+      lyrics: null,
+      karaoke: null,
+    },
+    {
+      id: 'M002',
+      title: 'Colors Everywhere',
+      subtitle: 'Cores',
+      emoji: '🌈',
+      audio: 'assets/music/mini/M002-COLORS_EVERYWHERE.mp3',
+      video: null,
+      thumbnail: null,
+      lyrics: null,
+      karaoke: null,
+    },
+    {
+      id: 'M003',
+      title: 'Numbers Are Great',
+      subtitle: 'Números',
+      emoji: '🔢',
+      audio: 'assets/music/mini/M003-A-NUMBERS_ARE_GREAT.mp3',
+      video: null,
+      thumbnail: null,
+      lyrics: null,
+      karaoke: null,
+    },
+    {
+      id: 'M004',
+      title: 'My Family',
+      subtitle: 'Família',
+      emoji: '👨‍👩‍👧',
+      audio: 'assets/music/mini/M004-MY_FAMILY.mp3',
+      video: null,
+      thumbnail: null,
+      lyrics: null,
+      karaoke: null,
+    },
+    {
+      id: 'M005',
+      title: 'Food Is Yummy',
+      subtitle: 'Comida',
+      emoji: '🍎',
+      audio: 'assets/music/mini/M005-Food_Is_Yummy__0_89x_.mp3',
+      video: null,
+      thumbnail: null,
+      lyrics: null,
+      karaoke: null,
+    },
+    {
+      id: 'M006',
+      title: 'My Body Parts',
+      subtitle: 'Corpo',
+      emoji: '👁️',
+      audio: 'assets/music/mini/M006_-MY_BODY_PARTS.mp3',
+      video: null,
+      thumbnail: null,
+      lyrics: null,
+      karaoke: null,
+    },
+    {
+      id: 'M007',
+      title: 'Feel Your Feelings',
+      subtitle: 'Sentimentos',
+      emoji: '💛',
+      audio: 'assets/music/mini/M007-Feel_your_Feelings__0_89x_.mp3',
+      video: null,
+      thumbnail: null,
+      lyrics: null,
+      karaoke: null,
+    },
+    {
+      id: 'M008',
+      title: 'Big and Small',
+      subtitle: 'Tamanhos',
+      emoji: '🐘',
+      audio: 'assets/music/mini/M008-Big_and_Small.mp3',
+      video: null,
+      thumbnail: null,
+      lyrics: null,
+      karaoke: null,
+    },
+  ],
+  kids: [
+    {
+      id: 'K001',
+      title: 'Lion Sunshine',
+      subtitle: 'Animals · Colors',
+      emoji: '🦁',
+      audio: 'assets/music/kids/M001-Lion_Sunshine.mp3',
+      video: null,
+      thumbnail: null,
+      lyrics: null,
+      karaoke: null,
+    },
+    {
+      id: 'K002',
+      title: 'Colors Everywhere',
+      subtitle: 'Colors',
+      emoji: '🌈',
+      audio: 'assets/music/kids/M002-COLORS_EVERYWHERE.mp3',
+      video: null,
+      thumbnail: null,
+      lyrics: null,
+      karaoke: null,
+    },
+    {
+      id: 'K003',
+      title: 'Numbers Are Great',
+      subtitle: 'Numbers',
+      emoji: '🔢',
+      audio: 'assets/music/kids/M003-A-NUMBERS_ARE_GREAT.mp3',
+      video: null,
+      thumbnail: null,
+      lyrics: null,
+      karaoke: null,
+    },
+    {
+      id: 'K004',
+      title: 'My Family',
+      subtitle: 'Family',
+      emoji: '👨‍👩‍👧',
+      audio: 'assets/music/kids/M004-MY_FAMILY.mp3',
+      video: null,
+      thumbnail: null,
+      lyrics: null,
+      karaoke: null,
+    },
+    {
+      id: 'K005',
+      title: 'Food Is Yummy',
+      subtitle: 'Food',
+      emoji: '🍎',
+      audio: 'assets/music/kids/M005-Food_Is_Yummy__0_89x_.mp3',
+      video: null,
+      thumbnail: null,
+      lyrics: null,
+      karaoke: null,
+    },
+    {
+      id: 'K006',
+      title: 'My Body Parts',
+      subtitle: 'Body',
+      emoji: '👁️',
+      audio: 'assets/music/kids/M006_-MY_BODY_PARTS.mp3',
+      video: null,
+      thumbnail: null,
+      lyrics: null,
+      karaoke: null,
+    },
+    {
+      id: 'K007',
+      title: 'Feel Your Feelings',
+      subtitle: 'Feelings',
+      emoji: '💛',
+      audio: 'assets/music/kids/M007-Feel_your_Feelings__0_89x_.mp3',
+      video: null,
+      thumbnail: null,
+      lyrics: null,
+      karaoke: null,
+    },
+    {
+      id: 'K008',
+      title: 'Big and Small',
+      subtitle: 'Adjectives',
+      emoji: '🐘',
+      audio: 'assets/music/kids/M008-Big_and_Small.mp3',
+      video: null,
+      thumbnail: null,
+      lyrics: null,
+      karaoke: null,
+    },
+  ],
+  adventure: [],
+};
+
+/* ─── Player State ─────────────────────────────────────────── */
+let songsAudio     = null;   // única instância de Audio
+let songsIdx       = -1;     // índice da música atual
+let songsPlaying   = false;
+let songsRAF       = null;   // requestAnimationFrame para a barra
+let songsWorld     = 'mini'; // mundo atual do módulo
+
+/* ─── Helpers ──────────────────────────────────────────────── */
+function _songsFormat(sec){
+  if(!isFinite(sec)||sec<0) return '0:00';
+  const m=Math.floor(sec/60), s=Math.floor(sec%60);
+  return m+':'+(s<10?'0':'')+s;
+}
+
+function _songsGetList(){
+  return SONGS_CATALOG[songsWorld] || [];
+}
+
+/* ─── Render ────────────────────────────────────────────────── */
+function renderSongsList(){
+  const list = document.getElementById('songs-list');
+  if(!list) return;
+  const songs = _songsGetList();
+  list.innerHTML = '';
+  songs.forEach((s, i) => {
+    const card = document.createElement('div');
+    card.className = 'song-card' + (songsIdx === i ? ' active' : '');
+    card.id = 'song-card-'+i;
+    const isActive = songsIdx === i;
+    const isPlaying = isActive && songsPlaying;
+    card.innerHTML = `
+      <div class="song-thumb">${s.emoji}</div>
+      <div class="song-info">
+        <div class="song-title">${s.title}</div>
+        <div class="song-meta">${s.subtitle} · Mundo Mini</div>
+      </div>
+      <div class="song-ctrl">
+        <div class="song-wave${isPlaying?' playing':''}" id="wave-${i}">
+          <span style="height:${isPlaying?'12px':'4px'}"></span>
+          <span style="height:${isPlaying?'18px':'4px'}"></span>
+          <span style="height:${isPlaying?'8px':'4px'}"></span>
+          <span style="height:${isPlaying?'16px':'4px'}"></span>
+        </div>
+        <button class="song-play-btn" id="spb-${i}" onclick="songsPlayIdx(${i})"
+          aria-label="${isPlaying?'Pausar':'Tocar'} ${s.title}">
+          ${isPlaying ? '⏸' : '▶'}
+        </button>
+      </div>`;
+    card.addEventListener('click', (e) => {
+      if(e.target.closest('.song-play-btn')) return;
+      songsPlayIdx(i);
+    });
+    list.appendChild(card);
+  });
+}
+
+function _songsUpdatePlayerUI(){
+  const songs  = _songsGetList();
+  const empty  = document.getElementById('player-empty');
+  const active = document.getElementById('player-active');
+  const nameEl = document.getElementById('player-song-name');
+  const mainBtn= document.getElementById('player-main-btn');
+
+  if(songsIdx < 0 || !songs[songsIdx]){
+    if(empty)  empty.style.display='';
+    if(active) active.style.display='none';
+    return;
+  }
+  if(empty)  empty.style.display='none';
+  if(active) active.style.display='';
+  if(nameEl) nameEl.textContent = songs[songsIdx].title;
+  if(mainBtn) mainBtn.textContent = songsPlaying ? '⏸' : '▶';
+}
+
+function _songsTickBar(){
+  if(!songsAudio) return;
+  const fill  = document.getElementById('player-fill');
+  const thumb = document.getElementById('player-thumb');
+  const cur   = document.getElementById('player-cur');
+  const dur   = document.getElementById('player-dur');
+  const d = songsAudio.duration || 0;
+  const c = songsAudio.currentTime || 0;
+  const pct = d > 0 ? (c / d * 100) : 0;
+  if(fill)  fill.style.width   = pct + '%';
+  if(thumb) thumb.style.left   = 'calc('+pct+'% - 6px)';
+  if(cur)   cur.textContent    = _songsFormat(c);
+  if(dur)   dur.textContent    = _songsFormat(d);
+  if(songsPlaying) songsRAF = requestAnimationFrame(_songsTickBar);
+}
+
+function _songsUpdateCards(){
+  const songs = _songsGetList();
+  songs.forEach((_s, i) => {
+    const card = document.getElementById('song-card-'+i);
+    const wave = document.getElementById('wave-'+i);
+    const btn  = document.getElementById('spb-'+i);
+    const isActive  = songsIdx === i;
+    const isPlaying = isActive && songsPlaying;
+    if(card){
+      card.classList.toggle('active', isActive);
+    }
+    if(wave){
+      wave.className = 'song-wave' + (isPlaying ? ' playing' : '');
+    }
+    if(btn) btn.textContent = isPlaying ? '⏸' : '▶';
+  });
+}
+
+/* ─── Core Player API ───────────────────────────────────────── */
+function songsPlayIdx(i){
+  const songs = _songsGetList();
+  if(i < 0 || i >= songs.length) return;
+  const song = songs[i];
+
+  // If same song — toggle play/pause
+  if(i === songsIdx && songsAudio){
+    if(songsPlaying) songsPause();
+    else             _songsResume();
+    return;
+  }
+
+  // New song — tear down previous
+  songsStop(true); // silent=true (skip UI reset that renderSongsList handles)
+
+  songsIdx = i;
+
+  // Create fresh Audio element (load on demand)
+  songsAudio = new Audio();
+  songsAudio.preload = 'metadata';
+
+  songsAudio.addEventListener('loadedmetadata', () => {
+    _songsUpdatePlayerUI();
+    _songsTickBar();
+  }, {once:true});
+
+  songsAudio.addEventListener('ended', () => {
+    songsPlaying = false;
+    if(songsRAF){ cancelAnimationFrame(songsRAF); songsRAF=null; }
+    _songsUpdateCards();
+    _songsUpdatePlayerUI();
+    _songsTickBar();
+    // Auto-advance to next
+    const next = songsIdx + 1;
+    if(next < songs.length){
+      setTimeout(()=>songsPlayIdx(next), 600);
+    }
+  }, {once:true});
+
+  songsAudio.addEventListener('error', (e) => {
+    console.warn('[Songs] Audio error:', e);
+    songsPlaying = false;
+    _songsUpdateCards();
+    _songsUpdatePlayerUI();
+  });
+
+  songsAudio.src = song.audio;
+  songsAudio.load();
+  songsAudio.play().then(()=>{
+    songsPlaying = true;
+    _songsUpdateCards();
+    _songsUpdatePlayerUI();
+    if(songsRAF){ cancelAnimationFrame(songsRAF); songsRAF=null; }
+    songsRAF = requestAnimationFrame(_songsTickBar);
+  }).catch(err=>{
+    console.warn('[Songs] Play error:', err);
+  });
+}
+
+function songsPause(){
+  if(!songsAudio || !songsPlaying) return;
+  songsAudio.pause();
+  songsPlaying = false;
+  if(songsRAF){ cancelAnimationFrame(songsRAF); songsRAF=null; }
+  _songsUpdateCards();
+  _songsUpdatePlayerUI();
+}
+
+function _songsResume(){
+  if(!songsAudio || songsPlaying) return;
+  songsAudio.play().then(()=>{
+    songsPlaying = true;
+    _songsUpdateCards();
+    _songsUpdatePlayerUI();
+    songsRAF = requestAnimationFrame(_songsTickBar);
+  }).catch(err=>{ console.warn('[Songs] Resume error:', err); });
+}
+
+function songsToggle(){
+  if(songsIdx < 0){
+    songsPlayIdx(0);
+    return;
+  }
+  if(songsPlaying) songsPause();
+  else             _songsResume();
+}
+
+function songsNext(){
+  const songs = _songsGetList();
+  const next = (songsIdx + 1) < songs.length ? songsIdx + 1 : 0;
+  songsPlayIdx(next);
+}
+
+function songsPrev(){
+  // Se passou mais de 3s, reinicia a atual
+  if(songsAudio && songsAudio.currentTime > 3){
+    songsAudio.currentTime = 0;
+    return;
+  }
+  const songs = _songsGetList();
+  const prev = songsIdx > 0 ? songsIdx - 1 : songs.length - 1;
+  songsPlayIdx(prev);
+}
+
+function songsStop(silent){
+  if(songsAudio){
+    try{ songsAudio.pause(); }catch(e){}
+    songsAudio.src = '';
+    songsAudio = null;
+  }
+  if(songsRAF){ cancelAnimationFrame(songsRAF); songsRAF=null; }
+  songsPlaying = false;
+  if(!silent){
+    songsIdx = -1;
+    _songsUpdateCards();
+    _songsUpdatePlayerUI();
+    // reset progress bar
+    const fill  = document.getElementById('player-fill');
+    const thumb = document.getElementById('player-thumb');
+    const cur   = document.getElementById('player-cur');
+    const dur   = document.getElementById('player-dur');
+    if(fill)  fill.style.width  = '0%';
+    if(thumb) thumb.style.left  = '-6px';
+    if(cur)   cur.textContent   = '0:00';
+    if(dur)   dur.textContent   = '0:00';
+  }
+}
+
+function playerSeek(e){
+  if(!songsAudio || !isFinite(songsAudio.duration)) return;
+  const bar = document.getElementById('player-progress');
+  if(!bar) return;
+  const rect = bar.getBoundingClientRect();
+  const pct  = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+  songsAudio.currentTime = pct * songsAudio.duration;
+  _songsTickBar();
+}
+
+/* ─── Screen entry point ────────────────────────────────────── */
+function openSongsScreen(){
+  // Se mudou de mundo, para o áudio e reseta o player
+  if(songsWorld !== currentWorld){
+    songsStop();
+    songsIdx = -1;
+  }
+  songsWorld = currentWorld;
+
+  // Atualiza título do header com nome do mundo
+  const worldLabels = { mini:'Mundo Mini', kids:'Mundo Kids', adventure:'Mundo Adventure' };
+  const titleEl = document.getElementById('songs-header-ttl');
+  if(titleEl) titleEl.textContent = '🎵 Músicas — ' + (worldLabels[currentWorld] || '');
+
+  renderSongsList();
+  _songsUpdatePlayerUI();
+  // Scroll lista para o topo
+  const list = document.getElementById('songs-list');
+  if(list) list.scrollTop = 0;
+}
+
+
 
 /* ═══════════════════════════════════════════════════════════════
    FULL VOCABULARY — 3 TIERS per the Toyland Universe doc
@@ -7741,6 +8307,7 @@ function goBack(){
     worldmap: 'map',
     album:    'map',
     store:    'map',
+    songs:    'map',
     toyworld: 'menu',
   };
   const target = backMap[curScr] || prevScr || 'home';
